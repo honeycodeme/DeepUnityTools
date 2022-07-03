@@ -16,4 +16,11 @@ namespace CNTK.CSTrainingExamples
             LogisticRegression.TrainAndEvaluate(device);
 
             Console.WriteLine($"======== running MNISTClassifier.TrainAndEvaluate with multilayer perceptron (MLP) classifier using {device.Type} ========");
-            MNISTClassi
+            MNISTClassifier.TrainAndEvaluate(device, false, true);
+
+            Console.WriteLine($"======== running MNISTClassifier.TrainAndEvaluate with convolutional neural network using {device.Type} ========");
+            MNISTClassifier.TrainAndEvaluate(device, true, true);
+
+            // Batch normalization is not available on CPU build. See following examples in GPU project.
+            // Following examples will be enabled once BN is supported on CPU.
+            //Console.WriteLine("======== running CifarResNet.T
