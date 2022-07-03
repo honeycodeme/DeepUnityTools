@@ -23,4 +23,13 @@ namespace CNTK.CSTrainingExamples
 
             // Batch normalization is not available on CPU build. See following examples in GPU project.
             // Following examples will be enabled once BN is supported on CPU.
-            //Console.WriteLine("======== running CifarResNet.T
+            //Console.WriteLine("======== running CifarResNet.TrainAndEvaluate using CPU ========");
+            //CifarResNetClassifier.TrainAndEvaluate(device, true);
+
+            //Console.WriteLine("======== running TransferLearning.TrainAndEvaluateWithFlowerData using CPU ========");
+            //TransferLearning.TrainAndEvaluateWithFlowerData(device, true);
+
+            //Console.WriteLine("======== running TransferLearning.TrainAndEvaluateWithAnimalData using CPU ========");
+            //TransferLearning.TrainAndEvaluateWithAnimalData(device, true);
+
+            Console.WriteLine($"====
