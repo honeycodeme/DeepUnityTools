@@ -16,4 +16,19 @@ namespace CNTK.CSTrainingExamples
         static int inputDim = 3;
         static int numOutputClasses = 2;
 
-        static public void TrainAndEvaluate(De
+        static public void TrainAndEvaluate(DeviceDescriptor device)
+        {
+            try
+            {
+
+                // build a logistic regression model
+                Variable featureVariable, labelVariable;
+
+                featureVariable = Variable.InputVariable(new int[] { inputDim }, DataType.Float);
+                labelVariable = Variable.InputVariable(new int[] { numOutputClasses }, DataType.Float);
+
+
+
+                var classifierOutput = CreateLinearModel(featureVariable, numOutputClasses, device);
+
+                var loss = CNTKLib.Cro
