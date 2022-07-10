@@ -135,3 +135,92 @@ namespace CNTK.CSTrainingExamples
 
             Func<Variable> projectInput = () =>
                 createBiasParam(cellDim) + (createProjectionParam(cellDim) * input);
+
+            // Input gate
+            Function it =
+                CNTKLib.Sigmoid(
+                    (Variable)(projectInput() + (createProjectionParam(cellDim) * stabilizedPrevOutput)) +  
+                    CNTKLib.ElementTimes(createDiagWeightParam(cellDim), stabilizedPrevCellState));
+            Function bit = CNTKLib.ElementTimes(
+                it,
+                CNTKLib.Tanh(projectInput() + (createProjectionParam(cellDim) * stabilizedPrevOutput)));
+
+            // Forget-me-not gate
+            Function ft = CNTKLib.Sigmoid(
+                (Variable)(
+                        projectInput() + (createProjectionParam(cellDim) * stabilizedPrevOutput)) +
+                        CNTKLib.ElementTimes(createDiagWeightParam(cellDim), stabilizedPrevCellState));
+            Function bft = CNTKLib.ElementTimes(ft, prevCellState);
+
+            Function ct = (Variable)bft + bit;
+
+            // Output gate
+            Function ot = CNTKLib.Sigmoid( 
+                (Variable)(projectInput() + (createProjectionParam(cellDim) * stabilizedPrevOutput)) + 
+                CNTKLib.ElementTimes(createDiagWeightParam(cellDim), Stabilize<ElementType>(ct, device)));
+            Function ht = CNTKLib.ElementTimes(ot, CNTKLib.Tanh(ct));
+
+            Function c = ct;
+            Function h = (outputDim != cellDim) ? (createProjectionParam(outputDim) * Stabilize<ElementType>(ht, device)) : ht;
+
+            return new Tuple<Function, Function>(h, c);
+        }
+
+
+        static Tuple<Function, Function> LSTMPComponentWithSelfStabilization<ElementType>(Variable input,
+            NDShape outputShape, NDShape cellShape,
+            Func<Variable, Function> recurrenceHookH,
+            Func<Variable, Function> recurrenceHookC,
+            DeviceDescriptor device)
+        {
+            var dh = Variable.PlaceholderVariable(outputShape, input.DynamicAxes);
+            var dc = Variable.PlaceholderVariable(cellShape, input.DynamicAxes);
+
+            var LSTMCell = LSTMPCellWithSelfStabilization<ElementType>(input, dh, dc, device);
+            var actualDh = recurrenceHookH(LSTMCell.Item1);
+            var actualDc = recurrenceHookC(LSTMCell.Item2);
+
+            // Form the recurrence loop by replacing the dh and dc placeholders with the actualDh and actualDc
+            (LSTMCell.Item1).ReplacePlaceholders(new Dictionary<Variable, Variable> { { dh, actualDh }, { dc, actualDc } });
+
+            return new Tuple<Function, Function>(LSTMCell.Item1, LSTMCell.Item2);
+        }
+
+        private static Function Embedding(Variable input, int embeddingDim, DeviceDescriptor device)
+        {
+            System.Diagnostics.Debug.Assert(input.Shape.Rank == 1);
+            int inputDim = input.Shape[0];
+            var embeddingParameters = new Parameter(new int[] { embeddingDim, inputDim }, DataType.Float, CNTKLib.GlorotUniformInitializer(), device);
+            return CNTKLib.Times(embeddingParameters, input);
+        }
+
+        /// <summary>
+        /// Build a one direction recurrent neural network (RNN) with long-short-term-memory (LSTM) cells.
+        /// http://colah.github.io/posts/2015-08-Understanding-LSTMs/
+        /// </summary>
+        /// <param name="input">the input variable</param>
+        /// <param name="numOutputClasses">number of output classes</param>
+        /// <param name="embeddingDim">dimension of the embedding layer</param>
+        /// <param name="LSTMDim">LSTM output dimension</param>
+        /// <param name="cellDim">cell dimension</param>
+        /// <param name="device">CPU or GPU device to run the model</param>
+        /// <param name="outputName">name of the model output</param>
+        /// <returns>the RNN model</returns>
+        static Function LSTMSequenceClassifierNet(Variable input, int numOutputClasses, int embeddingDim, int LSTMDim, int cellDim, DeviceDescriptor device, 
+            string outputName)
+        {
+            Function embeddingFunction = Embedding(input, embeddingDim, device);
+            Func<Variable, Function> pastValueRecurrenceHook = (x) => CNTKLib.PastValue(x);
+            Function LSTMFunction = LSTMPComponentWithSelfStabilization<float>(
+                embeddingFunction,
+                new int[] { LSTMDim },
+                new int[] { cellDim },
+                pastValueRecurrenceHook,
+                pastValueRecurrenceHook,
+                device).Item1;
+            Function thoughtVectorFunction = CNTKLib.SequenceLast(LSTMFunction);
+
+            return TestHelper.FullyConnectedLinearLayer(thoughtVectorFunction, numOutputClasses, device, outputName);
+        }
+    }
+}
