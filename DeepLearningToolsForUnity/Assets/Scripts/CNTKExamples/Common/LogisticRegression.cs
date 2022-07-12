@@ -51,4 +51,12 @@ namespace CNTK.CSTrainingExamples
                 UnityEngine.Debug.Log("Trainer created");
                 
 
-        
+                // train the model
+                for (int minibatchCount = 0; minibatchCount < numMinibatchesToTrain; minibatchCount++)
+                {
+                    Value features, labels;
+                    GenerateValueData(minibatchSize, inputDim, numOutputClasses, out features, out labels, device);
+                    //TODO: sweepEnd should be set properly instead of false.
+#pragma warning disable 618
+                    trainer.TrainMinibatch(
+                        new Dictionary
