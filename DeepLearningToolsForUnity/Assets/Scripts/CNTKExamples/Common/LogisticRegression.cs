@@ -31,4 +31,12 @@ namespace CNTK.CSTrainingExamples
 
                 var classifierOutput = CreateLinearModel(featureVariable, numOutputClasses, device);
 
-                var loss = CNTKLib.Cro
+                var loss = CNTKLib.CrossEntropyWithSoftmax(classifierOutput, labelVariable);
+                var evalError = CNTKLib.ClassificationError(classifierOutput, labelVariable);
+                UnityEngine.Debug.Log("Model built");
+
+                // prepare for training
+                CNTK.TrainingParameterScheduleDouble learningRatePerSample = new CNTK.TrainingParameterScheduleDouble(0.02, 1);
+                UnityEngine.Debug.Log("Training parameter created");
+                IList<Learner> parameterLearners =
+                    new List<Learner>() { Learner.SGD
