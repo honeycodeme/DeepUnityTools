@@ -39,4 +39,16 @@ namespace CNTK.CSTrainingExamples
                 CNTK.TrainingParameterScheduleDouble learningRatePerSample = new CNTK.TrainingParameterScheduleDouble(0.02, 1);
                 UnityEngine.Debug.Log("Training parameter created");
                 IList<Learner> parameterLearners =
-                    new List<Learner>() { Learner.SGD
+                    new List<Learner>() { Learner.SGDLearner(classifierOutput.Parameters(), learningRatePerSample) };
+                UnityEngine.Debug.Log("Learners created");
+                
+                var trainer = Trainer.CreateTrainer(classifierOutput, loss, evalError, parameterLearners);
+
+                int minibatchSize = 64;
+                int numMinibatchesToTrain = 1000;
+                int updatePerMinibatches = 50;
+
+                UnityEngine.Debug.Log("Trainer created");
+                
+
+        
