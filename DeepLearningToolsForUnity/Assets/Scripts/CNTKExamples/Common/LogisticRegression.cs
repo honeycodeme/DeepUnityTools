@@ -77,4 +77,9 @@ namespace CNTK.CSTrainingExamples
                 IList<int> expectedLabels = expectedOneHot.Select(l => l.IndexOf(1.0F)).ToList();
 
                 var inputDataMap = new Dictionary<Variable, Value>() { { featureVariable, testFeatureValue } };
-                var outputDataMap =
+                var outputDataMap = new Dictionary<Variable, Value>() { { classifierOutput.Output, null } };
+                classifierOutput.Evaluate(inputDataMap, outputDataMap, device);
+                var outputValue = outputDataMap[classifierOutput.Output];
+                IList<IList<float>> actualLabelSoftMax = outputValue.GetDenseData<float>(classifierOutput.Output);
+                var actualLabels = actualLabelSoftMax.Select((IList<float> l) => l.IndexOf(l.Max())).ToList();
+                int m
