@@ -70,4 +70,11 @@ namespace CNTK.CSTrainingExamples
                 // test and validate the model
                 int testSize = 100;
                 Value testFeatureValue, expectedLabelValue;
-                GenerateValueData(testSize, inputDim,
+                GenerateValueData(testSize, inputDim, numOutputClasses, out testFeatureValue, out expectedLabelValue, device);
+
+                // GetDenseData just needs the variable's shape
+                IList<IList<float>> expectedOneHot = expectedLabelValue.GetDenseData<float>(labelVariable);
+                IList<int> expectedLabels = expectedOneHot.Select(l => l.IndexOf(1.0F)).ToList();
+
+                var inputDataMap = new Dictionary<Variable, Value>() { { featureVariable, testFeatureValue } };
+                var outputDataMap =
