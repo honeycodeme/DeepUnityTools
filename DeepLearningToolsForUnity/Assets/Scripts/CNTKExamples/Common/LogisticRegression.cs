@@ -82,4 +82,16 @@ namespace CNTK.CSTrainingExamples
                 var outputValue = outputDataMap[classifierOutput.Output];
                 IList<IList<float>> actualLabelSoftMax = outputValue.GetDenseData<float>(classifierOutput.Output);
                 var actualLabels = actualLabelSoftMax.Select((IList<float> l) => l.IndexOf(l.Max())).ToList();
-                int m
+                int misMatches = actualLabels.Zip(expectedLabels, (a, b) => a.Equals(b) ? 0 : 1).Sum();
+
+                UnityEngine.Debug.Log($"Validating Model: Total Samples = {testSize}, Misclassify Count = {misMatches}");
+            }
+            catch (Exception e)
+            {
+                UnityEngine.Debug.Log(e.Message);
+                return;
+            }
+        }
+
+        private static void GenerateValueData(int sampleSize, int inputDim, int numOutputClasses,
+      
