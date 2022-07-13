@@ -59,4 +59,15 @@ namespace CNTK.CSTrainingExamples
                     //TODO: sweepEnd should be set properly instead of false.
 #pragma warning disable 618
                     trainer.TrainMinibatch(
-                        new Dictionary
+                        new Dictionary<Variable, Value>() { { featureVariable, features }, { labelVariable, labels } }, device);
+#pragma warning restore 618
+                    TestHelper.PrintTrainingProgress(trainer, minibatchCount, updatePerMinibatches);
+                }
+
+                UnityEngine.Debug.Log("Trained");
+                
+
+                // test and validate the model
+                int testSize = 100;
+                Value testFeatureValue, expectedLabelValue;
+                GenerateValueData(testSize, inputDim,
