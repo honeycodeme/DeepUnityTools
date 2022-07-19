@@ -115,4 +115,18 @@ namespace CNTK.CSTrainingExamples
             for (int sample = 0; sample < sampleSize; sample++)
             {
                 int label = random.Next(numOutputClasses);
-                for (int i = 0; i < numOutpu
+                for (int i = 0; i < numOutputClasses; i++)
+                {
+                    oneHotLabels[sample * numOutputClasses + i] = label == i ? 1 : 0;
+                }
+
+                for (int i = 0; i < inputDim; i++)
+                {
+                    features[sample * inputDim + i] = (float)GenerateGaussianNoise(3, 1, random) * (label + 1);
+                }
+            }
+        }
+
+        /// <summary>
+        /// https://en.wikipedia.org/wiki/Box%E2%80%93Muller_transform
+        /// https://stackoverflow.com/questions/218060/random-gaussian-variables
