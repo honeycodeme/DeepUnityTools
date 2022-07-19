@@ -94,4 +94,14 @@ namespace CNTK.CSTrainingExamples
         }
 
         private static void GenerateValueData(int sampleSize, int inputDim, int numOutputClasses,
-      
+            out Value featureValue, out Value labelValue, DeviceDescriptor device)
+        {
+            float[] features;
+            float[] oneHotLabels;
+            GenerateRawDataSamples(sampleSize, inputDim, numOutputClasses, out features, out oneHotLabels);
+
+            featureValue = Value.CreateBatch<float>(new int[] { inputDim }, features, device);
+            labelValue = Value.CreateBatch<float>(new int[] { numOutputClasses }, oneHotLabels, device);
+        }
+
+        private static void GenerateRawDataSamples(int sam
