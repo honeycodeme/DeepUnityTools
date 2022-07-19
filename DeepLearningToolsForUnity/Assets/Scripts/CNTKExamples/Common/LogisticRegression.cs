@@ -104,4 +104,15 @@ namespace CNTK.CSTrainingExamples
             labelValue = Value.CreateBatch<float>(new int[] { numOutputClasses }, oneHotLabels, device);
         }
 
-        private static void GenerateRawDataSamples(int sam
+        private static void GenerateRawDataSamples(int sampleSize, int inputDim, int numOutputClasses,
+            out float[] features, out float[] oneHotLabels)
+        {
+            Random random = new Random(0);
+
+            features = new float[sampleSize * inputDim];
+            oneHotLabels = new float[sampleSize * numOutputClasses];
+
+            for (int sample = 0; sample < sampleSize; sample++)
+            {
+                int label = random.Next(numOutputClasses);
+                for (int i = 0; i < numOutpu
