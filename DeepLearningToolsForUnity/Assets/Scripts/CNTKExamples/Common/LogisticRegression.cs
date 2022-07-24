@@ -130,3 +130,14 @@ namespace CNTK.CSTrainingExamples
         /// <summary>
         /// https://en.wikipedia.org/wiki/Box%E2%80%93Muller_transform
         /// https://stackoverflow.com/questions/218060/random-gaussian-variables
+        /// </summary>
+        /// <returns></returns>
+        static double GenerateGaussianNoise(double mean, double stdDev, Random random)
+        {
+            double u1 = 1.0 - random.NextDouble();
+            double u2 = 1.0 - random.NextDouble();
+            double stdNormalRandomValue = Math.Sqrt(-2.0 * Math.Log(u1)) * Math.Sin(2.0 * Math.PI * u2);
+            return mean + stdDev * stdNormalRandomValue;
+        }
+
+        public static Function CreateLinearModel(Variable input, int outputDim, DeviceDes
