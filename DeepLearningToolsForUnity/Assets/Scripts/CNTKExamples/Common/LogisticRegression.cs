@@ -140,4 +140,13 @@ namespace CNTK.CSTrainingExamples
             return mean + stdDev * stdNormalRandomValue;
         }
 
-        public static Function CreateLinearModel(Variable input, int outputDim, DeviceDes
+        public static Function CreateLinearModel(Variable input, int outputDim, DeviceDescriptor device)
+        {
+            int inputDim = input.Shape[0];
+            var weightParam = new Parameter(new int[] { outputDim, inputDim }, DataType.Float, 1, device, "w");
+            var biasParam = new Parameter(new int[] { outputDim }, DataType.Float, 0, device, "b");
+            
+            return CNTKLib.Times(weightParam, input) + biasParam;
+        }
+    }
+}
