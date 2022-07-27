@@ -33,4 +33,14 @@ namespace CNTK.CSTrainingExamples
             var featureStreamName = "features";
             var labelsStreamName = "labels";
             var classifierName = "classifierOutput";
-            Function classifi
+            Function classifierOutput;
+            int[] imageDim = useConvolution ? new int[] { 28, 28, 1 } : new int[] { 784 };
+            int imageSize = 28 * 28;
+            int numClasses = 10;
+
+            IList<StreamConfiguration> streamConfigurations = new StreamConfiguration[]
+                { new StreamConfiguration(featureStreamName, imageSize), new StreamConfiguration(labelsStreamName, numClasses) };
+
+            string modelFile = useConvolution ? "MNISTConvolution.model" : "MNISTMLP.model";
+
+    
