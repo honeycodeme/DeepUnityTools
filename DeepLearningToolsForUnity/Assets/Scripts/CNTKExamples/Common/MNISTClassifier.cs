@@ -16,4 +16,14 @@ namespace CNTK.CSTrainingExamples
     {
         /// <summary>
         /// Execution folder is: CNTK/x64/BuildFolder
-        /// Data folder is: CNTK/Tests/EndToEndTests/Imag
+        /// Data folder is: CNTK/Tests/EndToEndTests/Image/Data
+        /// </summary>
+        public static string ImageDataFolder = "../../Tests/EndToEndTests/Image/Data";
+
+        /// <summary>
+        /// Train and evaluate a image classifier for MNIST data.
+        /// </summary>
+        /// <param name="device">CPU or GPU device to run training and evaluation</param>
+        /// <param name="useConvolution">option to use convolution network or to use multilayer perceptron</param>
+        /// <param name="forceRetrain">whether to override an existing model.
+      
