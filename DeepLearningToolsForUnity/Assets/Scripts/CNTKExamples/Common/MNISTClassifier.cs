@@ -26,4 +26,11 @@ namespace CNTK.CSTrainingExamples
         /// <param name="device">CPU or GPU device to run training and evaluation</param>
         /// <param name="useConvolution">option to use convolution network or to use multilayer perceptron</param>
         /// <param name="forceRetrain">whether to override an existing model.
-      
+        /// if true, any existing model will be overridden and the new one evaluated. 
+        /// if false and there is an existing model, the existing model is evaluated.</param>
+        public static void TrainAndEvaluate(DeviceDescriptor device, bool useConvolution, bool forceRetrain)
+        {
+            var featureStreamName = "features";
+            var labelsStreamName = "labels";
+            var classifierName = "classifierOutput";
+            Function classifi
