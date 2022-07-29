@@ -43,4 +43,10 @@ namespace CNTK.CSTrainingExamples
 
             string modelFile = useConvolution ? "MNISTConvolution.model" : "MNISTMLP.model";
 
-    
+            // If a model already exists and not set to force retrain, validate the model and return.
+            if (File.Exists(modelFile) && !forceRetrain)
+            {
+                var minibatchSourceExistModel = MinibatchSource.TextFormatMinibatchSource(
+                    Path.Combine(ImageDataFolder, "Test_cntk_text.txt"), streamConfigurations);
+                TestHelper.ValidateModelWithMinibatchSource(modelFile, minibatchSourceExistModel,
+                                    imageDim, numClasses, featureStreamN
