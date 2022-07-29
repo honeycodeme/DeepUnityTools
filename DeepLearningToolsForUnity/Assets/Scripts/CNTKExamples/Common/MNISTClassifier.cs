@@ -49,4 +49,17 @@ namespace CNTK.CSTrainingExamples
                 var minibatchSourceExistModel = MinibatchSource.TextFormatMinibatchSource(
                     Path.Combine(ImageDataFolder, "Test_cntk_text.txt"), streamConfigurations);
                 TestHelper.ValidateModelWithMinibatchSource(modelFile, minibatchSourceExistModel,
-                                    imageDim, numClasses, featureStreamN
+                                    imageDim, numClasses, featureStreamName, labelsStreamName, classifierName, device);
+                return;
+            }
+
+            // build the network
+            var input = CNTKLib.InputVariable(imageDim, DataType.Float, featureStreamName);
+            if (useConvolution)
+            {
+                var scaledInput = CNTKLib.ElementTimes(Constant.Scalar<float>(0.00390625f, device), input);
+                classifierOutput = CreateConvolutionalNeuralNetwork(scaledInput, numClasses, device, classifierName);
+            }
+            else
+            {
+                // For
