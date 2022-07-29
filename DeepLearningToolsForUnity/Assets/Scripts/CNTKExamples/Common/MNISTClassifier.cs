@@ -69,4 +69,11 @@ namespace CNTK.CSTrainingExamples
             }
 
             var labels = CNTKLib.InputVariable(new int[] { numClasses }, DataType.Float, labelsStreamName);
-            var trainingLoss = CNTKLib.CrossEntropyWith
+            var trainingLoss = CNTKLib.CrossEntropyWithSoftmax(new Variable(classifierOutput), labels, "lossFunction");
+            var prediction = CNTKLib.ClassificationError(new Variable(classifierOutput), labels, "classificationError");
+
+            // prepare training data
+            var minibatchSource = MinibatchSource.TextFormatMinibatchSource(
+                Path.Combine(ImageDataFolder, "Train_cntk_text.txt"), streamConfigurations, MinibatchSource.InfinitelyRepeat);
+
+            var featureStreamInfo = minibatchSource.StreamInfo(featureStreamNam
