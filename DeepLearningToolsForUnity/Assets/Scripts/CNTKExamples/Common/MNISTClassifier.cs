@@ -62,4 +62,11 @@ namespace CNTK.CSTrainingExamples
             }
             else
             {
-                // For
+                // For MLP, we like to have the middle layer to have certain amount of states.
+                int hiddenLayerDim = 200;
+                var scaledInput = CNTKLib.ElementTimes(Constant.Scalar<float>(0.00390625f, device), input);
+                classifierOutput = CreateMLPClassifier(device, numClasses, hiddenLayerDim, scaledInput, classifierName);
+            }
+
+            var labels = CNTKLib.InputVariable(new int[] { numClasses }, DataType.Float, labelsStreamName);
+            var trainingLoss = CNTKLib.CrossEntropyWith
