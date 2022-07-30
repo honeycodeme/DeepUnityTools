@@ -76,4 +76,12 @@ namespace CNTK.CSTrainingExamples
             var minibatchSource = MinibatchSource.TextFormatMinibatchSource(
                 Path.Combine(ImageDataFolder, "Train_cntk_text.txt"), streamConfigurations, MinibatchSource.InfinitelyRepeat);
 
-            var featureStreamInfo = minibatchSource.StreamInfo(featureStreamNam
+            var featureStreamInfo = minibatchSource.StreamInfo(featureStreamName);
+            var labelStreamInfo = minibatchSource.StreamInfo(labelsStreamName);
+
+            // set per sample learning rate
+            CNTK.TrainingParameterScheduleDouble learningRatePerSample = new CNTK.TrainingParameterScheduleDouble(
+                0.003125, 1);
+
+            IList<Learner> parameterLearners = new List<Learner>() { Learner.SGDLearner(classifierOutput.Parameters(), learningRatePerSample) };
+            var trainer = Trainer.CreateTrainer(classifierOutput, trainingLoss, predi
