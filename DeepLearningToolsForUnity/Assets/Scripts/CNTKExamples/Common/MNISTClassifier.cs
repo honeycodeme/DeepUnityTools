@@ -84,4 +84,16 @@ namespace CNTK.CSTrainingExamples
                 0.003125, 1);
 
             IList<Learner> parameterLearners = new List<Learner>() { Learner.SGDLearner(classifierOutput.Parameters(), learningRatePerSample) };
-            var trainer = Trainer.CreateTrainer(classifierOutput, trainingLoss, predi
+            var trainer = Trainer.CreateTrainer(classifierOutput, trainingLoss, prediction, parameterLearners);
+
+            //
+            const uint minibatchSize = 64;
+            int outputFrequencyInMinibatches = 20, i = 0;
+            int epochs = 5;
+            while (epochs > 0)
+            {
+                var minibatchData = minibatchSource.GetNextMinibatch(minibatchSize, device);
+                var arguments = new Dictionary<Variable, MinibatchData>
+                {
+                    { input, minibatchData[featureStreamInfo] },
+           
