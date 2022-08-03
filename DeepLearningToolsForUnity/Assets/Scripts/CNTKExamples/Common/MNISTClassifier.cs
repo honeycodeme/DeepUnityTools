@@ -105,4 +105,16 @@ namespace CNTK.CSTrainingExamples
                 // MinibatchSource is created with MinibatchSource.InfinitelyRepeat.
                 // Batching will not end. Each time minibatchSource completes an sweep (epoch),
                 // the last minibatch data will be marked as end of a sweep. We use this flag
-                // to count numb
+                // to count number of epochs.
+                if (TestHelper.MiniBatchDataIsSweepEnd(minibatchData.Values))
+                {
+                    epochs--;
+                }
+            }
+
+            // save the trained model
+            classifierOutput.Save(modelFile);
+
+            // validate the model
+            var minibatchSourceNewModel = MinibatchSource.TextFormatMinibatchSource(
+                Path.Combine(ImageDataFolder, "Test_cntk_text.txt"), streamConfigurations, MinibatchSource.FullDat
