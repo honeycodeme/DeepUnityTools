@@ -96,4 +96,13 @@ namespace CNTK.CSTrainingExamples
                 var arguments = new Dictionary<Variable, MinibatchData>
                 {
                     { input, minibatchData[featureStreamInfo] },
-           
+                    { labels, minibatchData[labelStreamInfo] }
+                };
+
+                trainer.TrainMinibatch(arguments, device);
+                TestHelper.PrintTrainingProgress(trainer, i++, outputFrequencyInMinibatches);
+
+                // MinibatchSource is created with MinibatchSource.InfinitelyRepeat.
+                // Batching will not end. Each time minibatchSource completes an sweep (epoch),
+                // the last minibatch data will be marked as end of a sweep. We use this flag
+                // to count numb
