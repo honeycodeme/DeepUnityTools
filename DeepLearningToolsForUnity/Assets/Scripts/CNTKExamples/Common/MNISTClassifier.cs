@@ -117,4 +117,12 @@ namespace CNTK.CSTrainingExamples
 
             // validate the model
             var minibatchSourceNewModel = MinibatchSource.TextFormatMinibatchSource(
-                Path.Combine(ImageDataFolder, "Test_cntk_text.txt"), streamConfigurations, MinibatchSource.FullDat
+                Path.Combine(ImageDataFolder, "Test_cntk_text.txt"), streamConfigurations, MinibatchSource.FullDataSweep);
+            TestHelper.ValidateModelWithMinibatchSource(modelFile, minibatchSourceNewModel,
+                                imageDim, numClasses, featureStreamName, labelsStreamName, classifierName, device);
+        }
+
+        private static Function CreateMLPClassifier(DeviceDescriptor device, int numOutputClasses, int hiddenLayerDim,
+            Function scaledInput, string classifierName)
+        {
+            Function dense1 = TestHelper.Dense(scaledInput, hiddenLayerDim, device, Activation.Sigmoid
