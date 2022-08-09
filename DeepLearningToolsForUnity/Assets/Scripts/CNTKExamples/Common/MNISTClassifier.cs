@@ -136,4 +136,13 @@ namespace CNTK.CSTrainingExamples
         /// <param name="features">input feature variable</param>
         /// <param name="outDims">number of output classes</param>
         /// <param name="device">CPU or GPU device to run the model</param>
-        /// <param name="classifierName"
+        /// <param name="classifierName">name of the classifier</param>
+        /// <returns>the convolution neural network classifier</returns>
+        static Function CreateConvolutionalNeuralNetwork(Variable features, int outDims, DeviceDescriptor device, string classifierName)
+        {
+            // 28x28x1 -> 14x14x4
+            int kernelWidth1 = 3, kernelHeight1 = 3, numInputChannels1 = 1, outFeatureMapCount1 = 4;
+            int hStride1 = 2, vStride1 = 2;
+            int poolingWindowWidth1 = 3, poolingWindowHeight1 = 3;
+
+            Fun
