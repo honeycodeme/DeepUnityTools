@@ -125,4 +125,15 @@ namespace CNTK.CSTrainingExamples
         private static Function CreateMLPClassifier(DeviceDescriptor device, int numOutputClasses, int hiddenLayerDim,
             Function scaledInput, string classifierName)
         {
-            Function dense1 = TestHelper.Dense(scaledInput, hiddenLayerDim, device, Activation.Sigmoid
+            Function dense1 = TestHelper.Dense(scaledInput, hiddenLayerDim, device, Activation.Sigmoid, "");
+            Function classifierOutput = TestHelper.Dense(dense1, numOutputClasses, device, Activation.None, classifierName);
+            return classifierOutput;
+        }
+
+        /// <summary>
+        /// Create convolution neural network
+        /// </summary>
+        /// <param name="features">input feature variable</param>
+        /// <param name="outDims">number of output classes</param>
+        /// <param name="device">CPU or GPU device to run the model</param>
+        /// <param name="classifierName"
