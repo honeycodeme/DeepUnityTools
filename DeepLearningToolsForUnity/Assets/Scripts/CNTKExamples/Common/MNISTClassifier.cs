@@ -161,4 +161,11 @@ namespace CNTK.CSTrainingExamples
         }
 
         private static Function ConvolutionWithMaxPooling(Variable features, DeviceDescriptor device,
-            int kernelWidth, int kernelHeight, int numI
+            int kernelWidth, int kernelHeight, int numInputChannels, int outFeatureMapCount,
+            int hStride, int vStride, int poolingWindowWidth, int poolingWindowHeight)
+        {
+            // parameter initialization hyper parameter
+            double convWScale = 0.26;
+            var convParams = new Parameter(new int[] { kernelWidth, kernelHeight, numInputChannels, outFeatureMapCount }, DataType.Float,
+                CNTKLib.GlorotUniformInitializer(convWScale, -1, 2), device);
+            Function convFunction = CNTKLib.ReLU(CNTKLib.Convolution(convParams, features, new int[] 
