@@ -145,4 +145,12 @@ namespace CNTK.CSTrainingExamples
             int hStride1 = 2, vStride1 = 2;
             int poolingWindowWidth1 = 3, poolingWindowHeight1 = 3;
 
-            Fun
+            Function pooling1 = ConvolutionWithMaxPooling(features, device, kernelWidth1, kernelHeight1,
+                numInputChannels1, outFeatureMapCount1, hStride1, vStride1, poolingWindowWidth1, poolingWindowHeight1);
+
+            // 14x14x4 -> 7x7x8
+            int kernelWidth2 = 3, kernelHeight2 = 3, numInputChannels2 = outFeatureMapCount1, outFeatureMapCount2 = 8;
+            int hStride2 = 2, vStride2 = 2;
+            int poolingWindowWidth2 = 3, poolingWindowHeight2 = 3;
+
+            Function pooling
