@@ -153,4 +153,12 @@ namespace CNTK.CSTrainingExamples
             int hStride2 = 2, vStride2 = 2;
             int poolingWindowWidth2 = 3, poolingWindowHeight2 = 3;
 
-            Function pooling
+            Function pooling2 = ConvolutionWithMaxPooling(pooling1, device, kernelWidth2, kernelHeight2,
+                numInputChannels2, outFeatureMapCount2, hStride2, vStride2, poolingWindowWidth2, poolingWindowHeight2);
+
+            Function denseLayer = TestHelper.Dense(pooling2, outDims, device, Activation.None, classifierName);
+            return denseLayer;
+        }
+
+        private static Function ConvolutionWithMaxPooling(Variable features, DeviceDescriptor device,
+            int kernelWidth, int kernelHeight, int numI
