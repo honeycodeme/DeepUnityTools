@@ -168,4 +168,11 @@ namespace CNTK.CSTrainingExamples
             double convWScale = 0.26;
             var convParams = new Parameter(new int[] { kernelWidth, kernelHeight, numInputChannels, outFeatureMapCount }, DataType.Float,
                 CNTKLib.GlorotUniformInitializer(convWScale, -1, 2), device);
-            Function convFunction = CNTKLib.ReLU(CNTKLib.Convolution(convParams, features, new int[] 
+            Function convFunction = CNTKLib.ReLU(CNTKLib.Convolution(convParams, features, new int[] { 1, 1, numInputChannels } /* strides */));
+
+            Function pooling = CNTKLib.Pooling(convFunction, PoolingType.Max,
+                new int[] { poolingWindowWidth, poolingWindowHeight }, new int[] { hStride, vStride }, new bool[] { true });
+            return pooling;
+        }
+    }
+}
