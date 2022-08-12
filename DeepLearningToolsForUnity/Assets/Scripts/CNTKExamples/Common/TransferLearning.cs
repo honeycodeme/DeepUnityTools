@@ -279,3 +279,205 @@ namespace CNTK.CSTrainingExamples
             imageInput = Variable.InputVariable(imageDims, DataType.Float);
             labelInput = Variable.InputVariable(new int[] { numClasses }, DataType.Float);
             Function normalizedFeatureNode = CNTKLib.Minus(imageInput, Constant.Scalar(DataType.Float, 114.0F));
+
+            Variable oldFeatureNode = baseModel.Arguments.Single(a => a.Name == featureNodeName);
+            Function lastNode = baseModel.FindByName(hiddenNodeName);
+
+            // Clone the desired layers with fixed weights
+            Function clonedLayer = CNTKLib.AsComposite(lastNode).Clone(
+                ParameterCloningMethod.Freeze,
+                new Dictionary<Variable, Variable>() { { oldFeatureNode, normalizedFeatureNode } });
+
+            // Add new dense layer for class prediction
+            Function clonedModel = TestHelper.Dense(clonedLayer, numClasses, device, Activation.None, outputNodeName);
+
+            trainingLoss = CNTKLib.CrossEntropyWithSoftmax(clonedModel, labelInput);
+            predictionError = CNTKLib.ClassificationError(clonedModel, labelInput);
+
+            return clonedModel;
+        }
+
+        /// <summary>
+        /// Validate a model with data loaded and processed explicitly in the sample code.
+        /// </summary>
+        /// <param name="modelFile"></param>
+        /// <param name="testDataFolder"></param>
+        /// <param name="animals"></param>
+        /// <param name="imageDims"></param>
+        /// <param name="numClasses"></param>
+        /// <param name="device"></param>
+        /// <returns></returns>
+        private static double ValidateModelWithoutMinibatchSource(string modelFile, string testDataFolder, string[] animals, 
+            int[] imageDims, int numClasses, DeviceDescriptor device)
+        {
+            Function model = Function.Load(modelFile, device);
+            List<Tuple<string, int, float[]>> testDataMap =
+                PrepareTrainingDataFromSubfolders(testDataFolder, animals, imageDims);
+            Value imageBatch, labelBatch;
+            int batchCount = 0, batchSize = 15;
+            int miscountTotal = 0, totalCount = 0;
+            while (GetImageAndLabelMinibatch(testDataMap, batchSize, batchCount++,
+                TransferLearning.imageDims, numClasses, device, out imageBatch, out labelBatch))
+            {
+                var inputDataMap = new Dictionary<Variable, Value>() { { model.Arguments[0], imageBatch } };
+
+                Variable outputVar = model.Output;
+                var outputDataMap = new Dictionary<Variable, Value>() { { outputVar, null } };
+                model.Evaluate(inputDataMap, outputDataMap, device);
+                var outputVal = outputDataMap[outputVar];
+                var actual = outputVal.GetDenseData<float>(outputVar);
+                var expected = labelBatch.GetDenseData<float>(model.Output);
+
+                var actualLabels = actual.Select((IList<float> l) => l.IndexOf(l.Max())).ToList();
+                var expectedLabels = expected.Select((IList<float> l) => l.IndexOf(l.Max())).ToList();
+
+                int misMatches = actualLabels.Zip(expectedLabels, (a, b) => a.Equals(b) ? 0 : 1).Sum();
+                miscountTotal += misMatches;
+                totalCount += actualLabels.Count();
+
+                Console.WriteLine($"Validating Model: Total Samples = {totalCount}, Misclassify Count = {miscountTotal}");
+            }
+
+            return 1.0 * miscountTotal / testDataMap.Count();
+        }
+
+        /// <summary>
+        /// Validate a mode with MinibatchSource for data preparation and batching.
+        /// </summary>
+        /// <param name="modelFile"></param>
+        /// <param name="mapFile"></param>
+        /// <param name="imageDim"></param>
+        /// <param name="numClasses"></param>
+        /// <param name="device"></param>
+        /// <param name="maxCount"></param>
+        /// <returns></returns>
+        private static float ValidateModelWithMinibatchSource(string modelFile, string mapFile,
+            int[] imageDim, int numClasses, DeviceDescriptor device, int maxCount = 1000)
+        {
+            Function model = Function.Load(modelFile, device);
+            var imageInput = model.Arguments[0];
+            var labelOutput = model.Output;
+
+            MinibatchSource minibatchSource = CreateMinibatchSource(mapFile,
+                imageDims, numClasses);
+            var featureStreamInfo = minibatchSource.StreamInfo("image");
+            var labelStreamInfo = minibatchSource.StreamInfo("labels");
+
+            int batchSize = 50;
+            int miscountTotal = 0, totalCount = 0;
+            while (true)
+            {
+                var minibatchData = minibatchSource.GetNextMinibatch((uint)batchSize, device);
+                if (minibatchData == null)
+                    break;
+                totalCount += (int)minibatchData[featureStreamInfo].numberOfSamples;
+                if (totalCount > maxCount)
+                    break;
+
+                // expected lables are in the minibatch data.
+                var labelData = minibatchData[labelStreamInfo].data.GetDenseData<float>(labelOutput);
+                var expectedLabels = labelData.Select(l => l.IndexOf(l.Max())).ToList();
+
+                var inputDataMap = new Dictionary<Variable, Value>() {
+                    { imageInput, minibatchData[featureStreamInfo].data }
+                };
+
+                var outputDataMap = new Dictionary<Variable, Value>() {
+                    { labelOutput, null }
+                };
+
+                model.Evaluate(inputDataMap, outputDataMap, device);
+                var outputData = outputDataMap[labelOutput].GetDenseData<float>(labelOutput);
+                var actualLabels = outputData.Select(l => l.IndexOf(l.Max())).ToList();
+
+                int misMatches = actualLabels.Zip(expectedLabels, (a, b) => a.Equals(b) ? 0 : 1).Sum();
+
+                miscountTotal += misMatches;
+                Console.WriteLine($"Validating Model: Total Samples = {totalCount}, Misclassify Count = {miscountTotal}");
+            }
+
+            float errorRate = 1.0F * miscountTotal / totalCount;
+            Console.WriteLine($"Model Validation Error = {errorRate}");
+            return errorRate;
+        }
+
+        private static Dictionary<string, int> LoadMapFile(string mapFile)
+        {
+            Dictionary<string, int> imageFileToLabel = new Dictionary<string, int>();
+            string line;
+
+            if (File.Exists(mapFile))
+            {
+                StreamReader file = null;
+                try
+                {
+                    file = new StreamReader(mapFile);
+                    while ((line = file.ReadLine()) != null)
+                    {
+                        int spaceIndex = line.IndexOfAny(new char[]{ ' ', '\t'});
+                        string filePath = line.Substring(0, spaceIndex);
+                        int label = int.Parse(line.Substring(spaceIndex).Trim());
+                        imageFileToLabel.Add(filePath, label);
+                    }
+                }
+                finally
+                {
+                    if (file != null)
+                        file.Close();
+                }
+            }
+            return imageFileToLabel;
+        }
+
+        /// <summary>
+        /// The method assumes that images are stored in subfolders named after the image classes.
+        /// </summary>
+        /// <param name="rootFolderOfClassifiedImages"></param>
+        /// <param name="categories"></param>
+        /// <param name="imageDims"></param>
+        /// <returns>List of tuples of image file path, image labels, and image data.</returns>
+        private static List<Tuple<string, int, float[]>> PrepareTrainingDataFromSubfolders(
+            string rootFolderOfClassifiedImages, string[] categories, int[] imageDims)
+        {
+            // classified images are stored in named folders
+            List<Tuple<string, int, float[]>> dataMap = new List<Tuple<string, int, float[]>>();
+            int categoryIndex = 0;
+            foreach (var category in categories)
+            {
+                var fileInfos = Directory.GetFiles(Path.Combine(rootFolderOfClassifiedImages, category), "*.jpg");
+                foreach (var file in fileInfos)
+                {
+                    float[] image = LoadBitmap(imageDims, file).ToArray();
+                    dataMap.Add(new Tuple<string, int, float[]>(file, categoryIndex, image));
+                }
+                categoryIndex++;
+            }
+
+            return dataMap;
+        }
+
+        private static MinibatchSource CreateMinibatchSource(string map_file, int[] image_dims, int num_classes)
+        {
+            List<CNTKDictionary> transforms = new List<CNTKDictionary>
+            {
+                CNTKLib.ReaderScale(image_dims[0], image_dims[1], image_dims[2], "linear")
+            };
+
+            var deserializerConfiguration = CNTKLib.ImageDeserializer(map_file, 
+                "labels", (uint)num_classes,
+                "image", transforms);
+
+            MinibatchSourceConfig config = new MinibatchSourceConfig(new List<CNTKDictionary> { deserializerConfiguration });
+
+            return CNTKLib.CreateCompositeMinibatchSource(config);
+        }
+
+        private static List<float> LoadBitmap(int[] image_dims, string filePath)
+        {
+            Bitmap bmp = new Bitmap(Bitmap.FromFile(filePath));
+            var resized = bmp.Resize(image_dims[0], image_dims[1], true);
+            List<float> resizedCHW = resized.ParallelExtractCHW();
+            return resizedCHW;
+        }
+    }
+}
