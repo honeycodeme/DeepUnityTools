@@ -15,4 +15,18 @@ namespace UnityCNTK
         /// <returns></returns>
         public static T[] CopyToArray<T>(this IList<T> iList, int startIndex = 0)
         {
-            T[] result =
+            T[] result = new T[iList.Count - startIndex];
+            iList.CopyTo(result, startIndex);
+            return result;
+        }
+
+
+        public static Parameter FindParameterByName(this Function func, string name)
+        {
+            var allInputs = func.Parameters();
+            foreach (var p in allInputs)
+            {
+                if (p.Kind == VariableKind.Parameter)
+                {
+                    //look for the parameter of the same name from the other function
+                    if (name == p.Name)
