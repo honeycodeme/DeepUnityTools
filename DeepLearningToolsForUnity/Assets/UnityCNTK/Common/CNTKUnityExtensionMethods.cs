@@ -29,4 +29,20 @@ namespace UnityCNTK
                 if (p.Kind == VariableKind.Parameter)
                 {
                     //look for the parameter of the same name from the other function
-                    if (name == p.Name)
+                    if (name == p.Name) {
+                        return p;
+                    }
+                }
+            }
+            return null;
+        }
+
+        public static List<Parameter> FindParametersByName(this Function func, string[] names)
+        {
+            HashSet<string> set = new HashSet<string>(names);
+            var allInputs = func.Parameters();
+            var result = new List<Parameter>();
+            foreach (var p in allInputs)
+            {
+                if (p.Kind == VariableKind.Parameter)
+   
