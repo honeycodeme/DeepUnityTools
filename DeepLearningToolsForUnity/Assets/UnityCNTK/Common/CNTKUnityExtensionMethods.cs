@@ -60,4 +60,17 @@ namespace UnityCNTK
         {
             var allInputs = func.Parameters();
             var fromInputs = fromFunction.Parameters();
-          
+            foreach(var p in allInputs)
+            {
+                if(p.Kind == VariableKind.Parameter)
+                {
+                    Parameter fromP = null;
+                    //look for the parameter of the same name from the other function
+                    foreach(var f in fromInputs)
+                    {
+                        if(f.Name == p.Name)
+                        {
+                            fromP = f;
+                            break;
+                        }
+      
