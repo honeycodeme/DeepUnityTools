@@ -45,4 +45,19 @@ namespace UnityCNTK
             foreach (var p in allInputs)
             {
                 if (p.Kind == VariableKind.Parameter)
-   
+                {
+                    //look for the parameter of the same name from the other function
+                    if (set.Contains( p.Name))
+                    {
+                        result.Add(p);
+                    }
+                }
+            }
+            return result;
+        }
+
+        public static void RestoreParametersByName(this Function func, Function fromFunction)
+        {
+            var allInputs = func.Parameters();
+            var fromInputs = fromFunction.Parameters();
+          
