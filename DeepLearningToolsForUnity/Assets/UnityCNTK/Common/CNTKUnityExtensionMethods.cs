@@ -73,4 +73,15 @@ namespace UnityCNTK
                             fromP = f;
                             break;
                         }
+                    }
+
+                    if(fromP == null)
+                    {
+                        Debug.LogWarning("Did not find parameter " + p.Name +  " in the other function");
+                    }else if (!p.Shape.Equals(fromP.Shape))
+                    {
+                        Debug.LogError("Parameter shapes not the same. Original " + p.Name + " has a shape of " + string.Join(",", p.Shape.Dimensions) + " while the new one is " + string.Join(",", fromP.Shape.Dimensions));
+                    }
+                    else
+                    {
       
