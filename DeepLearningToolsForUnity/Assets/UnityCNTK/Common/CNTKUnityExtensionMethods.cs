@@ -84,4 +84,11 @@ namespace UnityCNTK
                     }
                     else
                     {
-      
+                        p.Value().CopyFrom(fromP.Value());
+                    }
+
+                }
+            }
+        }
+    }
+}
