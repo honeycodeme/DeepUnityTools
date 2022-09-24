@@ -55,4 +55,17 @@ namespace UnityCNTK.Editor
 
         public static Rect ResizeWindow(Rect windowRect, ref bool isRezising, Vector2 minWindowSize)
         {
-            // this is a custom style that looks like a // in 
+            // this is a custom style that looks like a // in the lower corner
+            if (styleWindowResize == null)
+            {
+                styleWindowResize = GUI.skin.GetStyle("WindowBottomResize");
+                //Debug.Log("resizer style");
+            }
+            Vector2 mouse = Event.current.mousePosition;
+            //rectangle for the drag button
+            Rect r = new Rect(windowRect.size - buttonSize, buttonSize);
+
+            if (Event.current.type == EventType.MouseDown && r.Contains(mouse))
+            {
+                isRezising = true;
+                //Debug.L
