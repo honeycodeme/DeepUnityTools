@@ -43,4 +43,16 @@ namespace UnityCNTK.Editor
             WindowRect = GUILayout.Window(ID, WindowRect, DoWindow, Title, GUILayout.ExpandWidth(true));
         }
 
-        protected virtual void DoWindow(int win
+        protected virtual void DoWindow(int windowID)
+        {
+            WindowRect = ResizeWindow(WindowRect, ref isResize, MinWindowSize);
+            GUILayout.Label("");
+
+            var dragAreaRect = new Rect(0, 0, WindowRect.width, dragableTopHeight);
+            GUI.DragWindow(dragAreaRect);
+            //GUI.Button(dragAreaRect,"");
+        }
+
+        public static Rect ResizeWindow(Rect windowRect, ref bool isRezising, Vector2 minWindowSize)
+        {
+            // this is a custom style that looks like a // in 
