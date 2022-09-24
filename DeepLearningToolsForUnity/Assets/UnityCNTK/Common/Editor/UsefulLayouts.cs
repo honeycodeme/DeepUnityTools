@@ -23,4 +23,24 @@ namespace UnityCNTK.Editor
 
         public string Title { get; set; }
 
-        public ResizableSubWindow(int id, R
+        public ResizableSubWindow(int id, Rect initWindowRect, string title = "")
+        {
+            WindowRect = initWindowRect;
+            Title = title;
+            ID = id;
+        }
+
+        public ResizableSubWindow(int id, string title = "")
+        {
+            Title = title;
+            ID = id;
+        }
+
+
+        public void OnGUI()
+        {
+
+            WindowRect = GUILayout.Window(ID, WindowRect, DoWindow, Title, GUILayout.ExpandWidth(true));
+        }
+
+        protected virtual void DoWindow(int win
