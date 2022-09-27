@@ -68,4 +68,15 @@ namespace UnityCNTK.Editor
             if (Event.current.type == EventType.MouseDown && r.Contains(mouse))
             {
                 isRezising = true;
-                //Debug.L
+                //Debug.Log("start resize");
+                //Event.current.Use();  // the GUI.Button below will eat the event, and this way it will show its active state
+            }
+            else if ((Event.current.type == EventType.MouseUp || Event.current.rawType == EventType.MouseUp) && isRezising)
+            {
+                isRezising = false;
+            }
+            else if (isRezising)
+            {
+                //Debug.Log("resizing");
+                //Debug.Log(Event.current.delta.x);
+                // 
