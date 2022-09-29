@@ -79,4 +79,12 @@ namespace UnityCNTK.Editor
             {
                 //Debug.Log("resizing");
                 //Debug.Log(Event.current.delta.x);
-                // 
+                // Debug.Log(windowRect);
+                windowRect.width = Mathf.Max(minWindowSize.x, windowRect.width + Event.current.delta.x / 2);
+                windowRect.height = Mathf.Max(minWindowSize.y, windowRect.height + Event.current.delta.y / 2);
+                windowRect.xMax = Mathf.Min(Screen.width, windowRect.xMax);  // modifying xMax affects width, not x
+                windowRect.yMax = Mathf.Min(Screen.height, windowRect.yMax);  // modifying yMax affects height, not y
+            }
+
+
+            //draw a button, also e
