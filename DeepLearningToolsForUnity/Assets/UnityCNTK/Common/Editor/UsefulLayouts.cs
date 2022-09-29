@@ -87,4 +87,11 @@ namespace UnityCNTK.Editor
             }
 
 
-            //draw a button, also e
+            //draw a button, also eat the mouse down event so that other event(window dragging) will not be trigger
+            GUI.Button(r, gcDrag, styleWindowResize);
+            return windowRect;
+
+        }
+    }
+
+}
