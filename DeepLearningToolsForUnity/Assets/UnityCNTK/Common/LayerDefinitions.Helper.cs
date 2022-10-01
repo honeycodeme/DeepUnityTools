@@ -14,4 +14,13 @@ namespace UnityCNTK.LayerDefinitions
             {
                 result[i]=new ResNodeDenseDef(hiddenSize, normalizatoin, dropout);
             }
-   
+            return result;
+        }
+
+        public static LayerDenseDef[] DenseLayers(int numOfLayers, int hiddenSize, bool hasBias = true, NormalizationMethod normalizatoin = NormalizationMethod.None, float dropout = 0.0f, float initialWeightScale = 0.1f, LayerDef activation = null)
+        {
+            var result = new LayerDenseDef[numOfLayers];
+            for (int i = 0; i < numOfLayers; ++i)
+            {
+                result[i] = new LayerDenseDef(hiddenSize, normalizatoin, activation, dropout);
+     
