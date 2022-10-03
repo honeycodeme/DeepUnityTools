@@ -23,4 +23,10 @@ namespace UnityCNTK.LayerDefinitions
             for (int i = 0; i < numOfLayers; ++i)
             {
                 result[i] = new LayerDenseDef(hiddenSize, normalizatoin, activation, dropout);
-     
+                result[i].HasBias = hasBias;
+                result[i].InitialWeightScale = initialWeightScale;
+            }
+            return result;
+        }
+    }
+}
