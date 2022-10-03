@@ -344,3 +344,257 @@ namespace UnityCNTK.LayerDefinitions
             return GetParam(paramName);
         }
         public void SetParam(DenseParamType paramType, float[] data)
+        {
+            var paramName = ParamTypeToName(paramType);
+            if (paramName == "")
+                return;
+            SetParam(paramName, data);
+        }
+        public override Function BuildNew(Variable input, DeviceDescriptor device, string name)
+        {
+            Debug.LogError("BuildNew not supported");
+            return null;
+        }
+        protected override Function BuildNetwork(Variable input, DeviceDescriptor device, string name) {
+           
+            var c1 = UnityCNTK.Layers.Dense(input, HiddenSize, device, HasBias, name + ".Dense", InitialWeightScale);
+            if (NormalizationMethod == NormalizationMethod.BatchNormalizatoin)
+            {
+                c1 = Layers.BatchNormalization(c1, InitialNormalizationBias, InitialNormalizationScale, BNTimeConst, BNSpatial, device, name + ".BN");
+            }
+            else if (NormalizationMethod == NormalizationMethod.LayerNormalization)
+            {
+                c1 = Layers.LayerNormalization(c1, device, InitialNormalizationBias, InitialNormalizationScale, name + ".LN");
+            }
+
+            if(Activation != null)
+            {
+                c1 = Activation.BuildNew(c1,  Device, name+".Activation");
+            }
+
+
+            if (DropoutRate > 0)
+                c1 = CNTKLib.Dropout(c1, DropoutRate);
+
+
+            //add parameters to list
+            ParameterNames.Add(ParamTypeToName(DenseParamType.Weight));
+            ParameterNames.Add(ParamTypeToName(DenseParamType.Bias));
+            return c1;
+        }
+    };
+
+
+    public abstract class OutputLayerDef : LayerDef
+    {
+        public abstract Variable GetOutputVariable();
+        public abstract Variable GetTrainingLossVariable();
+        public abstract Variable GetTargetInputVariable();
+        //public abstract Variable GetEvaluationErrorVariable();
+    }
+
+    /// <summary>
+    /// Output layer for normal dense network
+    /// </summary>
+    public class OutputLayerDense : OutputLayerDef
+    {
+        public enum LossFunction
+        {
+            None,
+            CrossEntropy,
+            Square
+        }
+       
+
+        public int HiddenSize { get { return hiddenSize; } set { Debug.Assert(!IsBuilt, "Can not change after built."); hiddenSize = value; } }
+        private int hiddenSize;
+        public float InitialWeightScale { get { return initialWeightScale; } set { Debug.Assert(!IsBuilt, "Can not change after built."); initialWeightScale = value; } }
+        protected float initialWeightScale = 7.07f;
+        public bool HasBias { get { return hasBias; } set { Debug.Assert(!IsBuilt, "Can not change after built."); hasBias = value; } }
+        private bool hasBias = true;
+        public LossFunction Loss { get { return loss; } set { Debug.Assert(!IsBuilt, "Can not change after built."); loss = value; } }
+        private LossFunction loss;
+        public LayerDef Activation { get { return activation; } set { Debug.Assert(!IsBuilt, "Can not change after built."); activation = value; } }
+        private LayerDef activation;
+
+        protected Variable lossOutput;
+        protected Variable resultOutput;
+        protected Variable targetInput;
+
+
+        public override List<string> ParameterNames { get; protected set; }
+
+
+        public enum DenseParamType { Bias, Weight };
+        public OutputLayerDense(int outputNumber, LayerDef activationFunction, LossFunction lossFunction)  {
+            if (!(activationFunction is SoftmaxDef) && lossFunction == LossFunction.CrossEntropy)
+            {
+                Debug.LogError("Cross Entropy only support softmax activation for now.");
+                activationFunction = new SoftmaxDef();
+            }
+            HiddenSize = outputNumber;
+            Activation = activationFunction;
+            Loss = lossFunction;
+            ParameterNames = new List<string>();
+        }
+        public override Function BuildNew(Variable input, DeviceDescriptor device, string name)
+        {
+            Debug.LogError("BuildNew not supported");
+            return null;
+        }
+        protected override Function BuildNetwork(Variable input, DeviceDescriptor device, string name)
+        {
+            var c1 = UnityCNTK.Layers.Dense(input, HiddenSize, device, HasBias, name + ".Dense", InitialWeightScale);
+
+            if (Activation != null)
+            {
+                resultOutput = Activation.BuildNew(c1, Device, name + ".Activation");
+            }
+            else
+            {
+                resultOutput = c1;
+            }
+
+            if (loss != LossFunction.None)
+                targetInput = CNTKLib.InputVariable(resultOutput.Shape, resultOutput.DataType, name + ".TargetInput");
+            else
+                targetInput = null;
+            lossOutput = null;
+            if(Loss == LossFunction.CrossEntropy)
+            {
+                lossOutput = CNTKLib.CrossEntropyWithSoftmax(c1, targetInput);
+            }
+            else if(Loss == LossFunction.Square)
+            {
+                lossOutput = CNTKLib.SquaredError(resultOutput, targetInput);
+            }
+            else
+            {
+                lossOutput = null;
+            }
+
+            //add parameters to list
+            ParameterNames.Add(ParamTypeToName(DenseParamType.Weight));
+            ParameterNames.Add(ParamTypeToName(DenseParamType.Bias));
+
+            return lossOutput!= null?lossOutput:resultOutput;
+        }
+        public override Variable GetOutputVariable(){ return resultOutput; }
+        public override Variable GetTrainingLossVariable() { return lossOutput; }
+        public override Variable GetTargetInputVariable() { return targetInput; }
+        //public override Variable GetEvaluationErrorVariable() { return ; }
+
+        private string ParamTypeToName(DenseParamType type)
+        {
+            string paramName = "";
+            switch (type)
+            {
+                case DenseParamType.Bias:
+                    paramName = Name + ".Dense" + Layers.BiasSuffix;
+                    break;
+                case DenseParamType.Weight:
+                    paramName = Name + ".Dense" + Layers.WeightSuffix;
+                    break;
+            }
+            return paramName;
+        }
+        public IList<float> GetParam(DenseParamType paramType)
+        {
+            var paramName = ParamTypeToName(paramType);
+            if (paramName == "")
+                return null;
+            return GetParam(paramName);
+        }
+        public void SetParam(DenseParamType paramType, float[] data)
+        {
+            var paramName = ParamTypeToName(paramType);
+            if (paramName == "")
+                return;
+            SetParam(paramName, data);
+        }
+    }
+
+
+    /// <summary>
+    /// Output layer with bayesian loss
+    /// </summary>
+    public class OutputLayerDenseBayesian : OutputLayerDef
+    {
+        public int HiddenSize { get { return hiddenSize; } set { Debug.Assert(!IsBuilt, "Can not change after built."); hiddenSize = value; } }
+        private int hiddenSize;
+        public float InitialWeightScale { get { return initialWeightScale; } set { Debug.Assert(!IsBuilt, "Can not change after built."); initialWeightScale = value; } }
+        protected float initialWeightScale = 1f;
+
+        protected Variable lossOutput;
+        protected Variable resultOutput;
+        protected Variable targetInput;
+        protected Variable varianceOutput;
+
+        public override List<string> ParameterNames { get; protected set; }
+
+        public enum DenseParamType { Bias, Weight };
+
+        public OutputLayerDenseBayesian(int outputNumber)
+        {
+            HiddenSize = outputNumber+1;
+            ParameterNames = new List<string>();
+        }
+        public override Function BuildNew(Variable input, DeviceDescriptor device, string name)
+        {
+            Debug.LogError("BuildNew not supported");
+            return null;
+        }
+        protected override Function BuildNetwork(Variable input, DeviceDescriptor device, string name)
+        {
+            var c1 = UnityCNTK.Layers.Dense(input, HiddenSize, device, true, name + ".Dense", InitialWeightScale);
+            resultOutput = CNTKLib.Slice(c1, AxisVector.Repeat(new Axis(0),1) , IntVector.Repeat(0,1), IntVector.Repeat(HiddenSize - 1, 1));
+            varianceOutput = CNTKLib.Square(CNTKLib.Slice(c1, AxisVector.Repeat(new Axis(0), 1), IntVector.Repeat(HiddenSize - 1, 1), IntVector.Repeat(HiddenSize ,1)));
+            targetInput = CNTKLib.InputVariable(resultOutput.Shape, resultOutput.DataType, name + ".TargetInput");
+
+            var squareErrorRoot = CNTKLib.Sqrt(CNTKLib.SquaredError(resultOutput, targetInput));
+            var l = CNTKLib.ElementDivide(squareErrorRoot, CNTKLib.ElementTimes(Constant.Scalar(DataType.Float, 2), varianceOutput));
+            lossOutput = l.Output + CNTKLib.ElementTimes(CNTKLib.Log(varianceOutput),Constant.Scalar(DataType.Float,1));
+            //lossOutput = squareError;//test
+
+            //add parameters to list
+            ParameterNames.Add(ParamTypeToName(DenseParamType.Weight));
+            ParameterNames.Add(ParamTypeToName(DenseParamType.Bias));
+
+            return lossOutput;
+        }
+        public override Variable GetOutputVariable() { return resultOutput; }
+        public override Variable GetTrainingLossVariable() { return lossOutput; }
+        public override Variable GetTargetInputVariable() { return targetInput; }
+        public Variable GetVarianceVariable() { return varianceOutput; }
+
+
+        private string ParamTypeToName(DenseParamType type)
+        {
+            string paramName = "";
+            switch (type)
+            {
+                case DenseParamType.Bias:
+                    paramName = Name + ".Dense" + Layers.BiasSuffix;
+                    break;
+                case DenseParamType.Weight:
+                    paramName = Name + ".Dense" + Layers.WeightSuffix;
+                    break;
+            }
+            return paramName;
+        }
+        public IList<float> GetParam(DenseParamType paramType)
+        {
+            var paramName = ParamTypeToName(paramType);
+            if (paramName == "")
+                return null;
+            return GetParam(paramName);
+        }
+        public void SetParam(DenseParamType paramType, float[] data)
+        {
+            var paramName = ParamTypeToName(paramType);
+            if (paramName == "")
+                return;
+            SetParam(paramName, data);
+        }
+    }
+}
