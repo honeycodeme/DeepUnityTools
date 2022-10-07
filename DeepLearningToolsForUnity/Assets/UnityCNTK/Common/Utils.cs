@@ -29,4 +29,26 @@ namespace UnityCNTK
         }
         public int x, y;
     }
-    /// <summary
+    /// <summary>
+    /// helps to get the average of data
+    /// </summary>
+    public class AutoAverage
+    {
+        private int interval;
+        public int Interval
+        {
+            get { return interval; }
+            set { interval = Mathf.Max(value, 1); }
+        }
+
+        public float Average
+        {
+            get
+            {
+                return lastAverage;
+            }
+        }
+
+        public bool JustUpdated
+        {
+            get; private set
