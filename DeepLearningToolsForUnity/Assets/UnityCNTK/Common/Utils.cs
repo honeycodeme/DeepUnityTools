@@ -94,3 +94,25 @@ namespace UnityCNTK
             }
             return result;
         }
+
+
+        public static float NextGaussianFloat()
+        {
+            float u, v, S;
+
+            do
+            {
+                u = 2.0f * Random.value - 1.0f;
+                v = 2.0f * Random.value - 1.0f;
+                S = u * u + v * v;
+            }
+            while (S >= 1.0);
+
+            float fac = Mathf.Sqrt(-2.0f * Mathf.Log(S) / S);
+            return u * fac;
+        }
+    }
+
+    public static class RLUtils
+    {
+        public static float[] DiscountedRewards(float[] rewards, float disco
