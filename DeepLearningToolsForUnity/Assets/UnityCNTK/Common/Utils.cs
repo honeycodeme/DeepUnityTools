@@ -72,4 +72,25 @@ namespace UnityCNTK
             if (currentCount >= Interval)
             {
                 lastAverage = sum / currentCount;
-                cu
+                currentCount = 0;
+                sum = 0;
+                JustUpdated = true;
+            }
+        }
+
+
+    }
+
+    public static class Utils 
+    {
+        public static float[] GenerateWhiteNoise(int size, float min, float max)
+        {
+            if (size <= 0)
+                return null;
+            float[] result = new float[size];
+            for (int i = 0; i < size; ++i)
+            {
+                result[i] = UnityEngine.Random.Range(min, max);
+            }
+            return result;
+        }
