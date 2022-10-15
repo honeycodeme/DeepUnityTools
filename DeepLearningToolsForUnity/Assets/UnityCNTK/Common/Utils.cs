@@ -115,4 +115,17 @@ namespace UnityCNTK
 
     public static class RLUtils
     {
-        public static float[] DiscountedRewards(float[] rewards, float disco
+        public static float[] DiscountedRewards(float[] rewards, float discountFactor = 0.99f, float nextValue = 0)
+        {
+            float accum = nextValue;
+            float[] result = new float[rewards.Length];
+            for (int i = rewards.Length - 1; i >= 0; --i)
+            {
+                accum = accum * discountFactor + rewards[i];
+                result[i] = accum;
+            }
+
+            return result;
+        }
+
+        public static float[] GeneralAdvantageEst(float[] rewards, float[] estimatedValues, float discountedFactor = 0.99f, float GAEFactor = 0.95f, float ne
