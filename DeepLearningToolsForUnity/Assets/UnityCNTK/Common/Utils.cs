@@ -140,4 +140,27 @@ namespace UnityCNTK
                 }
                 else
                 {
-                    deltaT[i] = rewards[i] + discountedFac
+                    deltaT[i] = rewards[i] + discountedFactor * nextValue - estimatedValues[i];
+                }
+
+            }
+            return DiscountedRewards(deltaT, GAEFactor * discountedFactor);
+        }
+
+    }
+
+
+    public static class MathUtils
+    {
+        public enum InterpolateMethod
+        {
+            Linear,
+            Log
+        }
+
+        /// <summary>
+        /// interpolate between x1 and x2 to ty suing the interpolate method
+        /// </summary>
+        /// <param name="method"></param>
+        /// <param name="x1"></param>
+        /// <param 
