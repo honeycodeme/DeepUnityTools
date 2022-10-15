@@ -128,4 +128,16 @@ namespace UnityCNTK
             return result;
         }
 
-        public static float[] GeneralAdvantageEst(float[] rewards, float[] estimatedValues, float discountedFactor = 0.99f, float GAEFactor = 0.95f, float ne
+        public static float[] GeneralAdvantageEst(float[] rewards, float[] estimatedValues, float discountedFactor = 0.99f, float GAEFactor = 0.95f, float nextValue = 0)
+        {
+            Debug.Assert(rewards.Length == estimatedValues.Length);
+            float[] deltaT = new float[rewards.Length];
+            for(int i = 0; i < rewards.Length; ++i)
+            {
+                if(i != rewards.Length - 1)
+                {
+                    deltaT[i] = rewards[i] + discountedFactor * estimatedValues[i + 1] - estimatedValues[i];
+                }
+                else
+                {
+                    deltaT[i] = rewards[i] + discountedFac
