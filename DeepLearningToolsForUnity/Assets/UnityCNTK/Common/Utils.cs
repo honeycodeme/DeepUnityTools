@@ -179,4 +179,21 @@ namespace UnityCNTK
         }
 
         /// <summary>
-        /// Return a in
+        /// Return a index randomly. The probability if a index depends on the value in that list
+        /// </summary>
+        /// <param name="list"></param>
+        /// <returns></returns>
+        public static int IndexByChance(IList<float> list)
+        {
+            float total = 0;
+
+            foreach (var v in list)
+            {
+                total += v;
+            }
+            Debug.Assert(total > 0);
+
+            float current = 0;
+            float point = Random.Range(0, total);
+
+            for (int i = 0; i < list.Co
