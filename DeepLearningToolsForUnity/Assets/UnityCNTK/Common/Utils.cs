@@ -163,4 +163,20 @@ namespace UnityCNTK
         /// </summary>
         /// <param name="method"></param>
         /// <param name="x1"></param>
-        /// <param 
+        /// <param name="x2"></param>
+        /// <param name="t"></param>
+        /// <returns></returns>
+        public static float Interpolate(float x1, float x2, float t, InterpolateMethod method = InterpolateMethod.Linear)
+        {
+            if (method == InterpolateMethod.Linear)
+            {
+                return Mathf.Lerp(x1, x2, t);
+            }
+            else
+            {
+                return Mathf.Pow(x1, 1 - t) * Mathf.Pow(x2, t);
+            }
+        }
+
+        /// <summary>
+        /// Return a in
