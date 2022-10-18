@@ -196,4 +196,22 @@ namespace UnityCNTK
             float current = 0;
             float point = Random.Range(0, total);
 
-            for (int i = 0; i < list.Co
+            for (int i = 0; i < list.Count; ++i)
+            {
+                current += list[i];
+                if (current >= point)
+                {
+                    return i;
+                }
+            }
+            return 0;
+        }
+        /// <summary>
+        /// return the index of the max value in the list
+        /// </summary>
+        /// <param name="list"></param>
+        /// <returns></returns>
+        public static int IndexMax(IList<float> list)
+        {
+            int result = 0;
+            float max = Mathf.Nega
