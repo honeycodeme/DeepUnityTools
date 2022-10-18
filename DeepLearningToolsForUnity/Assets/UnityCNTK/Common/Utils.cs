@@ -214,4 +214,22 @@ namespace UnityCNTK
         public static int IndexMax(IList<float> list)
         {
             int result = 0;
-            float max = Mathf.Nega
+            float max = Mathf.NegativeInfinity;
+            for (int i = 0; i < list.Count; ++i)
+            {
+                if (max < list[i])
+                {
+                    result = i;
+                }
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Shuffle a list
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="list"></param>
+        /// <param name="rnd"></param>
+        public static void Shuffle<T>(IList<T> list, System.Random rnd)
+ 
