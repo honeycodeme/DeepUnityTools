@@ -40,4 +40,15 @@ public class SerializableDictionaryPropertyDrawer : PropertyDrawer
 		int buttonActionIndex = 0;
 
 		var keyArrayProperty = property.FindPropertyRelative(KeysFieldName);
-		var valueArrayProperty = property.FindPropertyRelat
+		var valueArrayProperty = property.FindPropertyRelative(ValuesFieldName);
+
+		if(m_conflictIndex != -1)
+		{
+			keyArrayProperty.InsertArrayElementAtIndex(m_conflictIndex);
+			var keyProperty = keyArrayProperty.GetArrayElementAtIndex(m_conflictIndex);
+			SetPropertyValue(keyProperty, m_conflictKey);
+			keyProperty.isExpanded = m_conflictKeyPropertyExpanded;
+
+			valueArrayProperty.InsertArrayElementAtIndex(m_conflictIndex);
+			var valueProperty = valueArrayProperty.GetArrayElementAtIndex(m_conflictIndex);
+			SetPropertyValue(val
