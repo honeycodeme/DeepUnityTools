@@ -20,4 +20,24 @@ public class SerializableDictionaryPropertyDrawer : PropertyDrawer
 	object m_conflictKey = null;
 	object m_conflictValue = null;
 	int m_conflictIndex = -1 ;
-	
+	int m_conflictOtherIndex = -1 ;
+	bool m_conflictKeyPropertyExpanded = false;
+	bool m_conflictValuePropertyExpanded = false;
+	float m_conflictLineHeight = 0f;
+
+	enum Action
+	{
+		None,
+		Add,
+		Remove
+	}
+
+	public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+	{
+		label = EditorGUI.BeginProperty(position, label, property);
+
+		Action buttonAction = Action.None;
+		int buttonActionIndex = 0;
+
+		var keyArrayProperty = property.FindPropertyRelative(KeysFieldName);
+		var valueArrayProperty = property.FindPropertyRelat
