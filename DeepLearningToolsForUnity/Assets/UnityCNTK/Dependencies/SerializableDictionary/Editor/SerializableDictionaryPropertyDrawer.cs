@@ -51,4 +51,17 @@ public class SerializableDictionaryPropertyDrawer : PropertyDrawer
 
 			valueArrayProperty.InsertArrayElementAtIndex(m_conflictIndex);
 			var valueProperty = valueArrayProperty.GetArrayElementAtIndex(m_conflictIndex);
-			SetPropertyValue(val
+			SetPropertyValue(valueProperty, m_conflictValue);
+			valueProperty.isExpanded = m_conflictValuePropertyExpanded;
+		}
+
+		var buttonWidth = m_buttonStyle.CalcSize(m_iconPlus).x;
+
+		var labelPosition = position;
+		labelPosition.height = EditorGUIUtility.singleLineHeight;
+		if (property.isExpanded) 
+			labelPosition.xMax -= m_buttonStyle.CalcSize(m_iconPlus).x;
+
+		EditorGUI.PropertyField(labelPosition, property, label, false);
+		// property.isExpanded = EditorGUI.Foldout(labelPosition, property.isExpanded, label);
+		if (property.isExpa
