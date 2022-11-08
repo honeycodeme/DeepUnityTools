@@ -102,4 +102,20 @@ public class SerializableDictionaryPropertyDrawer : PropertyDrawer
 				valuePosition.xMin = labelWidth;
 				valuePosition.xMax -= buttonWidth;
 				EditorGUIUtility.labelWidth = labelWidth * valuePosition.width / linePosition.width ;
-				EditorGUI.PropertyField(valuePosition, valueProperty, GUIContent.
+				EditorGUI.PropertyField(valuePosition, valueProperty, GUIContent.none, true);
+			
+				EditorGUIUtility.labelWidth = labelWidth;
+
+				buttonPosition = linePosition;
+				buttonPosition.xMin = buttonPosition.xMax - buttonWidth;
+				buttonPosition.height = EditorGUIUtility.singleLineHeight;
+				if(GUI.Button(buttonPosition, m_iconMinus, m_buttonStyle))
+				{
+					buttonAction = Action.Remove;
+					buttonActionIndex = i;
+				}
+
+				if(i == m_conflictIndex && m_conflictOtherIndex == -1)
+				{
+					var iconPosition = linePosition;
+					iconPosition.size =  m_buttonStyle.CalcS
