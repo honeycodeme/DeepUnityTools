@@ -118,4 +118,20 @@ public class SerializableDictionaryPropertyDrawer : PropertyDrawer
 				if(i == m_conflictIndex && m_conflictOtherIndex == -1)
 				{
 					var iconPosition = linePosition;
-					iconPosition.size =  m_buttonStyle.CalcS
+					iconPosition.size =  m_buttonStyle.CalcSize(m_warningIconNull);
+					GUI.Label(iconPosition, m_warningIconNull);
+				}
+				else if(i == m_conflictIndex)
+				{
+					var iconPosition = linePosition;
+					iconPosition.size =  m_buttonStyle.CalcSize(m_warningIconConflict);
+					GUI.Label(iconPosition, m_warningIconConflict);
+				}
+				else if(i == m_conflictOtherIndex)
+				{
+					var iconPosition = linePosition;
+					iconPosition.size =  m_buttonStyle.CalcSize(m_warningIconOther);
+					GUI.Label(iconPosition, m_warningIconOther);
+				}
+
+				float lineHeight = Ma
