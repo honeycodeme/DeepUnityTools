@@ -134,4 +134,23 @@ public class SerializableDictionaryPropertyDrawer : PropertyDrawer
 					GUI.Label(iconPosition, m_warningIconOther);
 				}
 
-				float lineHeight = Ma
+				float lineHeight = Mathf.Max(keyPropertyHeight, valuePropertyHeight);
+				linePosition.y += lineHeight;
+			}
+
+			EditorGUI.indentLevel--;
+		}
+
+		if(buttonAction == Action.Add)
+		{
+			keyArrayProperty.InsertArrayElementAtIndex(buttonActionIndex);
+			valueArrayProperty.InsertArrayElementAtIndex(buttonActionIndex);
+		}
+		else if(buttonAction == Action.Remove)
+		{
+			DeleteArrayElementAtIndex(keyArrayProperty, buttonActionIndex);
+			DeleteArrayElementAtIndex(valueArrayProperty, buttonActionIndex);
+		}
+
+		m_conflictKey = null;
+		
