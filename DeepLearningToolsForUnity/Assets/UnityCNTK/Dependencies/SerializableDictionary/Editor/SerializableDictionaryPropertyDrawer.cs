@@ -248,4 +248,13 @@ public class SerializableDictionaryPropertyDrawer : PropertyDrawer
 		Dictionary<SerializedPropertyType, string> serializedPropertyValueAccessorsNameDict = new Dictionary<SerializedPropertyType, string>() {
 			{ SerializedPropertyType.Integer, "intValue" },
 			{ SerializedPropertyType.Boolean, "boolValue" },
-	
+			{ SerializedPropertyType.Float, "floatValue" },
+			{ SerializedPropertyType.String, "stringValue" },
+			{ SerializedPropertyType.Color, "colorValue" },
+			{ SerializedPropertyType.ObjectReference, "objectReferenceValue" },
+			{ SerializedPropertyType.LayerMask, "intValue" },
+			{ SerializedPropertyType.Enum, "intValue" },
+			{ SerializedPropertyType.Vector2, "vector2Value" },
+			{ SerializedPropertyType.Vector3, "vector3Value" },
+			{ SerializedPropertyType.Vector4, "vector4Value" },
+			{ Serialized
