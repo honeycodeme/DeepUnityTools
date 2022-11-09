@@ -219,4 +219,14 @@ public class SerializableDictionaryPropertyDrawer : PropertyDrawer
 
 		if (property.isExpanded)
 		{
-			var keysProp
+			var keysProperty = property.FindPropertyRelative(KeysFieldName);
+			var valuesProperty = property.FindPropertyRelative(ValuesFieldName);
+
+			foreach(var entry in EnumerateEntries(keysProperty, valuesProperty))
+			{
+				var keyProperty = entry.keyProperty;
+				var valueProperty = entry.valueProperty;
+				float keyPropertyHeight = EditorGUI.GetPropertyHeight(keyProperty);
+				float valuePropertyHeight = EditorGUI.GetPropertyHeight(valueProperty);
+				float lineHeight = Mathf.Max(keyPropertyHeight, valuePropertyHeight);
+				proper
