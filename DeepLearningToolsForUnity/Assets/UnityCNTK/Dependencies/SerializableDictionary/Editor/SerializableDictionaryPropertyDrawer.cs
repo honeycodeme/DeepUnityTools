@@ -229,4 +229,23 @@ public class SerializableDictionaryPropertyDrawer : PropertyDrawer
 				float keyPropertyHeight = EditorGUI.GetPropertyHeight(keyProperty);
 				float valuePropertyHeight = EditorGUI.GetPropertyHeight(valueProperty);
 				float lineHeight = Mathf.Max(keyPropertyHeight, valuePropertyHeight);
-				proper
+				propertyHeight += lineHeight;
+			}
+
+			if(m_conflictIndex != -1)
+			{
+				propertyHeight += m_conflictLineHeight;
+			}
+		}
+
+		return propertyHeight;
+	}
+
+	static Dictionary<SerializedPropertyType, PropertyInfo> ms_serializedPropertyValueAccessorsDict;
+
+	static SerializableDictionaryPropertyDrawer()
+	{
+		Dictionary<SerializedPropertyType, string> serializedPropertyValueAccessorsNameDict = new Dictionary<SerializedPropertyType, string>() {
+			{ SerializedPropertyType.Integer, "intValue" },
+			{ SerializedPropertyType.Boolean, "boolValue" },
+	
