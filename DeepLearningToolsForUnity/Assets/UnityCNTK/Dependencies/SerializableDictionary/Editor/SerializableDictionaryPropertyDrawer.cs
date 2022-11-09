@@ -170,4 +170,21 @@ public class SerializableDictionaryPropertyDrawer : PropertyDrawer
 			{
 				var valueProperty1 = entry1.valueProperty;
 				SaveProperty(keyProperty1, valueProperty1, i, -1);
-				D
+				DeleteArrayElementAtIndex(valueArrayProperty, i);
+				DeleteArrayElementAtIndex(keyArrayProperty, i);
+
+				break;
+			}
+
+
+			foreach(var entry2 in EnumerateEntries(keyArrayProperty, valueArrayProperty, i + 1))
+			{
+				var keyProperty2 = entry2.keyProperty;
+				int j = entry2.index;
+				object keyProperty2Value = GetPropertyValue(keyProperty2);
+
+				if(object.Equals(keyProperty1Value, keyProperty2Value))
+				{					
+					var valueProperty2 = entry2.valueProperty;
+					SaveProperty(keyProperty2, valueProperty2, j, i);
+					DeleteAr
