@@ -187,4 +187,21 @@ public class SerializableDictionaryPropertyDrawer : PropertyDrawer
 				{					
 					var valueProperty2 = entry2.valueProperty;
 					SaveProperty(keyProperty2, valueProperty2, j, i);
-					DeleteAr
+					DeleteArrayElementAtIndex(keyArrayProperty, j);
+					DeleteArrayElementAtIndex(valueArrayProperty, j);
+
+					goto breakLoops;
+				}
+			}
+		}
+		breakLoops:
+
+		EditorGUI.EndProperty();
+	}
+
+	void SaveProperty(SerializedProperty keyProperty, SerializedProperty valueProperty, int index, int otherIndex)
+	{
+		m_conflictKey = GetPropertyValue(keyProperty);
+		m_conflictValue = GetPropertyValue(valueProperty);
+		float keyPropertyHeight = EditorGUI.GetPropertyHeight(keyProperty);
+		float valuePropertyHeight = EditorGUI.GetPropertyHeight(valuePr
