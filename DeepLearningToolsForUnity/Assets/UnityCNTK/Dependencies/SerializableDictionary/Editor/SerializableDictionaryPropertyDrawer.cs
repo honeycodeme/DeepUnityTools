@@ -153,4 +153,21 @@ public class SerializableDictionaryPropertyDrawer : PropertyDrawer
 		}
 
 		m_conflictKey = null;
-		
+		m_conflictValue = null;
+		m_conflictIndex = -1;
+		m_conflictOtherIndex = -1;
+		m_conflictLineHeight = 0f;
+		m_conflictKeyPropertyExpanded = false;
+		m_conflictValuePropertyExpanded = false;
+
+		foreach(var entry1 in EnumerateEntries(keyArrayProperty, valueArrayProperty))
+		{
+			var keyProperty1 = entry1.keyProperty;
+			int i = entry1.index;
+			object keyProperty1Value = GetPropertyValue(keyProperty1);
+
+			if(keyProperty1Value == null)
+			{
+				var valueProperty1 = entry1.valueProperty;
+				SaveProperty(keyProperty1, valueProperty1, i, -1);
+				D
