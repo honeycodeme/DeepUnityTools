@@ -204,4 +204,19 @@ public class SerializableDictionaryPropertyDrawer : PropertyDrawer
 		m_conflictKey = GetPropertyValue(keyProperty);
 		m_conflictValue = GetPropertyValue(valueProperty);
 		float keyPropertyHeight = EditorGUI.GetPropertyHeight(keyProperty);
-		float valuePropertyHeight = EditorGUI.GetPropertyHeight(valuePr
+		float valuePropertyHeight = EditorGUI.GetPropertyHeight(valueProperty);
+		float lineHeight = Mathf.Max(keyPropertyHeight, valuePropertyHeight);
+		m_conflictLineHeight = lineHeight;
+		m_conflictIndex = index;
+		m_conflictOtherIndex = otherIndex;
+		m_conflictKeyPropertyExpanded = keyProperty.isExpanded;
+		m_conflictValuePropertyExpanded = valueProperty.isExpanded;
+	}
+
+	public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
+	{
+		float propertyHeight = EditorGUIUtility.singleLineHeight;
+
+		if (property.isExpanded)
+		{
+			var keysProp
