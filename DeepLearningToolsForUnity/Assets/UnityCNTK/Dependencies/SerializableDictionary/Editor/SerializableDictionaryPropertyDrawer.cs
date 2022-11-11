@@ -267,4 +267,19 @@ public class SerializableDictionaryPropertyDrawer : PropertyDrawer
 		Type serializedPropertyType = typeof(SerializedProperty);
 
 		ms_serializedPropertyValueAccessorsDict	= new Dictionary<SerializedPropertyType, PropertyInfo>();
-		BindingFlags flags = BindingFlags.Instance 
+		BindingFlags flags = BindingFlags.Instance | BindingFlags.Public;
+
+		foreach(var kvp in serializedPropertyValueAccessorsNameDict)
+		{
+			PropertyInfo propertyInfo = serializedPropertyType.GetProperty(kvp.Value, flags);
+			ms_serializedPropertyValueAccessorsDict.Add(kvp.Key, propertyInfo);
+		}
+	}
+
+	static GUIContent IconContent(string name, string tooltip)
+	{
+		var builtinIcon = EditorGUIUtility.IconContent (name);
+		return new GUIContent(builtinIcon.image, tooltip);
+	}
+
+	static void DeleteArrayElementAtIndex(Serialize
