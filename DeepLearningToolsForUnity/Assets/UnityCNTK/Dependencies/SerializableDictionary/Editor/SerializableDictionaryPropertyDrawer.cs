@@ -257,4 +257,14 @@ public class SerializableDictionaryPropertyDrawer : PropertyDrawer
 			{ SerializedPropertyType.Vector2, "vector2Value" },
 			{ SerializedPropertyType.Vector3, "vector3Value" },
 			{ SerializedPropertyType.Vector4, "vector4Value" },
-			{ Serialized
+			{ SerializedPropertyType.Rect, "rectValue" },
+			{ SerializedPropertyType.ArraySize, "intValue" },
+			{ SerializedPropertyType.Character, "intValue" },
+			{ SerializedPropertyType.AnimationCurve, "animationCurveValue" },
+			{ SerializedPropertyType.Bounds, "boundsValue" },
+			{ SerializedPropertyType.Quaternion, "quaternionValue" },
+		};
+		Type serializedPropertyType = typeof(SerializedProperty);
+
+		ms_serializedPropertyValueAccessorsDict	= new Dictionary<SerializedPropertyType, PropertyInfo>();
+		BindingFlags flags = BindingFlags.Instance 
