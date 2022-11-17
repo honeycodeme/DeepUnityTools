@@ -297,4 +297,28 @@ public class SerializableDictionaryPropertyDrawer : PropertyDrawer
 	public static object GetPropertyValue(SerializedProperty p)
 	{
 		PropertyInfo propertyInfo;
-		if(ms_serializedPropertyValueAccessorsDict.TryGetValue(p.
+		if(ms_serializedPropertyValueAccessorsDict.TryGetValue(p.propertyType, out propertyInfo))
+		{
+			return propertyInfo.GetValue(p, null);
+		}
+		else
+		{
+			if(p.isArray)
+				return GetPropertyValueArray(p);
+			else
+				return GetPropertyValueGeneric(p);
+		}
+	}
+
+	static void SetPropertyValue(SerializedProperty p, object v)
+	{
+		PropertyInfo propertyInfo;
+		if(ms_serializedPropertyValueAccessorsDict.TryGetValue(p.propertyType, out propertyInfo))
+		{
+			propertyInfo.SetValue(p, v, null);
+		}
+		else
+		{
+			if(p.isArray)
+				SetPropertyValueArray(p, v);
+		
