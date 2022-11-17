@@ -321,4 +321,22 @@ public class SerializableDictionaryPropertyDrawer : PropertyDrawer
 		{
 			if(p.isArray)
 				SetPropertyValueArray(p, v);
-		
+			else
+				SetPropertyValueGeneric(p, v);
+		}
+	}
+
+	static object GetPropertyValueArray(SerializedProperty property)
+	{
+		object[] array = new object[property.arraySize];
+		for(int i = 0; i < property.arraySize; i++)
+		{
+			SerializedProperty item = property.GetArrayElementAtIndex(i);
+			array[i] = GetPropertyValue(item);
+		}
+		return array;
+	}
+
+	static object GetPropertyValueGeneric(SerializedProperty property)
+	{
+		Dictionary<string, object> dict = new Dictionar
