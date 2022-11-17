@@ -282,4 +282,19 @@ public class SerializableDictionaryPropertyDrawer : PropertyDrawer
 		return new GUIContent(builtinIcon.image, tooltip);
 	}
 
-	static void DeleteArrayElementAtIndex(Serialize
+	static void DeleteArrayElementAtIndex(SerializedProperty arrayProperty, int index)
+	{
+		var property = arrayProperty.GetArrayElementAtIndex(index);
+		// if(arrayProperty.arrayElementType.StartsWith("PPtr<$"))
+		if(property.propertyType == SerializedPropertyType.ObjectReference)
+		{
+			property.objectReferenceValue = null;
+		}
+
+		arrayProperty.DeleteArrayElementAtIndex(index);
+	}
+
+	public static object GetPropertyValue(SerializedProperty p)
+	{
+		PropertyInfo propertyInfo;
+		if(ms_serializedPropertyValueAccessorsDict.TryGetValue(p.
