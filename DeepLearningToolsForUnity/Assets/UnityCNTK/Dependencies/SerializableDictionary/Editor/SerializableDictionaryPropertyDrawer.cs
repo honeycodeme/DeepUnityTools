@@ -339,4 +339,25 @@ public class SerializableDictionaryPropertyDrawer : PropertyDrawer
 
 	static object GetPropertyValueGeneric(SerializedProperty property)
 	{
-		Dictionary<string, object> dict = new Dictionar
+		Dictionary<string, object> dict = new Dictionary<string, object>();
+		var iterator = property.Copy();
+		if(iterator.Next(true))
+		{
+			var end = property.GetEndProperty();
+			do
+			{
+				string name = iterator.name;
+				object value = GetPropertyValue(iterator);
+				dict.Add(name, value);
+			} while(iterator.Next(false) && iterator.propertyPath != end.propertyPath);
+		}
+		return dict;
+	}
+
+	static void SetPropertyValueArray(SerializedProperty property, object v)
+	{
+		object[] array = (object[]) v;
+		property.arraySize = array.Length;
+		for(int i = 0; i < property.arraySize; i++)
+		{
+			SerializedProperty item = property.GetA
