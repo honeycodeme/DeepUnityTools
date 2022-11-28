@@ -360,4 +360,26 @@ public class SerializableDictionaryPropertyDrawer : PropertyDrawer
 		property.arraySize = array.Length;
 		for(int i = 0; i < property.arraySize; i++)
 		{
-			SerializedProperty item = property.GetA
+			SerializedProperty item = property.GetArrayElementAtIndex(i);
+			SetPropertyValue(item, array[i]);
+		}
+	}
+
+	static void SetPropertyValueGeneric(SerializedProperty property, object v)
+	{
+		Dictionary<string, object> dict = (Dictionary<string, object>) v;
+		var iterator = property.Copy();
+		if(iterator.Next(true))
+		{
+			var end = property.GetEndProperty();
+			do
+			{
+				string name = iterator.name;
+				SetPropertyValue(iterator, dict[name]);
+			} while(iterator.Next(false) && iterator.propertyPath != end.propertyPath);
+		}
+	}
+
+	struct EnumerationEntry
+	{
+		
