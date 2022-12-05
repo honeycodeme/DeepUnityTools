@@ -382,4 +382,18 @@ public class SerializableDictionaryPropertyDrawer : PropertyDrawer
 
 	struct EnumerationEntry
 	{
-		
+		public SerializedProperty keyProperty;
+		public SerializedProperty valueProperty;
+		public int index;
+
+		public EnumerationEntry(SerializedProperty keyProperty, SerializedProperty valueProperty, int index)
+		{
+			this.keyProperty = keyProperty;
+			this.valueProperty = valueProperty;
+			this.index = index;
+		}
+	}
+
+	static IEnumerable<EnumerationEntry> EnumerateEntries(SerializedProperty keyArrayProperty, SerializedProperty valueArrayProperty, int startIndex = 0)
+	{
+		if(keyArrayProperty.arraySize > startIn
