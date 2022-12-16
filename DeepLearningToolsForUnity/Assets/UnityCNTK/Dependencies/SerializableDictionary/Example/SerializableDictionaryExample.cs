@@ -17,4 +17,7 @@ public class SerializableDictionaryExample : MonoBehaviour {
 	void Reset ()
 	{
 		// access by property
-		StringStringDictionary = new Dictionary<string, string>() { {"first key"
+		StringStringDictionary = new Dictionary<string, string>() { {"first key", "value A"}, {"second key", "value B"}, {"third key", "value C"} };
+		m_objectColorDictionary = new ObjectColorDictionary() { {gameObject, Color.blue}, {this, Color.red} };
+	}
+}
