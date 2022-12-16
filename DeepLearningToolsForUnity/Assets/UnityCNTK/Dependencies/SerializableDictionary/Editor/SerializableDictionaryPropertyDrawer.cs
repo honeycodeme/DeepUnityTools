@@ -396,4 +396,18 @@ public class SerializableDictionaryPropertyDrawer : PropertyDrawer
 
 	static IEnumerable<EnumerationEntry> EnumerateEntries(SerializedProperty keyArrayProperty, SerializedProperty valueArrayProperty, int startIndex = 0)
 	{
-		if(keyArrayProperty.arraySize > startIn
+		if(keyArrayProperty.arraySize > startIndex)
+		{
+			int index = startIndex;
+			var keyProperty = keyArrayProperty.GetArrayElementAtIndex(startIndex);
+			var valueProperty = valueArrayProperty.GetArrayElementAtIndex(startIndex);
+			var endProperty = keyArrayProperty.GetEndProperty();
+
+			do
+			{
+				yield return new EnumerationEntry(keyProperty, valueProperty, index);
+				index++;
+			} while(keyProperty.Next(false) && valueProperty.Next(false) && !SerializedProperty.EqualContents(keyProperty, endProperty));
+		}
+	}
+}
