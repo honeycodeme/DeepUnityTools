@@ -8,4 +8,4 @@ using UnityEditor;
 [CustomPropertyDrawer(typeof(ObjectColorDictionary))]
 [CustomPropertyDrawer(typeof(MaterialTexture2DDictionary))]
 [CustomPropertyDrawer(typeof(Texture2DTexture2DDictionary))]
-public class AnySerializableDictionaryPropertyDrawer : SerializableDictionaryPrope
+public class AnySerializableDictionaryPropertyDrawer : SerializableDictionaryPropertyDrawer {}
