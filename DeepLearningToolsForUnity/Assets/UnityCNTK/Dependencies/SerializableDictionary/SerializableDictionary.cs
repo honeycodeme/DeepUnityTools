@@ -48,4 +48,18 @@ public class SerializableDictionary<TKey, TValue> : Dictionary<TKey, TValue>, IS
 
 	}
 
-	public void OnBeforeSeri
+	public void OnBeforeSerialize()
+	{
+		int n = this.Count;
+		m_keys = new TKey[n];
+		m_values = new TValue[n];
+
+		int i = 0;
+		foreach(var kvp in this)
+		{
+			m_keys[i] = kvp.Key;
+			m_values[i] = kvp.Value;
+			++i;
+		}
+	}
+}
