@@ -1219,3 +1219,15 @@ MonoBehaviour:
   delegates: []
 --- !u!114 &2127189633
 MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2127189625}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 919a13c1ae048e848a02337980f91b9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dataPlane: {fileID: 2127189630}
+  lr: 0.01
+  training: 0
