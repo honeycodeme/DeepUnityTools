@@ -28,4 +28,10 @@ public class DataPlane2DInput : MonoBehaviour {
 
     public void OnClicked(BaseEventData data)
     {
-        var pd
+        var pdata = data as PointerEventData;
+        var rcast = pdata.pointerCurrentRaycast;
+        dataPlane.AddDatapoint(rcast.worldPosition, currentDataLabel);
+        print("Clicked On " + rcast.worldPosition); 
+    }
+
+}
