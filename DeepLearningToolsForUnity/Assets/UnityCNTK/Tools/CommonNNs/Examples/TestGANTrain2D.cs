@@ -42,4 +42,22 @@ public class TestGANTrain2D : MonoBehaviour {
     }
 
 
-    public void LoadTrainingData(
+    public void LoadTrainingData()
+    {
+        trainerGan.ClearData();
+        trainerGan.AddData(null,dataPlane.GetDataPositions());
+    }
+
+
+    public void TrainOnce(int episodes)
+    {
+        trainerGan.SetLearningRateGenerator(lrGenerator);
+        trainerGan.SetLearningRateDiscriminator(lrDiscriminator);
+        for (int i = 0; i < episodes; ++i)
+        {
+            trainerGan.TrainMiniBatch(32);
+            trainedEpisodes++;
+        }
+
+        Debug.Log("G loss: " + trainerGan.LastLossGenerator);
+        Debug.Log(
