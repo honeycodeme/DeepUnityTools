@@ -20,4 +20,26 @@ public class TestGANTrain2D : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-  
+        CreateGAN();
+
+    }
+	
+	// Update is called once per frame
+	void Update () {
+        if (training)
+        {
+            TrainOnce(10);
+        }
+    }
+
+
+
+    public void CreateGAN()
+    {
+        gan = new GAN(2, 0, 2, 10, 5, 10, 5, DeviceDescriptor.GPUDevice(0));
+        trainerGan = new TrainerGAN(gan, LearnerDefs.AdamLearner(lrGenerator), LearnerDefs.AdamLearner(lrDiscriminator),DeviceDescriptor.GPUDevice(0));
+        trainerGan.usePredictionInTraining = true;
+    }
+
+
+    public void LoadTrainingData(
