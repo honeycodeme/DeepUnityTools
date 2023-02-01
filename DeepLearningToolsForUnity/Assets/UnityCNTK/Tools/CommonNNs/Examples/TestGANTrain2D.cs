@@ -60,4 +60,28 @@ public class TestGANTrain2D : MonoBehaviour {
         }
 
         Debug.Log("G loss: " + trainerGan.LastLossGenerator);
-        Debug.Log(
+        Debug.Log("D loss: " + trainerGan.LastLossDiscriminator);
+    }
+
+    public void UseGAN(int generatedNumber)
+    {
+        dataPlane.RemovePointsOfType(1);
+        for (int i = 0; i < generatedNumber; ++i)
+        {
+            var result = gan.EvaluateOne(null);
+            dataPlane.AddDatapoint(new Vector2(result[0], result[1]), 1);
+        }
+        
+    }
+
+
+    public void SaveGenerator()
+    {
+        trainerGan.SaveGenerator(2);
+    }
+
+    public void RestoreGenerator()
+    {
+        trainerGan.RestoreGenerator(2);
+    }
+}
