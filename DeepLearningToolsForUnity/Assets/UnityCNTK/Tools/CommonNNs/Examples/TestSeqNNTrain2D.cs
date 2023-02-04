@@ -55,4 +55,21 @@ public class TestSeqNNTrain2D : MonoBehaviour {
 
     public void LoadTrainingData()
     {
-        t
+        trainer.ClearData();
+        trainer.AddData(dataPlane.GetDataPositions(), dataPlane.GetDataLabels());
+        
+    }
+
+    public void TrainOnce(int episodes)
+    {
+        trainer.SetLearningRate(lr);
+        for (int i = 0; i < episodes; ++i)
+        {
+            trainer.TrainMiniBatch(32);
+        }
+        print("Training loss:" + trainer.LastLoss);
+    }
+
+    public float EvalPosition(Vector2 position)
+    {
+        var pred = network.EvaluateOne(new float[] { position.x, positio
