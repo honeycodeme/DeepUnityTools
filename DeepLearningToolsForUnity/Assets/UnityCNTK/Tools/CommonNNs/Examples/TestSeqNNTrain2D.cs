@@ -72,4 +72,11 @@ public class TestSeqNNTrain2D : MonoBehaviour {
 
     public float EvalPosition(Vector2 position)
     {
-        var pred = network.EvaluateOne(new float[] { position.x, positio
+        var pred = network.EvaluateOne(new float[] { position.x, position.y });
+        //var variance = network.EvaluateOne(new float[] { position.x, position.y }, outputLayer.GetVarianceVariable());
+        //print("Predicted: " + pred[0] + ", variance: " + variance[0]);
+        print("Predicted: " + pred[0]);
+        return pred[0];
+    }
+    
+}
