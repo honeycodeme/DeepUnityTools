@@ -58,4 +58,15 @@ namespace UnityCNTK
             {
                 dataInfos.Add(new DataBuffer.DataInfo("Condition", DataBuffer.DataType.Float, gan.InputConditionSize));
             }
-            dataInfos.Add(new DataBu
+            dataInfos.Add(new DataBuffer.DataInfo("Target", DataBuffer.DataType.Float, gan.OutputSize));
+            dataBuffer = new DataBuffer(maxDataBufferCount, dataInfos.ToArray());
+
+            //others
+            savedLearners = new Dictionary<int, CNTKDictionary>();
+            savedParameters = new Dictionary<int, Dictionary<Parameter, NDArrayView>>();
+        }
+
+
+        public void AddData(float[] inputConditions, float[] inputTargets)
+        {
+            //I am not checking the data size here because the dataBuffer.AddData will check it for me....tooo 
