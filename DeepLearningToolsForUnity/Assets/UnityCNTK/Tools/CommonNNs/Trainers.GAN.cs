@@ -69,4 +69,21 @@ namespace UnityCNTK
 
         public void AddData(float[] inputConditions, float[] inputTargets)
         {
-            //I am not checking the data size here because the dataBuffer.AddData will check it for me....tooo 
+            //I am not checking the data size here because the dataBuffer.AddData will check it for me....tooo lazy
+            List<Tuple<string, Array>> data = new List<Tuple<string, Array>>();
+            if (ganReference.InputConditionSize > 0)
+            {
+                data.Add(new Tuple<string, Array>("Condition", inputConditions));
+            }
+            data.Add(new Tuple<string, Array>("Target", inputTargets));
+            dataBuffer.AddData(data.ToArray());
+        }
+
+        //clear all data
+        public void ClearData()
+        {
+            dataBuffer.ClearData();
+        }
+
+
+        public void TrainMiniBatch(int minib
