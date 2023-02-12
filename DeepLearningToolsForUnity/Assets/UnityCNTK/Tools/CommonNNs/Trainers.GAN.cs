@@ -48,4 +48,14 @@ namespace UnityCNTK
             trainerG = Trainer.CreateTrainer(gan.GeneratorOutput, gan.GeneratorLoss, gan.GeneratorLoss, learnersG);
             //trainer for  discriminator
             Learner learnerD = discriminatorLearner.Create(gan.DiscriminatorSequentialModel.Parameters);
-    
+            learnersD.Add(learnerD);
+            trainerD = Trainer.CreateTrainer(gan.DiscriminatorMerged, gan.DiscriminatorLoss, gan.DiscriminatorLoss, learnersD);
+
+            //create databuffer
+            List<DataBuffer.DataInfo> dataInfos = new List<DataBuffer.DataInfo>();
+
+            if(gan.InputConditionSize > 0)
+            {
+                dataInfos.Add(new DataBuffer.DataInfo("Condition", DataBuffer.DataType.Float, gan.InputConditionSize));
+            }
+            dataInfos.Add(new DataBu
