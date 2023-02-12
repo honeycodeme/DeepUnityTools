@@ -39,4 +39,13 @@ namespace UnityCNTK
             Device = device;
             ganReference = gan;
 
-            learnersG = new
+            learnersG = new List<Learner>();
+            learnersD = new List<Learner>();
+
+            //trainer for  generator
+            Learner learnerG = generatorLearner.Create(gan.GeneratorSequentialModel.Parameters);
+            learnersG.Add(learnerG);
+            trainerG = Trainer.CreateTrainer(gan.GeneratorOutput, gan.GeneratorLoss, gan.GeneratorLoss, learnersG);
+            //trainer for  discriminator
+            Learner learnerD = discriminatorLearner.Create(gan.DiscriminatorSequentialModel.Parameters);
+    
