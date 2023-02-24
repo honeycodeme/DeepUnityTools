@@ -86,4 +86,15 @@ namespace UnityCNTK
         }
 
 
-        public void TrainMiniBatch(int minib
+        public void TrainMiniBatch(int minibatchSize)
+        {
+            var fetches = new List<Tuple<string, int, string>>();
+            fetches.Add(new Tuple<string, int, string>("Target", 0, "Target"));
+            if (ganReference.InputConditionSize > 0)
+            {
+                fetches.Add(new Tuple<string, int, string>("Condition", 0, "Condition"));
+            }
+            var samples = dataBuffer.RandomSample(minibatchSize, fetches.ToArray());
+
+            float[] targets = (float[])samples["Target"];
+  
