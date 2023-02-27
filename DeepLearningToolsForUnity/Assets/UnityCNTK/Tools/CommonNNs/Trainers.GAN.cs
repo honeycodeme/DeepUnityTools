@@ -97,4 +97,13 @@ namespace UnityCNTK
             var samples = dataBuffer.RandomSample(minibatchSize, fetches.ToArray());
 
             float[] targets = (float[])samples["Target"];
-  
+            float[] conditions = samples.ContainsKey("Condition") ? (float[])samples["Condition"] : null;
+            TrainMiniBatch(Utils.GenerateWhiteNoise(ganReference.InputNoiseSize*minibatchSize,-1,1), conditions, targets);
+        }
+
+        public void TrainMiniBatch(float[] inputNoises,float[] inputConditions,float[] inputTargets)
+        {
+
+            //create input maps
+            bool hasConditionInput = ganReference.InputConditionGenerator != null;
+            bool hasNoiseInput = ganReference.InputNoiseGener
