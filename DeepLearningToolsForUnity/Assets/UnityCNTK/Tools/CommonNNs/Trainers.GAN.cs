@@ -116,4 +116,13 @@ namespace UnityCNTK
                 var inputCondition = Value.CreateBatch(ganReference.InputConditionGenerator.Shape, inputConditions, Device);
                 //generator training needed inputs
                 inputMapGeneratorTrain.Add(ganReference.InputConditionGenerator, inputCondition);
-      
+                //discriminator training needed inputs
+                inputMapDiscriminatorTrain.Add(ganReference.InputConditionGenerator, inputCondition);
+                inputMapDiscriminatorTrain.Add(ganReference.InputConditionDiscriminatorFake, inputCondition);
+                inputMapDiscriminatorTrain.Add(ganReference.InputConditionDiscriminatorReal, inputCondition);
+                
+            }
+
+            if (hasNoiseInput)
+            {
+                var inputNoise = Value.CreateBatch(ganReference.InputNoiseGenerator.Shape, inputN
