@@ -133,4 +133,15 @@ namespace UnityCNTK
             }
             var inputTarget = Value.CreateBatch(ganReference.InputDataDiscriminatorReal.Shape, inputTargets, Device);
             //generator training needed inputs
-            inputMapGeneratorT
+            inputMapGeneratorTrain.Add(ganReference.InputTargetGenerator, inputTarget);
+            //discriminator training needed inputs
+            inputMapDiscriminatorTrain.Add(ganReference.InputDataDiscriminatorReal, inputTarget);
+
+            if (usePredictionInTraining)
+            {
+                TrainWithPredictionBySaving(inputMapGeneratorTrain, inputMapDiscriminatorTrain);
+            }
+            else {
+                TrainDefault(inputMapGeneratorTrain, inputMapDiscriminatorTrain);
+            }
+            //TrainWithReorder(inputMap
