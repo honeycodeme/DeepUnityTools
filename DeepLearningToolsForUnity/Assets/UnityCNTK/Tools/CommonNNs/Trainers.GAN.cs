@@ -125,4 +125,12 @@ namespace UnityCNTK
 
             if (hasNoiseInput)
             {
-                var inputNoise = Value.CreateBatch(ganReference.InputNoiseGenerator.Shape, inputN
+                var inputNoise = Value.CreateBatch(ganReference.InputNoiseGenerator.Shape, inputNoises, Device);
+                //generator training needed inputs
+                inputMapGeneratorTrain.Add(ganReference.InputNoiseGenerator, inputNoise);
+                //discriminator training needed inputs
+                inputMapDiscriminatorTrain.Add(ganReference.InputNoiseGenerator, inputNoise);
+            }
+            var inputTarget = Value.CreateBatch(ganReference.InputDataDiscriminatorReal.Shape, inputTargets, Device);
+            //generator training needed inputs
+            inputMapGeneratorT
