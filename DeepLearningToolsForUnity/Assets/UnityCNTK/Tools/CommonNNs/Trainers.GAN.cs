@@ -202,4 +202,19 @@ namespace UnityCNTK
             }
             
         }
-    
+        public void RestoreGenerator(int key)
+        {
+            if (savedLearners.ContainsKey(key) && savedParameters.ContainsKey(key))
+            {
+                learnersG[0].RestoreFromCheckpoint(savedLearners[key]);
+                foreach (var p in ganReference.GeneratorSequentialModel.Parameters)
+                {
+                    p.SetValue(savedParameters[key][p]);
+                }
+            }
+
+        }
+        /*
+        public void SaveDiscriminator(int key)
+        {
+            savedLearners[key] = learnersD[0].CreateChec
