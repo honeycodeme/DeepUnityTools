@@ -158,4 +158,16 @@ namespace UnityCNTK
         }
         public void SetLearningRateDiscriminator(float lr)
         {
-   
+            LearningRateDiscriminator = lr;
+            learnersD[0].SetLearningRateSchedule(new TrainingParameterScheduleDouble(lr));
+        }
+
+
+
+        protected void TrainWithPredictionBySaving(IDictionary<Variable,Value> inputMapGeneratorTrain, IDictionary<Variable, Value> inputMapDiscriminatorTrain)
+        {
+            SaveGenerator(0);
+            trainerG.TrainMinibatch(inputMapGeneratorTrain, false, Device);
+            SaveGenerator(1);
+            RestoreGenerator(0);
+            learners
