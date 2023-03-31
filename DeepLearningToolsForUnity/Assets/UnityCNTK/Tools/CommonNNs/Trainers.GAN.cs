@@ -170,4 +170,11 @@ namespace UnityCNTK
             trainerG.TrainMinibatch(inputMapGeneratorTrain, false, Device);
             SaveGenerator(1);
             RestoreGenerator(0);
-            learners
+            learnersG[0].SetLearningRateSchedule(new TrainingParameterScheduleDouble(LearningRateGenerator * 2));
+            trainerG.TrainMinibatch(inputMapGeneratorTrain, false, Device);
+            trainerD.TrainMinibatch(inputMapDiscriminatorTrain, false, Device);
+            RestoreGenerator(1);
+        }
+        protected void TrainDefault(IDictionary<Variable, Value> inputMapGeneratorTrain, IDictionary<Variable, Value> inputMapDiscriminatorTrain)
+        {
+            trainerG.TrainMinibatch(inputMapGeneratorTrain, false, De
