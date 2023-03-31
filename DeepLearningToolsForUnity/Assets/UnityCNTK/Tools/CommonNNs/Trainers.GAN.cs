@@ -144,4 +144,18 @@ namespace UnityCNTK
             else {
                 TrainDefault(inputMapGeneratorTrain, inputMapDiscriminatorTrain);
             }
-            //TrainWithReorder(inputMap
+            //TrainWithReorder(inputMapGeneratorTrain, inputMapDiscriminatorTrain);
+            //Debug.Log("G loss: " + trainerG.PreviousMinibatchLossAverage());
+            //Debug.Log("D loss: " + trainerD.PreviousMinibatchLossAverage());
+            //Debug.Log(learnersG[0].LearningRate());
+
+        }
+
+        public void SetLearningRateGenerator(float lr)
+        {
+            LearningRateGenerator = lr;
+            learnersG[0].SetLearningRateSchedule(new TrainingParameterScheduleDouble(lr));
+        }
+        public void SetLearningRateDiscriminator(float lr)
+        {
+   
