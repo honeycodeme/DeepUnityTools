@@ -217,4 +217,16 @@ namespace UnityCNTK
         /*
         public void SaveDiscriminator(int key)
         {
-            savedLearners[key] = learnersD[0].CreateChec
+            savedLearners[key] = learnersD[0].CreateCheckpoint();
+            savedParameters[key] = new Dictionary<Parameter, NDArrayView>();
+            foreach (var p in ganReference.DiscriminatorSequentialModel.Parameters)
+            {
+                savedParameters[key][p] = p.GetValue().DeepClone(Device, true);
+            }
+        }
+        public void RestoreDiscriminator(int key)
+        {
+            if (savedLearners.ContainsKey(key) && savedParameters.ContainsKey(key))
+            {
+                learnersD[0].RestoreFromCheckpoint(savedLearners[key]);
+      
