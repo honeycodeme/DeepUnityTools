@@ -185,4 +185,21 @@ namespace UnityCNTK
             SaveGenerator(0);
             learnersG[0].SetLearningRateSchedule(new TrainingParameterScheduleDouble(LearningRateGenerator));
             trainerG.TrainMinibatch(inputMapGeneratorTrain, false, Device);
-            trainerD.TrainMinibatch(inputMapDiscriminatorTrain, false, Device)
+            trainerD.TrainMinibatch(inputMapDiscriminatorTrain, false, Device);
+            RestoreGenerator(0);
+            trainerG.TrainMinibatch(inputMapGeneratorTrain, false, Device);
+        }
+
+
+
+        public void SaveGenerator(int key)
+        {
+            savedLearners[key] = learnersG[0].CreateCheckpoint();
+            savedParameters[key] = new Dictionary<Parameter, NDArrayView>();
+            foreach (var p in ganReference.GeneratorSequentialModel.Parameters)
+            {
+                savedParameters[key][p] = p.GetValue().DeepClone(Device,true);
+            }
+            
+        }
+    
