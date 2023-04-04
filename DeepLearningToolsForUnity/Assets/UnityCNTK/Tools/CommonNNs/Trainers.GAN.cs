@@ -229,4 +229,12 @@ namespace UnityCNTK
             if (savedLearners.ContainsKey(key) && savedParameters.ContainsKey(key))
             {
                 learnersD[0].RestoreFromCheckpoint(savedLearners[key]);
-      
+                foreach (var p in ganReference.DiscriminatorSequentialModel.Parameters)
+                {
+                    p.SetValue(savedParameters[key][p]);
+                }
+            }
+
+        }*/
+    }
+}
