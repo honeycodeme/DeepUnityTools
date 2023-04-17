@@ -55,4 +55,21 @@ namespace UnityCNTK.ReinforcementLearning
         }
 
         public byte[] Save()
-      
+        {
+            return CNTKFunction.Save();
+        }
+
+        public void Restore(byte[] data)
+        {
+            Function f = Function.Load(data, Device);
+            CNTKFunction.RestoreParametersByName(f);
+        }
+
+
+        public int[] EvaluateAction(float[] state, out float[] maxQs)
+        {
+            //input data maps
+            var inputDataMap = new Dictionary<Variable, Value>();
+
+            Value inputStatedata = Value.CreateBatch(Network.InputState.Shape, state, Network.Device, true);
+  
