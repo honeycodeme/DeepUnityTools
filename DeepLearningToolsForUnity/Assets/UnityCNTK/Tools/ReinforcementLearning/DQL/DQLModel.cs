@@ -44,4 +44,15 @@ namespace UnityCNTK.ReinforcementLearning
             InputTargetQ = CNTKLib.InputVariable(new int[] { 1 }, DataType.Float);
 
             var oneHotOldAction = CNTKLib.OneHotOp(InputOldAction, (uint)ActionSize, false, new Axis(0));
-            outputTargetQ = CNTKLib.ReduceSum(CNTKLib.ElementTimes(OutputQs
+            outputTargetQ = CNTKLib.ReduceSum(CNTKLib.ElementTimes(OutputQs, oneHotOldAction), Axis.AllStaticAxes());
+            //OutputLoss = CNTKLib.Square(CNTKLib.Minus(outputTargetQ, InputTargetQ),"Loss");
+            OutputLoss = Layers.HuberLoss(outputTargetQ, InputTargetQ, Device);
+
+            OutputAction = CNTKLib.Argmax(OutputQs, new Axis(0));
+            OutputMaxQ = CNTKLib.ReduceMax(OutputQs, new Axis(0));
+
+            CNTKFunction = Function.Combine(new List<Variable>() { OutputLoss, OutputAction, OutputMaxQ });
+        }
+
+        public byte[] Save()
+      
