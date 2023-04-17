@@ -30,3 +30,18 @@ namespace UnityCNTK.ReinforcementLearning
 
         //test
         Variable outputTargetQ;
+
+        public Function CNTKFunction { get; protected set; }
+
+        //public Variable testOutputProb;
+
+        public DQLModel(QNetwork network)
+        {
+            Network = network;
+
+            InputOldAction = CNTKLib.InputVariable(new int[] { 1 }, DataType.Float);
+
+            InputTargetQ = CNTKLib.InputVariable(new int[] { 1 }, DataType.Float);
+
+            var oneHotOldAction = CNTKLib.OneHotOp(InputOldAction, (uint)ActionSize, false, new Axis(0));
+            outputTargetQ = CNTKLib.ReduceSum(CNTKLib.ElementTimes(OutputQs
