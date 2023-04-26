@@ -82,4 +82,14 @@ namespace UnityCNTK.ReinforcementLearning
             outputDataMap.Add(OutputMaxQ, null);
             outputDataMap.Add(OutputAction, null);
             //outputDataMap.Add(OutputQs, null);//test
-            //outputDataMap.Add(outputT
+            //outputDataMap.Add(outputTargetQ, null);//test
+
+            CNTKFunction.Evaluate(inputDataMap, outputDataMap, Device);
+
+            var maxQ = outputDataMap[OutputMaxQ].GetDenseData<float>(OutputMaxQ);
+            var action = outputDataMap[OutputAction].GetDenseData<float>(OutputAction);
+            //var Qs = outputDataMap[OutputQs].GetDenseData<float>(OutputQs);//test
+            //var tarQ = outputDataMap[outputTargetQ].GetDenseData<float>(outputTargetQ);//test
+            int batchSize = maxQ.Count;
+
+           
