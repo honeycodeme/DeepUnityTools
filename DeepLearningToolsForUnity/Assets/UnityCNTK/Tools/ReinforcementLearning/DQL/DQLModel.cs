@@ -72,4 +72,14 @@ namespace UnityCNTK.ReinforcementLearning
             var inputDataMap = new Dictionary<Variable, Value>();
 
             Value inputStatedata = Value.CreateBatch(Network.InputState.Shape, state, Network.Device, true);
-  
+            inputDataMap.Add(Network.InputState, inputStatedata);
+            //test
+            //inputDataMap.Add(InputOldAction, Value.CreateBatch(new int[] { 1 }, new float[] { 2 }, Network.Device, true));
+
+
+            //output datamaps
+            var outputDataMap = new Dictionary<Variable, Value>();
+            outputDataMap.Add(OutputMaxQ, null);
+            outputDataMap.Add(OutputAction, null);
+            //outputDataMap.Add(OutputQs, null);//test
+            //outputDataMap.Add(outputT
