@@ -92,4 +92,20 @@ namespace UnityCNTK.ReinforcementLearning
             //var tarQ = outputDataMap[outputTargetQ].GetDenseData<float>(outputTargetQ);//test
             int batchSize = maxQ.Count;
 
-           
+            int[] actions = new int[batchSize];
+            maxQs = new float[batchSize];
+            for (int i = 0; i < batchSize; ++i)
+            {
+                actions[i] = (int)action[i][0];
+                maxQs[i] = maxQ[i][0];
+            }
+            return actions;
+        }
+    }
+
+
+
+
+
+
+}
