@@ -184,3 +184,10 @@ public class Ball3DEnviroment : MonoBehaviour, IRLEnvironment
         {
             ball.transform.position = new Vector3(Random.Range(-1.5f, 1.5f), 4f, Random.Range(0, 0)) + gameObject.transform.position;
             ball.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionZ;
+        }
+        //
+        gameObject.transform.Rotate(new Vector3(0, 0, 1), Random.Range(-10f, 10f));
+        ball.GetComponent<Rigidbody>().velocity = new Vector3(0f, 0f, 0f);
+        
+    }
+}
