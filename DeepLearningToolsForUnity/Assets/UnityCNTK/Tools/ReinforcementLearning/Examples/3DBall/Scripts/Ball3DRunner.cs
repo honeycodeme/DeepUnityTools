@@ -27,4 +27,16 @@ public class Ball3DRunner : MonoBehaviour {
     public float timeScale;
     public bool training = true;
 
-    protect
+    protected AutoAverage loss;
+    protected AutoAverage episodePointAve;
+    protected float episodePoint;
+
+    // Use this for initialization
+    void Start () {
+        PPONetworkContinuousSimple network;
+        if (environment.is3D)
+        {
+            network = new PPONetworkContinuousSimple(8, 2, 2, 32, DeviceDescriptor.CPUDevice, 0.01f);
+            model = new PPOModel(network);
+            trainer = new TrainerPPOSimple(model, LearnerDefs.AdamLearner(learningRate),1, 10000, 200);
+            trainer.ClipE
