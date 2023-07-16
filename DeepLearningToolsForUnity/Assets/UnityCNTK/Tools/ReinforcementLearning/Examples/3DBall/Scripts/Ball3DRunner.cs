@@ -93,4 +93,25 @@ public class Ball3DRunner : MonoBehaviour {
 
                 trainer.TrainAllData(minibatch, iterationForEachTrain);
                 //record and print the loss
-                print("Trai
+                print("Training Loss:" + trainer.LastLoss);
+                trainedCount++;
+                trainer.ClearData();
+                episodesThisTrain = 0;
+            }
+        }else if (environment.IsEnd())
+        {
+            environment.Reset();
+        }
+    }
+    
+    public void Save()
+    {
+        var data = model.Save();
+        File.WriteAllBytes(saveDataPath, data);
+    }
+    public void Load()
+    {
+        var bytes = File.ReadAllBytes(saveDataPath);
+        model.Restore(bytes);
+    }
+}
