@@ -54,4 +54,30 @@ public class Ball3DRunner : MonoBehaviour {
         //trainer.RewardDiscountFactor = 0.5f;
 
         loss = new AutoAverage(iterationForEachTrain);
-        episodePointAve = new AutoAverage(episodeToR
+        episodePointAve = new AutoAverage(episodeToRunForEachTrain); 
+    }
+	
+	// Update is called once per frame
+	void Update () {
+        Time.timeScale = timeScale;
+        trainer.SetLearningRate(learningRate);
+    }
+
+
+    private void FixedUpdate()
+    {
+        RunStep();
+    }
+
+
+    protected void RunStep()
+    {
+        trainer.Step(environment);
+        bool reset = trainer.Record(environment);
+        episodePoint += environment.LastReward();
+
+        //reset if end
+        if (reset && training)
+        {
+            environment.Reset();
+            episodes
