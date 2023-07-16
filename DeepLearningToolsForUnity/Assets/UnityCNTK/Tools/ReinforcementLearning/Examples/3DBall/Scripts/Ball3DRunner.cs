@@ -80,4 +80,17 @@ public class Ball3DRunner : MonoBehaviour {
         if (reset && training)
         {
             environment.Reset();
-            episodes
+            episodesThisTrain++;
+            episodePointAve.AddValue(episodePoint);
+            if (episodePointAve.JustUpdated)
+            {
+                scoreUI.text = "Average points:" + episodePointAve.Average;
+            }
+            episodePoint = 0;
+
+            if (episodesThisTrain >= episodeToRunForEachTrain)
+            {
+
+                trainer.TrainAllData(minibatch, iterationForEachTrain);
+                //record and print the loss
+                print("Trai
