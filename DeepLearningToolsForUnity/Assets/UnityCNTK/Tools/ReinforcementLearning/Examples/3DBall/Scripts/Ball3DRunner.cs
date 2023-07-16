@@ -39,4 +39,19 @@ public class Ball3DRunner : MonoBehaviour {
             network = new PPONetworkContinuousSimple(8, 2, 2, 32, DeviceDescriptor.CPUDevice, 0.01f);
             model = new PPOModel(network);
             trainer = new TrainerPPOSimple(model, LearnerDefs.AdamLearner(learningRate),1, 10000, 200);
-            trainer.ClipE
+            trainer.ClipEpsilon = 0.1f;
+        }
+        else
+        {
+            network = new PPONetworkContinuousSimple(5, 2, 2, 32, DeviceDescriptor.CPUDevice, 0.01f);
+            model = new PPOModel(network);
+            trainer = new TrainerPPOSimple(model, LearnerDefs.AdamLearner(learningRate),1, 10000, 200);
+        }
+        
+        
+
+        //test
+        //trainer.RewardDiscountFactor = 0.5f;
+
+        loss = new AutoAverage(iterationForEachTrain);
+        episodePointAve = new AutoAverage(episodeToR
