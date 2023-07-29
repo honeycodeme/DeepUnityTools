@@ -21,4 +21,23 @@ public class MazeEnvironment: MonoBehaviour,IRLEnvironment
     
     private Vector2i startPosition;
     private Vector2i goalPosition;
-    
+    private Vector2i currentPlayerPosition;
+    public bool Win { get; private set; }
+    public float[,] map;
+    private Dictionary<int, GameState> savedState;
+
+    [Header("Info")]
+    public bool isDone = false;
+    public int steps = 0;
+    public float lastReward = 0;
+
+    public readonly int WallInt = 0;
+    public readonly int PlayerInt = 2;
+    public readonly int PathInt = 1;
+    public readonly int GoalInt = 3;
+
+    private struct GameState
+    {
+        public float[,] map;
+        public Vector2i startPosition;
+        public Vector2i goalPosition
