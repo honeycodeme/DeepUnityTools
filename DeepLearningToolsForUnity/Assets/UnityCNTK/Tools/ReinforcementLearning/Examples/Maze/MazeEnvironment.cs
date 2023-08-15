@@ -76,4 +76,20 @@ public class MazeEnvironment: MonoBehaviour,IRLEnvironment
         {
             for (int y = 0; y < mazeDimension.y; ++y)
             {
-                result[y + x * mazeDimension.y] 
+                result[y + x * mazeDimension.y] = (map[x, y]-1.5f)/1.5f;
+            }
+        }
+        return result;
+        
+    }
+    public int CurrentStep() { return steps; }
+    public bool IsEnd() { return isDone; }
+    public bool IsResolved() { return true; }
+    public void Reset() { steps = 0; RestartGame(regenerateMapOnReset); }
+
+    /// <summary>
+    /// take a action and return the reward
+    /// </summary>
+    /// <param name="action">0 left 1 right 2 down 3 up</param>
+    /// <returns>reward of this action</returns>
+    public float S
