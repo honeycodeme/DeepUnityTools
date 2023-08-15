@@ -40,4 +40,25 @@ public class MazeEnvironment: MonoBehaviour,IRLEnvironment
     {
         public float[,] map;
         public Vector2i startPosition;
-        public Vector2i goalPosition
+        public Vector2i goalPosition;
+        public Vector2i currentPlayerPosition;
+        public bool win;
+    }
+
+
+    // Use this for initialization
+    void Start()
+    {
+        savedState = new Dictionary<int, GameState>();
+        RestartGame(true);
+    }
+    
+    public void Step(params float[][] actions)
+    {
+        Debug.Assert(actions.Length == 1);
+        int action = Mathf.RoundToInt(actions[0][0]);
+        lastReward = StepAction(action);
+
+        steps++;
+    }
+    public float LastReward(int actor = 0) { return las
