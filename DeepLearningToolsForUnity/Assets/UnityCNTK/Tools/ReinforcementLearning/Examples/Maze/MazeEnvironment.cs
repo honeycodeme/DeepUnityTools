@@ -92,4 +92,23 @@ public class MazeEnvironment: MonoBehaviour,IRLEnvironment
     /// </summary>
     /// <param name="action">0 left 1 right 2 down 3 up</param>
     /// <returns>reward of this action</returns>
-    public float S
+    public float StepAction(int action)
+    {
+        float returnReward = 0;
+        //calculate the distance to goal before the action
+        int distanceBefore = currentPlayerPosition.ManhattanDistanceTo(goalPosition);
+
+        Vector2i toPosition = currentPlayerPosition;
+        //do the action
+        switch (action)
+        {
+            case 0:
+                toPosition.x -= 1;
+                break;
+            case 1:
+                toPosition.x += 1;
+                break;
+            case 2:
+                toPosition.y -= 1;
+                break;
+     
