@@ -61,4 +61,19 @@ public class MazeEnvironment: MonoBehaviour,IRLEnvironment
 
         steps++;
     }
-    public float LastReward(int actor = 0) { return las
+    public float LastReward(int actor = 0) { return lastReward; }
+
+    /// <summary>
+    /// get the state of the map. a array of all the blocks. 1 means road, 2 means blocked 3 means goal 4 means player; 
+    /// totally 6*6 = 36 floats
+    /// </summary>
+    /// <returns></returns>
+
+    public float[] CurrentState(int actor = 0)
+    {
+        float[] result = new float[mazeDimension.x * mazeDimension.y];
+        for (int x = 0; x < mazeDimension.x; ++x)
+        {
+            for (int y = 0; y < mazeDimension.y; ++y)
+            {
+                result[y + x * mazeDimension.y] 
