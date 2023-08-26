@@ -125,4 +125,27 @@ public class MazeEnvironment: MonoBehaviour,IRLEnvironment
         returnReward += stepChangedReward;
 
         //reward for move closer to the destination
-        int distanceAfter = currentPlayerPosition.ManhattanDistanceTo(g
+        int distanceAfter = currentPlayerPosition.ManhattanDistanceTo(goalPosition);
+        if (distanceAfter < distanceBefore)
+        {
+            returnReward += goCloserReward;
+        }
+
+        //reward for going up
+        if (action == 3)
+        {
+            returnReward += goUpReward;
+        }
+        
+        if (reachGoal)
+        {
+            isDone = true;
+            Win = true;
+        }
+        if (CurrentStep() >= maxStepAllowed)
+        {
+            isDone = true;
+            Win = false;
+            returnReward += failureReward;
+        }
+
