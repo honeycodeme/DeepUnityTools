@@ -149,3 +149,30 @@ public class MazeEnvironment: MonoBehaviour,IRLEnvironment
             returnReward += failureReward;
         }
 
+        return returnReward;
+    }
+
+
+    public void RestartGame(bool regenMap)
+    {
+        isDone = false;
+        steps = 0;
+        lastReward = 0;
+        if (regenMap)
+        {
+            RegenerateMap();
+            SaveState(-1);
+        }
+        else
+        {
+            LoadState(-1);
+        }
+    }
+
+    public void SaveState(int key)
+    {
+        float[,] copiedMap = new float[mazeDimension.x, mazeDimension.y];
+        System.Buffer.BlockCopy(map, 0, copiedMap, 0, map.Length * sizeof(float));
+
+        GameState state = new GameState();
+       
