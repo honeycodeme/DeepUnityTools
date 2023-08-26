@@ -111,4 +111,18 @@ public class MazeEnvironment: MonoBehaviour,IRLEnvironment
             case 2:
                 toPosition.y -= 1;
                 break;
-     
+            case 3:
+                toPosition.y += 1;
+                break;
+            default:
+                Debug.LogError("invalid action number");
+                break;
+        }
+
+        bool reachGoal;
+        float stepChangedReward;
+        StepFromTo(currentPlayerPosition, toPosition, out stepChangedReward, out reachGoal);
+        returnReward += stepChangedReward;
+
+        //reward for move closer to the destination
+        int distanceAfter = currentPlayerPosition.ManhattanDistanceTo(g
