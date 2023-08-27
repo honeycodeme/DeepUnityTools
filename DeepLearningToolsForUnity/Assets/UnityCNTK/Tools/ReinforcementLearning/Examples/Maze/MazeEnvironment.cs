@@ -214,4 +214,25 @@ public class MazeEnvironment: MonoBehaviour,IRLEnvironment
         GenerateExtraPath();
     }
 
-    //mark a path with true. The generator will guarantee that this p
+    //mark a path with true. The generator will guarantee that this path is walkable
+    private void GeneratePossiblePath()
+    {
+
+
+        int place = Random.Range(0, mazeDimension.x);
+        int prevPlace = place;
+        map[place, mazeDimension.y - 1] = GoalInt;
+        goalPosition = new Vector2i(place, mazeDimension.y - 1);
+
+        bool toggle = true;
+        for (int i = mazeDimension.y - 2; i >= 0; --i)
+        {
+            if (toggle)
+            {
+                toggle = false;
+                map[prevPlace, i] = PathInt;
+            }
+            else
+            {
+                toggle = true;
+     
