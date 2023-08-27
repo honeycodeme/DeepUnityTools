@@ -191,4 +191,27 @@ public class MazeEnvironment: MonoBehaviour,IRLEnvironment
         {
             GameState state = fromEnv.savedState[key];
             System.Buffer.BlockCopy(state.map, 0, map, 0, map.Length * sizeof(float));
-            current
+            currentPlayerPosition = state.currentPlayerPosition;
+            goalPosition = state.goalPosition;
+            startPosition = state.startPosition;
+            Win = state.win;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+
+
+
+
+    private void RegenerateMap()
+    {
+        map = new float[mazeDimension.x, mazeDimension.y];
+        GeneratePossiblePath();
+        GenerateExtraPath();
+    }
+
+    //mark a path with true. The generator will guarantee that this p
