@@ -235,4 +235,21 @@ public class MazeEnvironment: MonoBehaviour,IRLEnvironment
             else
             {
                 toggle = true;
-     
+                place = Random.Range(0, mazeDimension.x);
+                for (int j = Mathf.Min(place, prevPlace); j <= Mathf.Max(place, prevPlace); ++j)
+                {
+                    map[j, i] = PathInt;
+                }
+            }
+            prevPlace = place;
+        }
+
+        startPosition = new Vector2i(place, 0);
+        map[place, 0] = PlayerInt;
+        currentPlayerPosition = startPosition;
+    }
+
+    private void GenerateExtraPath()
+    {
+        float wallChance = wallChanceOnNonPath;
+        
