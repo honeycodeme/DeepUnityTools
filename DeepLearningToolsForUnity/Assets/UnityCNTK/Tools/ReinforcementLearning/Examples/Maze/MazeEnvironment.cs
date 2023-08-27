@@ -175,4 +175,20 @@ public class MazeEnvironment: MonoBehaviour,IRLEnvironment
         System.Buffer.BlockCopy(map, 0, copiedMap, 0, map.Length * sizeof(float));
 
         GameState state = new GameState();
-       
+        state.map = copiedMap;
+        state.currentPlayerPosition = currentPlayerPosition;
+        state.goalPosition = goalPosition;
+        state.startPosition = startPosition;
+        state.win = Win;
+        savedState[key] = state;
+    }
+
+
+    public bool LoadState(int key)
+    {
+        MazeEnvironment fromEnv = this;
+        if (fromEnv.savedState.ContainsKey(key))
+        {
+            GameState state = fromEnv.savedState[key];
+            System.Buffer.BlockCopy(state.map, 0, map, 0, map.Length * sizeof(float));
+            current
