@@ -252,4 +252,20 @@ public class MazeEnvironment: MonoBehaviour,IRLEnvironment
     private void GenerateExtraPath()
     {
         float wallChance = wallChanceOnNonPath;
-        
+        if (randomWallChance)
+        {
+            wallChance = Random.Range(0.0f, 1.0f);
+        }
+        for (int i = 0; i < mazeDimension.x; ++i)
+        {
+            for (int j = 0; j < mazeDimension.y; ++j)
+            {
+                if (map[i, j] == WallInt && Random.Range(0.0f, 1.0f) > wallChance)
+                {
+                    map[i, j] = PathInt;
+                }
+            }
+        }
+    }
+
+    private void StepFromTo(Vector2i from, Vector2i to, out float stepC
