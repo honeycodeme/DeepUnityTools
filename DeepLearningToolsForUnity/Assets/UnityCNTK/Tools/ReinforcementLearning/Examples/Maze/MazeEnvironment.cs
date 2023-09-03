@@ -268,4 +268,18 @@ public class MazeEnvironment: MonoBehaviour,IRLEnvironment
         }
     }
 
-    private void StepFromTo(Vector2i from, Vector2i to, out float stepC
+    private void StepFromTo(Vector2i from, Vector2i to, out float stepChangedReward, out bool reachedGoal)
+    {
+        Debug.Assert(map[from.x, from.y] == PlayerInt && currentPlayerPosition.Equals(from));
+        stepChangedReward = 0;
+        stepChangedReward += stepCostReward;
+        if (to.x < 0 || to.y < 0 || to.x >= mazeDimension.x || to.y >= mazeDimension.y)
+        {
+            //run to the edge
+            stepChangedReward += goToWallReward;
+            reachedGoal = false;
+        }
+        else
+        {
+            if (map[to.x, to.y] == WallInt)
+ 
