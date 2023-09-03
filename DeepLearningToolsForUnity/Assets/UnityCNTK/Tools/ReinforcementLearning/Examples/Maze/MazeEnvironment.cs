@@ -297,4 +297,11 @@ public class MazeEnvironment: MonoBehaviour,IRLEnvironment
             else
             {
                 //move successfully
-                map[currentPlayerPosition.x, currentPlayerPosition.y] = Path
+                map[currentPlayerPosition.x, currentPlayerPosition.y] = PathInt;
+                currentPlayerPosition = to;
+                map[currentPlayerPosition.x, currentPlayerPosition.y] = PlayerInt;
+                reachedGoal = false;
+            }
+        }
+    }
+}
