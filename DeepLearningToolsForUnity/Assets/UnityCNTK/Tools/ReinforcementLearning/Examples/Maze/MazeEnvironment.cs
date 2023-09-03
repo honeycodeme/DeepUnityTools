@@ -282,4 +282,19 @@ public class MazeEnvironment: MonoBehaviour,IRLEnvironment
         else
         {
             if (map[to.x, to.y] == WallInt)
- 
+            {
+                //run into a wall
+                //run to the edge
+                stepChangedReward += goToWallReward;
+                reachedGoal = false;
+            }
+            else if (map[to.x, to.y] == GoalInt)
+            {
+                //reach the goal
+                stepChangedReward += maxWinReward;
+                reachedGoal = true;
+            }
+            else
+            {
+                //move successfully
+                map[currentPlayerPosition.x, currentPlayerPosition.y] = Path
