@@ -121,3 +121,7 @@ public class PoleDQLRunner : MonoBehaviour {
         trainer.RandomChanceDropStepInterval = randomChanceDropSteps;
         trainer.StartRandomChance = randomChanceStart;
         trainer.EndRandomChance = randomChanceEnd;
+    }
+
+
+}
