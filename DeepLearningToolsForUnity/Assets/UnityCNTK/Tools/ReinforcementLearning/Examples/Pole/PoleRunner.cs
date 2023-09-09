@@ -50,3 +50,52 @@ public class PoleRunner : MonoBehaviour {
     {
         Time.timeScale = timeScale;
         trainer.SetLearningRate(learningRate);
+    }
+
+    private void FixedUpdate()
+    {
+        RunStep();
+    }
+
+    protected void RunStep()
+    {
+        trainer.Step(environment);
+        bool reset = trainer.Record(environment);
+        episodePoint += environment.LastReward();
+
+        //reset if end
+        if (reset && training)
+        {
+            environment.Reset();
+            episodesThisTrain++;
+            episodePointAve.AddValue(episodePoint);
+            if (episodePointAve.JustUpdated)
+            {
+                scoreUI.text = "(PPO, Continuous) Average Reward:" + episodePointAve.Average;
+            }
+            episodePoint = 0;
+
+            if (episodesThisTrain >= episodeToRunForEachTrain)
+            {
+
+                trainer.TrainAllData(minibatch, iterationForEachTrain);
+                //record and print the loss
+                print("Training Loss:" + trainer.LastLoss);
+                trainedCount++;
+                trainer.ClearData();
+                episodesThisTrain = 0;
+            }
+
+        }
+    }
+    public void Save()
+    {
+        var data = model.Save();
+        File.WriteAllBytes(saveDataPath, data);
+    }
+    public void Load()
+    {
+        var bytes = File.ReadAllBytes(saveDataPath);
+        model.Restore(bytes);
+    }
+}
