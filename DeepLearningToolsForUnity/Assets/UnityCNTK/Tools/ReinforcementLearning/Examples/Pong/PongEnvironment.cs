@@ -25,4 +25,25 @@ public class PongEnvironment : MonoBehaviour,IRLEnvironment {
 
     public float leftStartX = -1;
     public float rightStartX = 1;
-    public Vector2 arenaSize = new Vector2
+    public Vector2 arenaSize = new Vector2(2.2f, 1.0f);
+
+
+    [Header("Informations")]
+    public float leftHitOrMiss = 0;
+    public float rightHitOrMiss = 0;
+
+    public GameState CurrentGameState { get { return currentGameState; } }
+    private GameState currentGameState;
+    
+
+
+    protected int step = 0;
+    public int framesPerStep = 5;
+
+    public struct GameState
+    {
+        public Vector2 ballVelocity;
+        public Vector2 ballPosition;
+        public float leftY;
+        public float rightY;
+        public int gameWinPla
