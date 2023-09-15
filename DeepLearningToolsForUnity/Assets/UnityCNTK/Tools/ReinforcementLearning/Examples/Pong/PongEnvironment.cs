@@ -46,4 +46,33 @@ public class PongEnvironment : MonoBehaviour,IRLEnvironment {
         public Vector2 ballPosition;
         public float leftY;
         public float rightY;
-        public int gameWinPla
+        public int gameWinPlayer;
+        public float rewardLastStepLeft;
+        public float rewardLastStepRight;
+    }
+
+    public enum ControlSource
+    {
+        FromStep,
+        FromPlayerInput,
+        SimpleAI
+    }
+
+    public int GameWinPlayer
+    {
+        get
+        {
+            return currentGameState.gameWinPlayer;
+        }
+        protected set
+        {
+            currentGameState.gameWinPlayer = value;
+        }
+    }
+
+
+
+    private void Start()
+    {
+        Physics.autoSimulation = false;
+        Reset();
