@@ -76,3 +76,25 @@ public class PongEnvironment : MonoBehaviour,IRLEnvironment {
     {
         Physics.autoSimulation = false;
         Reset();
+    }
+
+
+    public float[] CurrentState(int actor=0)
+    {
+        float[] result = null;
+        if (actor == 0)
+        {
+            result = new float[] {
+                currentGameState.leftY,
+                currentGameState.rightY,
+                currentGameState.ballPosition.x,
+                currentGameState.ballPosition.y,
+                currentGameState.ballVelocity.x,
+                currentGameState.ballVelocity.y
+            };
+        }
+        else
+        {
+            result = new float[] {
+                currentGameState.rightY,
+                curr
