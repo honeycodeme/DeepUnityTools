@@ -120,4 +120,16 @@ public class PongEnvironment : MonoBehaviour,IRLEnvironment {
         return true;
     }
 
-    //public v
+    //public void Step(float[] actions) { Debug.LogError("Need two actor"); }
+
+    /// <summary>
+    /// Actions: 0:down, 1 not move, 2 up
+    /// </summary>
+    /// <param name="actions"></param>
+    public void Step(params float[][] actions)
+    {
+        //get action from different sources
+        int actionLeft;
+        if (playerLeftControl == ControlSource.FromPlayerInput) {
+            actionLeft = Input.GetButton("Up")?2:(Input.GetButton("Down")?0:1);
+        } else if (playerLeftControl == Cont
