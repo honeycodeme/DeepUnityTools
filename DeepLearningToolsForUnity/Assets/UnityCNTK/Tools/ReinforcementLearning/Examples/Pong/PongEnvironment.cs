@@ -97,4 +97,27 @@ public class PongEnvironment : MonoBehaviour,IRLEnvironment {
         {
             result = new float[] {
                 currentGameState.rightY,
-                curr
+                currentGameState.leftY,
+                -currentGameState.ballPosition.x,
+                currentGameState.ballPosition.y,
+                -currentGameState.ballVelocity.x,
+                currentGameState.ballVelocity.y
+            };
+        }
+        return result;
+    }
+    /// <summary>
+    /// steps from the start of this episode
+    /// </summary>
+    /// <returns></returns>
+    public int CurrentStep()
+    {
+        return step;
+    }
+
+    public bool IsResolved()
+    {
+        return true;
+    }
+
+    //public v
