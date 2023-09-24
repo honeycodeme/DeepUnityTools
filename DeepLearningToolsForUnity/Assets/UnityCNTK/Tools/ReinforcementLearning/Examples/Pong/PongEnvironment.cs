@@ -132,4 +132,21 @@ public class PongEnvironment : MonoBehaviour,IRLEnvironment {
         int actionLeft;
         if (playerLeftControl == ControlSource.FromPlayerInput) {
             actionLeft = Input.GetButton("Up")?2:(Input.GetButton("Down")?0:1);
-        } else if (playerLeftControl == Cont
+        } else if (playerLeftControl == ControlSource.SimpleAI) {
+            actionLeft = SimpleAI(0);
+        } else {
+            actionLeft = (int)actions[0][0]; 
+        }
+
+        int actionRight;
+        if (playerRightControl == ControlSource.FromPlayerInput)
+        {
+            actionRight = Input.GetButton("Up") ? 2 : (Input.GetButton("Down") ? 0 : 1);
+        }
+        else if (playerRightControl == ControlSource.SimpleAI)
+        {
+            actionRight = SimpleAI(1);
+        }
+        else
+        {
+            actionRigh
