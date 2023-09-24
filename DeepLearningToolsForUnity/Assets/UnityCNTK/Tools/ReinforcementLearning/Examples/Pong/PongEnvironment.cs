@@ -149,4 +149,18 @@ public class PongEnvironment : MonoBehaviour,IRLEnvironment {
         }
         else
         {
-            actionRigh
+            actionRight = (int)actions[playerLeftControl == ControlSource.FromStep?1:0][0];
+        }
+
+        //clear the reward 
+        currentGameState.rewardLastStepLeft = 0;
+        currentGameState.rewardLastStepRight = 0;
+        for (int i = 0; i < framesPerStep; ++i)
+        {
+
+
+            Debug.Assert(actionLeft >= ActionDown && actionLeft < ActionUp + 1);
+            Debug.Assert(actionLeft >= ActionDown && actionLeft < ActionUp + 1);
+
+            //move the rackets
+            currentGameState.leftY += racke
