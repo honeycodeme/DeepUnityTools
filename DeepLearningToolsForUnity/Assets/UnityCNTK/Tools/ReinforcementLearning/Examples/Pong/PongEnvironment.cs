@@ -170,3 +170,15 @@ public class PongEnvironment : MonoBehaviour,IRLEnvironment {
 
             //move the ball
             Vector2 oldBallPosition = currentGameState.ballPosition;
+            currentGameState.ballPosition += currentGameState.ballVelocity;
+
+            //detect collision of ball with wall
+            Vector2 newBallVel = currentGameState.ballVelocity;
+            if (currentGameState.ballPosition.y > arenaSize.y / 2 || currentGameState.ballPosition.y < -arenaSize.y / 2)
+            {
+                newBallVel.y = -newBallVel.y;
+
+            }
+            if (currentGameState.ballPosition.x > arenaSize.x / 2)
+            {
+                currentGameState.rewardLastStepLeft
