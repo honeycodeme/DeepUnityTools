@@ -163,4 +163,10 @@ public class PongEnvironment : MonoBehaviour,IRLEnvironment {
             Debug.Assert(actionLeft >= ActionDown && actionLeft < ActionUp + 1);
 
             //move the rackets
-            currentGameState.leftY += racke
+            currentGameState.leftY += racketSpeed * (actionLeft - 1);
+            currentGameState.leftY = Mathf.Clamp(currentGameState.leftY, -arenaSize.y / 2 + racketWidth / 2, arenaSize.y / 2 - racketWidth / 2);
+            currentGameState.rightY += racketSpeed * (actionRight - 1);
+            currentGameState.rightY = Mathf.Clamp(currentGameState.rightY, -arenaSize.y / 2 + racketWidth / 2, arenaSize.y / 2 - racketWidth / 2);
+
+            //move the ball
+            Vector2 oldBallPosition = currentGameState.ballPosition;
