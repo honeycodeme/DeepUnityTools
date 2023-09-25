@@ -195,3 +195,12 @@ public class PongEnvironment : MonoBehaviour,IRLEnvironment {
             }
 
             //detect collision of the ball with the rackets
+            if (currentGameState.ballPosition.x < leftStartX && oldBallPosition.x > leftStartX)
+            {
+                Vector2 moveVector = (currentGameState.ballPosition - oldBallPosition);
+                float yHit = (moveVector * Mathf.Abs((oldBallPosition.x - leftStartX) / moveVector.x) + oldBallPosition).y;
+                float yHitRatio = (currentGameState.leftY - yHit) / (racketWidth / 2);
+                if (Mathf.Abs(yHitRatio) < 1)
+                {
+                    //hit the left racket
+                    newBallVel.x = -newBallVe
