@@ -181,4 +181,17 @@ public class PongEnvironment : MonoBehaviour,IRLEnvironment {
             }
             if (currentGameState.ballPosition.x > arenaSize.x / 2)
             {
-                currentGameState.rewardLastStepLeft
+                currentGameState.rewardLastStepLeft += winReward;
+                currentGameState.rewardLastStepRight += failureReward;
+                GameWinPlayer = 0;
+                break;
+            }
+            else if (currentGameState.ballPosition.x < -arenaSize.x / 2)
+            {
+                currentGameState.rewardLastStepRight += winReward;
+                currentGameState.rewardLastStepLeft += failureReward;
+                GameWinPlayer = 1;
+                break;
+            }
+
+            //detect collision of the ball with the rackets
