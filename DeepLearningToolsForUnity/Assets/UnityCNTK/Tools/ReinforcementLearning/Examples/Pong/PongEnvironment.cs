@@ -203,4 +203,17 @@ public class PongEnvironment : MonoBehaviour,IRLEnvironment {
                 if (Mathf.Abs(yHitRatio) < 1)
                 {
                     //hit the left racket
-                    newBallVel.x = -newBallVe
+                    newBallVel.x = -newBallVel.x;
+                    newBallVel.y = -Mathf.Abs(newBallVel.x) * yHitRatio * 2;
+                    newBallVel = newBallVel.normalized * ballSpeed;
+                    currentGameState.rewardLastStepLeft += hitBallReward;
+                    leftHitOrMiss = 1;
+                }
+                else
+                {
+                    leftHitOrMiss = -1;
+                }
+            }
+            else if (currentGameState.ballPosition.x > rightStartX && oldBallPosition.x < rightStartX)
+            {
+   
