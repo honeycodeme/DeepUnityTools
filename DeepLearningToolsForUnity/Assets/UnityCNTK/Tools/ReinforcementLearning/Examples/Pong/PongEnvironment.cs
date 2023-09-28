@@ -223,4 +223,21 @@ public class PongEnvironment : MonoBehaviour,IRLEnvironment {
                 {
                     //hit the right racket
                     newBallVel.x = -newBallVel.x;
-                    newBallVel.y = -Mathf.Abs(newBall
+                    newBallVel.y = -Mathf.Abs(newBallVel.x) * yHitRatio * 2;
+                    newBallVel = newBallVel.normalized * ballSpeed;
+                    currentGameState.rewardLastStepRight += hitBallReward;
+                    rightHitOrMiss = 1;
+                }
+                else
+                {
+                    rightHitOrMiss = -1;
+                }
+            }
+            else
+            {
+                leftHitOrMiss = 0;
+                rightHitOrMiss = 0;
+            }
+
+            //update the velocity
+            currentGa
