@@ -216,4 +216,11 @@ public class PongEnvironment : MonoBehaviour,IRLEnvironment {
             }
             else if (currentGameState.ballPosition.x > rightStartX && oldBallPosition.x < rightStartX)
             {
-   
+                Vector2 moveVector = (currentGameState.ballPosition - oldBallPosition);
+                float yHit = (moveVector * Mathf.Abs((oldBallPosition.x - rightStartX) / moveVector.x) + oldBallPosition).y;
+                float yHitRatio = (currentGameState.rightY - yHit) / (racketWidth / 2);
+                if (Mathf.Abs(yHitRatio) < 1)
+                {
+                    //hit the right racket
+                    newBallVel.x = -newBallVel.x;
+                    newBallVel.y = -Mathf.Abs(newBall
