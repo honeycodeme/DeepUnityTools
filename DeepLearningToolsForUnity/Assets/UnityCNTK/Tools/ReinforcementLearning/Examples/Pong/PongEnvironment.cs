@@ -240,4 +240,12 @@ public class PongEnvironment : MonoBehaviour,IRLEnvironment {
             }
 
             //update the velocity
-            currentGa
+            currentGameState.ballVelocity = newBallVel;
+        }
+
+        //test
+        //currentGameState.rewardLastStepLeft = (0.2f - Mathf.Abs(currentGameState.leftY - currentGameState.ballPosition.y))*5;
+        //currentGameState.rewardLastStepRight = (0.2f - Mathf.Abs(currentGameState.rightY - currentGameState.ballPosition.y)) * 5;
+        //if(Mathf.Abs(currentGameState.leftY - currentGameState.ballPosition.y) < racketWidth / 2)
+        //{
+        //    currentGameState.rewardLastStepLeft = 0.1f
