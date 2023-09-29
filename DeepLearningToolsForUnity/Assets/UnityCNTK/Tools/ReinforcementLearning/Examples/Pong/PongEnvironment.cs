@@ -273,4 +273,15 @@ public class PongEnvironment : MonoBehaviour,IRLEnvironment {
     // to be implemented by the developer
     public void Reset()
     {
-     
+        currentGameState.leftY = 0;
+        currentGameState.rightY = 0;
+        currentGameState.ballPosition = Vector2.zero;
+        Vector2 initialVel = Random.insideUnitCircle;
+        if (Mathf.Abs(initialVel.y) > Mathf.Abs(initialVel.x))
+        {
+            float temp = initialVel.y;
+            initialVel.y = initialVel.x;
+            initialVel.x = temp;
+        }
+        currentGameState.ballVelocity = initialVel.normalized * ballSpeed;
+        currentGameState.r
