@@ -248,4 +248,29 @@ public class PongEnvironment : MonoBehaviour,IRLEnvironment {
         //currentGameState.rewardLastStepRight = (0.2f - Mathf.Abs(currentGameState.rightY - currentGameState.ballPosition.y)) * 5;
         //if(Mathf.Abs(currentGameState.leftY - currentGameState.ballPosition.y) < racketWidth / 2)
         //{
-        //    currentGameState.rewardLastStepLeft = 0.1f
+        //    currentGameState.rewardLastStepLeft = 0.1f;
+        //}
+        //else
+        //{
+        //    currentGameState.rewardLastStepLeft = 0.0f;
+       // }
+        //currentGameState.rewardLastStepLeft = 0.02f;
+
+        step++;
+    }
+
+
+    public float LastReward(int actor = 0)
+    {
+        return actor == 0 ? currentGameState.rewardLastStepLeft : currentGameState.rewardLastStepRight;
+    }
+
+    public bool IsEnd()
+    {
+        return currentGameState.gameWinPlayer >= 0;
+    }
+
+    // to be implemented by the developer
+    public void Reset()
+    {
+     
