@@ -284,4 +284,15 @@ public class PongEnvironment : MonoBehaviour,IRLEnvironment {
             initialVel.x = temp;
         }
         currentGameState.ballVelocity = initialVel.normalized * ballSpeed;
-        currentGameState.r
+        currentGameState.rewardLastStepRight = 0;
+        currentGameState.rewardLastStepLeft = 0;
+        currentGameState.gameWinPlayer = -1;
+        step = 0;
+    }
+
+    protected int SimpleAI(int actorNum)
+    {
+        var states = CurrentState(actorNum);
+        return states[0] > states[3] ? ActionDown : ActionUp;
+    }
+}
