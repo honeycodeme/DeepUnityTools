@@ -20,4 +20,23 @@ public class PongPPORunner : MonoBehaviour {
 
     public int episodeToRunForEachTrain = 30;
     public int iterationForEachTrain = 50;
-    public int
+    public int minibatch = 32;
+    public bool training = true;
+    [Range(0, 100)]
+    public float timeScale;
+
+    public int Steps { get { return trainer.Steps; } }
+    [Header("info")]
+    public int currentEpisode = 0;
+    public int leftWin = 0;
+    public int rightWin = 0;
+
+    public AutoAverage winningRate50Left = new AutoAverage(50);
+    protected AutoAverage loss;
+    public AutoAverage episodePointAve;
+    protected float episodePoint;
+
+    // Use this for initialization
+    void Start()
+    {
+        var network = new PPONetworkDiscreteSimple(6, 3
