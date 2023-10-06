@@ -39,4 +39,19 @@ public class PongPPORunner : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
-        var network = new PPONetworkDiscreteSimple(6, 3
+        var network = new PPONetworkDiscreteSimple(6, 3, 4, 64, DeviceDescriptor.CPUDevice, 0.01f);
+        model = new PPOModel(network);
+        trainer = new TrainerPPOSimple(model, LearnerDefs.AdamLearner(learningRate),1, 50000, 2000);
+
+        //test
+        //trainer.RewardDiscountFactor = 0.5f;
+
+        loss = new AutoAverage(iterationForEachTrain);
+        episodePointAve = new AutoAverage(episodeToRunForEachTrain);
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        Time.timeScale = timeScale;
+        trainer
