@@ -54,4 +54,25 @@ public class PongPPORunner : MonoBehaviour {
     void Update()
     {
         Time.timeScale = timeScale;
-        trainer
+        trainer.SetLearningRate(learningRate);
+    }
+
+    private void FixedUpdate()
+    {
+        RunStep();
+    }
+
+    protected void RunStep()
+    {
+        trainer.Step(environment);
+        bool reset = trainer.Record(environment);
+        episodePoint += environment.LastReward();
+
+        //reset if end
+        if (reset && training)
+        {
+            currentEpisode++;
+            if (environment.GameWinPlayer == 0)
+            {
+                leftWin++;
+                winningRate50Left.AddValue(1);
