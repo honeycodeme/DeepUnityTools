@@ -93,4 +93,23 @@ public class PongPPORunner : MonoBehaviour {
             {
 
                 trainer.TrainAllData(minibatch, iterationForEachTrain);
-                //record and print the 
+                //record and print the loss
+                print("Training Loss:" + trainer.LastLoss);
+                trainedCount++;
+                trainer.ClearData();
+                episodesThisTrain = 0;
+            }
+
+        }
+    }
+    public void Save()
+    {
+        var data = model.Save();
+        File.WriteAllBytes(saveDataPath, data);
+    }
+    public void Load()
+    {
+        var bytes = File.ReadAllBytes(saveDataPath);
+        model.Restore(bytes);
+    }
+}
