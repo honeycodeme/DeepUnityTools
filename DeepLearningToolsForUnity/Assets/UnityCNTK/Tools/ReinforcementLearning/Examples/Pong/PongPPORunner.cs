@@ -76,3 +76,21 @@ public class PongPPORunner : MonoBehaviour {
             {
                 leftWin++;
                 winningRate50Left.AddValue(1);
+            }
+            else
+            {
+                rightWin++;
+                winningRate50Left.AddValue(0);
+            }
+
+
+            environment.Reset();
+            episodesThisTrain++;
+            episodePointAve.AddValue(episodePoint);
+            episodePoint = 0;
+
+            if (episodesThisTrain >= episodeToRunForEachTrain)
+            {
+
+                trainer.TrainAllData(minibatch, iterationForEachTrain);
+                //record and print the 
