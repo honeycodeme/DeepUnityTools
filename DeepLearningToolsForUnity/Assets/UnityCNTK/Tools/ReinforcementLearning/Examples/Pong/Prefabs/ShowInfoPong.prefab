@@ -156,4 +156,24 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 224046646122915816}
-  - component: {fileID:
+  - component: {fileID: 222404784817521472}
+  - component: {fileID: 114746006606756516}
+  m_Layer: 5
+  m_Name: Text (5)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1638165869626658
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 224723083988118962}
+  - component: {fileID: 222137804761885896}
+  - component: {fileID: 114651771861275112}
+  m_Layer: 5
+  m
