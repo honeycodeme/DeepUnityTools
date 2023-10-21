@@ -215,4 +215,22 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticE
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1827740160416340
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 224467489824907320}
+  - component: {fileID: 222078387204907534}
+  - component: {fileID: 114997784278030026}
+  - component: {fileID: 114073683914802046}
+  m_Layer: 5
+  m_Name: SaveCheckpoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFl
