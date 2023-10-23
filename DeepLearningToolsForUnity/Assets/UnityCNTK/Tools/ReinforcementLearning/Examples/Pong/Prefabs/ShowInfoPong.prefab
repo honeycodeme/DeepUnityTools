@@ -303,4 +303,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1352144459699464}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 446a4ef7
+  m_Script: {fileID: 11500000, guid: 446a4ef7306250c4d9fef43f9fdd79a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DQLrunner: {fileID: 0}
+  PPOrunner: {fileID: 0}
+  environment: {fileID: 0}
+  stepsText: {fileID: 114278616095859416}
+  episodeText: {fileID: 114013995302951348}
+  leftWinText: {fileID: 114651771861275112}
+  rightWinText: {fileID: 114740056053317140}
+  leftWinPerText: {fileID: 114597564986033776}
+  leftHitPercText: {fileID: 114746006606756516}
+  infoText: {fileID: 114449536230316396}
+--- !u!114 &11
