@@ -769,4 +769,19 @@ CanvasRenderer:
 --- !u!222 &222078387204907534
 CanvasRenderer:
   m_ObjectHideFlags: 1
-  m_Prefa
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1827740160416340}
+--- !u!222 &222137804761885896
+CanvasRenderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1638165869626658}
+--- !u!222 &222280756824539858
+CanvasRenderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1332077345786100}
+--- !u!2
