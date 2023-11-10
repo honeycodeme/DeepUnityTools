@@ -752,4 +752,21 @@ MonoBehaviour:
 CanvasRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
-  m_Pref
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1402406657309400}
+--- !u!222 &222036743688528240
+CanvasRenderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1116252276061500}
+--- !u!222 &222069172024387030
+CanvasRenderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1818123587391824}
+--- !u!222 &222078387204907534
+CanvasRenderer:
+  m_ObjectHideFlags: 1
+  m_Prefa
