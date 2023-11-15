@@ -1009,4 +1009,19 @@ RectTransform:
 --- !u!224 &224717029755511182
 RectTransform:
   m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1818123587391824}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 224058667813400078}
+  m_Father: {fileID: 224041434795727092}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.44543272, y: 0}
+  m_AnchorMax: {x: 0.44543272, y: 0}
+  m_AnchoredPosition: {x: -53.419983, y: 27.679932}
+  m_SizeDelta: {x: 79.76, y: 25.16}
+  m_
