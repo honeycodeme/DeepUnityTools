@@ -1056,4 +1056,20 @@ RectTransform:
   - {fileID: 224019052345696574}
   - {fileID: 224645934001991286}
   - {fileID: 224723083988118962}
-  - {file
+  - {fileID: 224943010920054968}
+  - {fileID: 224423474234277680}
+  - {fileID: 224046646122915816}
+  - {fileID: 224131673404964970}
+  m_Father: {fileID: 224041434795727092}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!224 &224943010920054968
+RectTransform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabIn
