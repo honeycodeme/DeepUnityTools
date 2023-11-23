@@ -190,3 +190,40 @@ namespace UnityCNTK.ReinforcementLearning
                 }
             }
             
+            //test
+            //var test = outputDataMap[testOutputProb].GetDenseData<float>(testOutputProb)[0];
+            //Debug.Log("test:" + string.Join(",", test));
+
+            return actions;
+        }
+
+        public float[] EvaluateValue(float[] state)
+        {
+            //input data maps
+            var inputDataMap = new Dictionary<Variable, Value>();
+
+            Value inputStatedata = Value.CreateBatch(Network.InputState.Shape, state, Network.Device, true);
+            inputDataMap.Add(Network.InputState, inputStatedata);
+
+            //output datamaps
+            var outputDataMap = new Dictionary<Variable, Value>();
+            outputDataMap.Add(Network.OutputValue, null);
+
+            Network.ValueFunction.Evaluate(inputDataMap, outputDataMap, Device);
+            var values = outputDataMap[Network.OutputValue].GetDenseData<float>(Network.OutputValue);
+
+            float[] result = new float[values.Count];
+            for(int i = 0;i < result.Length; ++i)
+            {
+                result[i] = values[i][0];
+            }
+            return result;
+        }
+    }
+
+
+
+
+
+
+}
