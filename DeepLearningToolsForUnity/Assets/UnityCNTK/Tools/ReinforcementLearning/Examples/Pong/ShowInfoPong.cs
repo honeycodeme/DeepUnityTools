@@ -35,3 +35,13 @@ public class ShowInfoPong : MonoBehaviour {
         else if (PPOrunner && PPOrunner.isActiveAndEnabled)
         {
             stepsText.text = "Total Steps: " + PPOrunner.Steps.ToString();
+            episodeText.text = "Total Episodes: " + PPOrunner.currentEpisode.ToString();
+            leftWinText.text = PPOrunner.leftWin.ToString();
+            rightWinText.text = PPOrunner.rightWin.ToString();
+            leftWinPerText.text = "Win Rate: " + (PPOrunner.winningRate50Left.Average).ToString();
+            leftHitPercText.text = "Ave Reward: " + PPOrunner.episodePointAve.Average.ToString();
+            infoText.gameObject.SetActive(true);
+            infoText.text = "PPO not working for this yet";
+        }
+    }
+}
