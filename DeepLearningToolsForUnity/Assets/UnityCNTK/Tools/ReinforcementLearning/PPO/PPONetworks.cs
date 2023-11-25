@@ -32,4 +32,16 @@ namespace UnityCNTK.ReinforcementLearning
 
 
     /// <summary>
-    /// PPO network for continuous action space similiar to one of Unity ML's pyth
+    /// PPO network for continuous action space similiar to one of Unity ML's python implementation
+    /// https://github.com/Unity-Technologies/ml-agents
+    /// </summary>
+    public class PPONetworkContinuousSimple : PPONetwork
+    {
+        public override int StateSize { get; protected set; }
+        public override int ActionSize { get; protected set; }
+
+        public override bool IsActionContinuous { get; protected set; } = true;
+        public override Variable InputState { get; protected set; }
+
+        //actor outputs
+        public override Variable OutputMean { get; protected set; }   
