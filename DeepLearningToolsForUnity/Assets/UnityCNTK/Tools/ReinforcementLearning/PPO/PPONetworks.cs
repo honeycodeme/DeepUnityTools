@@ -19,4 +19,17 @@ namespace UnityCNTK.ReinforcementLearning
 
         public abstract Variable OutputMean { get; protected set; }
         public abstract Variable OutputVariance { get; protected set; }
-        public abstr
+        public abstract Variable OutputProbabilities { get; protected set; }
+        public abstract Variable OutputValue { get; protected set; }
+
+        //CNTK functions to use directly
+        public abstract Function ValueFunction { get; protected set; }
+        public abstract Function PolicyFunction { get; protected set; }
+
+        public abstract DeviceDescriptor Device { get; protected set; }
+
+    }
+
+
+    /// <summary>
+    /// PPO network for continuous action space similiar to one of Unity ML's pyth
