@@ -51,4 +51,14 @@ namespace UnityCNTK.ReinforcementLearning
         public override Variable OutputValue { get; protected set; }
         //CNTK functions to use directly
         public override Function ValueFunction { get; protected set; }
-        public 
+        public override Function PolicyFunction { get; protected set; }
+
+        protected SequentialNetworkDense valueNetwork;
+        protected SequentialNetworkDense policyNetwork;
+
+        public override DeviceDescriptor Device { get; protected set; }
+        public PPONetworkContinuousSimple(int stateSize, int actionSize, int numLayers, int hiddenSize, DeviceDescriptor device, float initialWeightScale = 0.01f)
+        {
+            Device = device;
+            StateSize = stateSize;
+            ActionSize = actionSi
