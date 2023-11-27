@@ -61,4 +61,12 @@ namespace UnityCNTK.ReinforcementLearning
         {
             Device = device;
             StateSize = stateSize;
-            ActionSize = actionSi
+            ActionSize = actionSize;
+
+            //create actor network part
+            var inputA = new InputLayerDense(stateSize);
+            var outputA = new OutputLayerDense(actionSize, null, OutputLayerDense.LossFunction.None);
+            outputA.InitialWeightScale = initialWeightScale;
+            valueNetwork = new SequentialNetworkDense(inputA, LayerDefineHelper.DenseLayers(numLayers, hiddenSize, true, NormalizationMethod.None, 0, initialWeightScale, new TanhDef()), outputA, device);
+            InputState = inputA.InputVariable;
+            OutputMean = outputA.GetOutput
