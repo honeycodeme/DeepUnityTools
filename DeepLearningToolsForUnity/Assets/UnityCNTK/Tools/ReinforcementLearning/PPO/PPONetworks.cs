@@ -44,4 +44,11 @@ namespace UnityCNTK.ReinforcementLearning
         public override Variable InputState { get; protected set; }
 
         //actor outputs
-        public override Variable OutputMean { get; protected set; }   
+        public override Variable OutputMean { get; protected set; }             //for continuous action
+        public override Variable OutputVariance { get; protected set; }         //for continuous action
+        public override Variable OutputProbabilities { get; protected set; }    //for discrete action
+        //critic output
+        public override Variable OutputValue { get; protected set; }
+        //CNTK functions to use directly
+        public override Function ValueFunction { get; protected set; }
+        public 
