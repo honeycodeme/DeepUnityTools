@@ -69,4 +69,14 @@ namespace UnityCNTK.ReinforcementLearning
             outputA.InitialWeightScale = initialWeightScale;
             valueNetwork = new SequentialNetworkDense(inputA, LayerDefineHelper.DenseLayers(numLayers, hiddenSize, true, NormalizationMethod.None, 0, initialWeightScale, new TanhDef()), outputA, device);
             InputState = inputA.InputVariable;
-            OutputMean = outputA.GetOutput
+            OutputMean = outputA.GetOutputVariable();
+            OutputProbabilities = null; //this is for discrete action only.
+
+            //the variance output will use a seperate parameter as in Unity's implementation
+            var log_sigma_sq = new Parameter(new int[] { actionSize }, DataType.Float, CNTKLib.ConstantInitializer(0), device, "PPO.log_sigma_square");
+            //test
+            OutputVariance = CNTKLib.Exp(log_sigma_sq);
+
+            PolicyFunction = Function.Combine(new Variable[] { OutputMean, OutputVariance });
+
+            //cre
