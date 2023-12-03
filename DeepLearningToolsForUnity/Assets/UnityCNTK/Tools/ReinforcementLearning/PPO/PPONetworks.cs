@@ -85,4 +85,19 @@ namespace UnityCNTK.ReinforcementLearning
             outputC.InitialWeightScale = initialWeightScale;
             policyNetwork = new SequentialNetworkDense(inputC, LayerDefineHelper.DenseLayers(numLayers, hiddenSize, true, NormalizationMethod.None, 0, initialWeightScale, new TanhDef()), outputC, device);
             OutputValue = outputC.GetOutputVariable();
-            ValueFunction
+            ValueFunction = OutputValue.ToFunction();
+
+            //PolicyParameters.Add(log_sigma_sq);
+        }
+    }
+
+    /// <summary>
+    /// PPO network for discrete action space similiar to one of Unity ML's python implementation
+    /// https://github.com/Unity-Technologies/ml-agents
+    /// </summary>
+    public class PPONetworkDiscreteSimple : PPONetwork
+    {
+        public override int StateSize { get; protected set; }
+        public override int ActionSize { get; protected set; }
+
+        public override bool IsActionContinuous { get; protected set; } = false;
