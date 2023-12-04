@@ -108,4 +108,13 @@ namespace UnityCNTK.ReinforcementLearning
         public override Variable OutputVariance { get; protected set; }         //for continuous action
         public override Variable OutputProbabilities { get; protected set; }    //for discrete action
         //critic output
-        public override Variable OutputValue
+        public override Variable OutputValue { get; protected set; }
+        //CNTK functions to use directly
+        public override Function ValueFunction { get; protected set; }
+        public override Function PolicyFunction { get; protected set; }
+
+        protected SequentialNetworkDense valueNetwork;
+        protected SequentialNetworkDense policyNetwork;
+
+        public override DeviceDescriptor Device { get; protected set; }
+        public PPONetworkDiscreteSimple(int stateSize, int actionSize, int nu
