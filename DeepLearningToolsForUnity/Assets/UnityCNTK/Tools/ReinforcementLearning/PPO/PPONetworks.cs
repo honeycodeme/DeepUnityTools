@@ -117,4 +117,14 @@ namespace UnityCNTK.ReinforcementLearning
         protected SequentialNetworkDense policyNetwork;
 
         public override DeviceDescriptor Device { get; protected set; }
-        public PPONetworkDiscreteSimple(int stateSize, int actionSize, int nu
+        public PPONetworkDiscreteSimple(int stateSize, int actionSize, int numLayers, int hiddenSize, DeviceDescriptor device, float initialWeightScale = 0.01f)
+        {
+            Device = device;
+            StateSize = stateSize;
+            ActionSize = actionSize;
+
+            //create actor network part
+            var inputA = new InputLayerDense(stateSize);
+            var outputA = new OutputLayerDense(actionSize, new SoftmaxDef(), OutputLayerDense.LossFunction.None);
+            outputA.InitialWeightScale = initialWeightScale;
+            valueNetwork = new SequentialNetworkD
