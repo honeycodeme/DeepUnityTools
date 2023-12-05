@@ -127,4 +127,13 @@ namespace UnityCNTK.ReinforcementLearning
             var inputA = new InputLayerDense(stateSize);
             var outputA = new OutputLayerDense(actionSize, new SoftmaxDef(), OutputLayerDense.LossFunction.None);
             outputA.InitialWeightScale = initialWeightScale;
-            valueNetwork = new SequentialNetworkD
+            valueNetwork = new SequentialNetworkDense(inputA, LayerDefineHelper.DenseLayers(numLayers, hiddenSize, true, NormalizationMethod.None, 0, initialWeightScale, new TanhDef()), outputA, device);
+            InputState = inputA.InputVariable;
+            OutputMean = null;
+            OutputVariance = null;
+            OutputProbabilities = outputA.GetOutputVariable(); //this is for discrete action only.
+
+            PolicyFunction = OutputProbabilities.ToFunction();
+
+            //create value network
+            var inputC = new InputLay
