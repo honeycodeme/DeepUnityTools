@@ -136,4 +136,18 @@ namespace UnityCNTK.ReinforcementLearning
             PolicyFunction = OutputProbabilities.ToFunction();
 
             //create value network
-            var inputC = new InputLay
+            var inputC = new InputLayerCNTKVar(InputState);
+            var outputC = new OutputLayerDense(1, null, OutputLayerDense.LossFunction.None);
+            outputC.InitialWeightScale = initialWeightScale;
+            policyNetwork = new SequentialNetworkDense(inputC, LayerDefineHelper.DenseLayers(numLayers, hiddenSize, true, NormalizationMethod.None, 0, initialWeightScale, new TanhDef()), outputC, device);
+            OutputValue = outputC.GetOutputVariable();
+            ValueFunction = OutputValue.ToFunction();
+        }
+    }
+
+
+
+
+
+
+}
