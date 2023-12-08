@@ -236,3 +236,113 @@ namespace UnityCNTK.ReinforcementLearning
             fetches.Add(new Tuple<string, int, string>("Action", 0, "Action"));
             fetches.Add(new Tuple<string, int, string>("ActionProb", 0, "ActionProb"));
             fetches.Add(new Tuple<string, int, string>("TargetValue", 0, "TargetValue"));
+            fetches.Add(new Tuple<string, int, string>("Advantage", 0, "Advantage"));
+            var samples = dataBuffer.RandomSample(batchSize, fetches.ToArray());
+
+            float[] states = (float[])samples["State"];
+            float[] actions = (float[])samples["Action"];
+            float[] actionProbs = (float[])samples["ActionProb"];
+            float[] targetValues = (float[])samples["TargetValue"];
+            float[] advantages = (float[])samples["Advantage"];
+            TrainBatch(states, actions, actionProbs, targetValues, advantages);
+            
+        }
+        
+        public void TrainBatch(float[] states,float[] actions,float[] actionProbs,float[] targetValues,float[] advantages)
+        {
+            //input map
+            var inputMapGeneratorTrain = new Dictionary<Variable, Value>();
+            var inputActions = Value.CreateBatch(Model.InputAction.Shape, actions, Model.Device);
+            inputMapGeneratorTrain.Add(Model.InputAction, inputActions);
+            var inputStates = Value.CreateBatch(Model.Network.InputState.Shape, states, Model.Device);
+            inputMapGeneratorTrain.Add(Model.Network.InputState, inputStates);
+            var inputAdvantages = Value.CreateBatch(Model.InputAdvantage.Shape, advantages, Model.Device);
+            inputMapGeneratorTrain.Add(Model.InputAdvantage, inputAdvantages);
+            var inputTargetValues = Value.CreateBatch(Model.InputTargetValue.Shape, targetValues, Model.Device);
+            inputMapGeneratorTrain.Add(Model.InputTargetValue, inputTargetValues);
+            var inputOldProbs = Value.CreateBatch(Model.InputOldProb.Shape, actionProbs, Model.Device);
+            inputMapGeneratorTrain.Add(Model.InputOldProb, inputOldProbs);
+
+            var inputClipEps = Value.CreateBatch(Model.InputClipEpsilon.Shape, new float[] { ClipEpsilon }, Model.Device);
+            inputMapGeneratorTrain.Add(Model.InputClipEpsilon, inputClipEps);
+            var inputValueLossWeight = Value.CreateBatch(Model.InputValuelossWeight.Shape, new float[] { ValueLossWeight }, Model.Device);
+            inputMapGeneratorTrain.Add(Model.InputValuelossWeight, inputValueLossWeight);
+            var inputEntropyLossWeight = Value.CreateBatch(Model.InputEntropyLossWeight.Shape, new float[] { EntroyLossWeight }, Model.Device);
+            inputMapGeneratorTrain.Add(Model.InputEntropyLossWeight, inputEntropyLossWeight);
+
+            //output Map
+            trainer.TrainMinibatch(inputMapGeneratorTrain, false, Model.Device);
+
+            LastLoss = (float)trainer.PreviousMinibatchLossAverage();
+            //LastEvalLoss = (float)trainer.PreviousMinibatchEvaluationAverage();
+        }
+
+
+
+        /// <summary>
+        /// calcualte the discounted advantages for the current sequence of data, and add them to the databuffer
+        /// </summary>
+        protected void ProcessEpisodeHistory(float nextValue, int actorNum)
+        {
+            var advantages = RLUtils.GeneralAdvantageEst(rewardsEpisodeHistory[actorNum].ToArray(), 
+                valuesEpisodeHistory[actorNum].ToArray(), RewardDiscountFactor, RewardGAEFactor, nextValue);
+            float[] targetValues = new float[advantages.Length];
+            for(int i = 0; i < targetValues.Length; ++i)
+            {
+                targetValues[i] = advantages[i] + valuesEpisodeHistory[actorNum][i];
+
+                //test 
+                //advantages[i] = 1;
+            }
+            //test
+            //targetValues = RLUtils.DiscountedRewards(rewardsEpisodeHistory.ToArray(), RewardDiscountFactor);
+
+
+            dataBuffer.AddData(Tuple.Create<string, Array>("State", statesEpisodeHistory[actorNum].ToArray()),
+                Tuple.Create<string, Array>("Action", actionsEpisodeHistory[actorNum].ToArray()),
+                Tuple.Create<string, Array>("ActionProb", actionprobsEpisodeHistory[actorNum].ToArray()),
+                Tuple.Create<string, Array>("TargetValue", targetValues),
+                Tuple.Create<string, Array>("Advantage", advantages)
+                );
+
+            statesEpisodeHistory[actorNum].Clear();
+            rewardsEpisodeHistory[actorNum].Clear();
+            actionsEpisodeHistory[actorNum].Clear();
+            actionprobsEpisodeHistory[actorNum].Clear();
+            valuesEpisodeHistory[actorNum].Clear();
+        }
+
+
+
+        protected void AddHistory(float[] state, float reward, float[] action, float[] actionProbs, float value, int actorNum)
+        {
+            statesEpisodeHistory[actorNum].AddRange(state);
+            rewardsEpisodeHistory[actorNum].Add(reward);
+            actionsEpisodeHistory[actorNum].AddRange(action);
+            actionprobsEpisodeHistory[actorNum].AddRange(actionProbs);
+            valuesEpisodeHistory[actorNum].Add(value);
+            
+        }
+
+
+        public void ClearData()
+        {
+            dataBuffer.ClearData();
+        }
+
+
+        public void SetLearningRate(float lr)
+        {
+            learners[0].SetLearningRateSchedule(new TrainingParameterScheduleDouble(lr));
+        }
+
+
+
+        public static T[] SubArray<T>(T[] data, int index, int length)
+        {
+            T[] result = new T[length];
+            Array.Copy(data, index, result, 0, length);
+            return result;
+        }
+    }
+}
