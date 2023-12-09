@@ -37,4 +37,16 @@ namespace UnityCNTK
                 if (GUILayout.Button("Remove"))
                 {
                     transferHelper.matTextureDic.Remove(m);
-    
+                }
+                EditorGUILayout.EndHorizontal();
+            }
+
+            //for test, show the texutre dics
+            /*EditorGUILayout.LabelField("Texture old new dic");
+            List<Texture2D> texKeys = new List<Texture2D>(transferHelper.oldNewTextureDic.Keys);
+            foreach (var t in texKeys)
+            {
+                EditorGUILayout.BeginHorizontal();
+                EditorGUILayout.ObjectField(t, typeof(Texture2D), true);
+                EditorGUILayout.EndHorizontal();
+   
