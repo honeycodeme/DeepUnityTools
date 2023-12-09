@@ -49,4 +49,12 @@ namespace UnityCNTK
                 EditorGUILayout.BeginHorizontal();
                 EditorGUILayout.ObjectField(t, typeof(Texture2D), true);
                 EditorGUILayout.EndHorizontal();
-   
+            }*/
+            
+            transferHelper.styleTexture = EditorGUILayout.ObjectField("Style Texture",transferHelper.styleTexture, typeof(Texture2D), true) as Texture2D;
+            transferHelper.styleTransferModelData = EditorGUILayout.ObjectField("NN data",transferHelper.styleTransferModelData, typeof(TextAsset), true) as TextAsset;
+
+            //transfor parameters
+            EditorGUILayout.LabelField("Transfer parameters");
+            foreach (var t in transferHelper.styleTransferParams)
+      
