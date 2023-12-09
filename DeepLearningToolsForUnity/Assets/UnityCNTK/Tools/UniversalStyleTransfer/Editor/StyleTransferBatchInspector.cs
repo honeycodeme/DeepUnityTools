@@ -6,4 +6,22 @@ using UnityEngine;
 namespace UnityCNTK
 {
 
-    [Custo
+    [CustomEditor(typeof(StyleTransferBatchHelper))]
+    public class StyleTransferBatchInspector : UnityEditor.Editor
+    {
+        StyleTransferBatchHelper transferHelper;
+
+        private void OnEnable()
+        {
+            transferHelper = (StyleTransferBatchHelper)target;
+        }
+
+        public override void OnInspectorGUI()
+        {
+
+            Undo.RecordObject(transferHelper, "StyleTransfer");
+
+
+            if(GUILayout.Button("Update Materials"))
+            {
+            
