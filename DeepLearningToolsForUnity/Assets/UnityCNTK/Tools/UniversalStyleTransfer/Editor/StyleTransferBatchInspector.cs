@@ -24,4 +24,17 @@ namespace UnityCNTK
 
             if(GUILayout.Button("Update Materials"))
             {
-            
+                transferHelper.UpdateMaterialList();
+            }
+
+            //effected materials
+            EditorGUILayout.LabelField("Effected materials");
+            List<Material> keys = new List<Material>(transferHelper.matTextureDic.Keys);
+            foreach(var m in keys)
+            {
+                EditorGUILayout.BeginHorizontal();
+                EditorGUILayout.ObjectField(m, typeof(Material),true);
+                if (GUILayout.Button("Remove"))
+                {
+                    transferHelper.matTextureDic.Remove(m);
+    
