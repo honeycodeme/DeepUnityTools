@@ -24,4 +24,19 @@ namespace UnityCNTK.Editor
                 styleWindow.enableButtons = !isRunningTransfer;
             }
         }
-        protected bool isRunningTransfer = f
+        protected bool isRunningTransfer = false;
+
+        public Material showImageMat;//will be set in editor
+        protected InputImageWindow contentWindow;
+        protected InputImageWindow styleWindow;
+        protected OutputImageWindow resultWindow;
+
+        //values to use
+        protected bool blendingFactorFoldout = false;
+        protected List<UniversalStyleTransferModel.ParameterSet> styleTransferParams;
+
+        protected Vector2Int contentSize;
+        protected Vector2Int styleSize;
+
+        protected bool resizeContent = true;
+        prot
