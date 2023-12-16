@@ -57,4 +57,15 @@ namespace UnityCNTK
             //transfor parameters
             EditorGUILayout.LabelField("Transfer parameters");
             foreach (var t in transferHelper.styleTransferParams)
-      
+            {
+                t.BlendFactor = EditorGUILayout.Slider("Blend Strength", t.BlendFactor,0,1);
+            }
+
+            if (GUILayout.Button("Transfer All"))
+            {
+                transferHelper.TransferAll();
+            }
+        }
+    }
+
+}
