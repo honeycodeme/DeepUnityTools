@@ -71,4 +71,16 @@ namespace UnityCNTK.Editor
             resultWindow.showImageMat = showImageMat;
 
             contentSize = new Vector2Int(512, 512);
-            sty
+            styleSize = new Vector2Int(512, 512);
+
+            //add the parameter sets
+            styleTransferParams = new List<UniversalStyleTransferModel.ParameterSet>();
+            for (int i = 0; i < 5; ++i)
+            {
+                styleTransferParams.Insert(0,new UniversalStyleTransferModel.ParameterSet((UniversalStyleTransferModel.PassIndex)i));
+            }
+
+            //get available device to run the style transfer on
+            foreach(var d in DeviceDescriptor.AllDevices())
+            {
+                if (
