@@ -49,4 +49,18 @@ namespace UnityCNTK.Editor
         protected static float leftColumnMaxWidth = 230;
         protected static Rect contentWindowDefaultRect = new Rect(leftColumnMaxWidth + 40, 30, 300, 330);
         protected static Rect styleWindowDefaultRect = new Rect(leftColumnMaxWidth + 40, 370, 300, 330);
-        protected static Rect resultWindowDefaultRect = 
+        protected static Rect resultWindowDefaultRect = new Rect(leftColumnMaxWidth + 360, 200, 350, 350);
+
+        //style transfer model
+        protected UniversalStyleTransferModel styleTransferModel = null;
+        public TextAsset styleTransferModelData;    //the data of the style transfer. need to be set in inspector to the data file
+
+        protected DeviceDescriptor cpuDevice = null;
+        protected DeviceDescriptor gpuDevice = null;
+
+        //style related
+        protected GUIStyle titleStyle;
+
+        private void Awake()
+        {
+        
