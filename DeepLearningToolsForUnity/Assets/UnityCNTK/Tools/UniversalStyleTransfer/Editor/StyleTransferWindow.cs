@@ -39,4 +39,14 @@ namespace UnityCNTK.Editor
         protected Vector2Int styleSize;
 
         protected bool resizeContent = true;
-        prot
+        protected bool resizeStyle = true;
+
+        protected bool useOriginalAlpha = true;
+
+        //dimensions for the layout
+
+        protected static Rect windowDefaultRect = new Rect(30, 60, 960, 720);
+        protected static float leftColumnMaxWidth = 230;
+        protected static Rect contentWindowDefaultRect = new Rect(leftColumnMaxWidth + 40, 30, 300, 330);
+        protected static Rect styleWindowDefaultRect = new Rect(leftColumnMaxWidth + 40, 370, 300, 330);
+        protected static Rect resultWindowDefaultRect = 
