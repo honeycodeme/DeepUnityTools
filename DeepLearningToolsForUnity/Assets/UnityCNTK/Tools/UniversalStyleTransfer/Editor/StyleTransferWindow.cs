@@ -63,4 +63,12 @@ namespace UnityCNTK.Editor
 
         private void Awake()
         {
-        
+            contentWindow = new InputImageWindow(1, contentWindowDefaultRect, "Content Image");
+            contentWindow.showImageMat = showImageMat;
+            styleWindow = new InputImageWindow(2, styleWindowDefaultRect, "Style Image");
+            styleWindow.showImageMat = showImageMat;
+            resultWindow = new OutputImageWindow(3, resultWindowDefaultRect, "Result Image");
+            resultWindow.showImageMat = showImageMat;
+
+            contentSize = new Vector2Int(512, 512);
+            sty
