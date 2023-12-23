@@ -83,4 +83,21 @@ namespace UnityCNTK.Editor
             //get available device to run the style transfer on
             foreach(var d in DeviceDescriptor.AllDevices())
             {
-                if (
+                if (d.Type == DeviceKind.CPU && cpuDevice == null)
+                {
+                    cpuDevice = d;
+                } else if (d.Type == DeviceKind.GPU && gpuDevice == null)
+                {
+                    gpuDevice = d;
+                }
+            }
+
+            
+        }
+
+        // Add menu named "My Window" to the Window menu
+        [MenuItem("Window/UnityDeeplearningTools/StyleTransferTool")]
+        static void Init()
+        {
+            // Get existing open window or if none, make a new one:
+        
