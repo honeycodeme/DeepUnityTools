@@ -119,4 +119,14 @@ namespace UnityCNTK.Editor
             EditorGUILayout.Space();
             EditorGUILayout.Space();
             //title
-            if
+            if (titleStyle == null)
+            {
+                titleStyle = GUI.skin.GetStyle("IN Title");
+            }
+            EditorGUILayout.LabelField("Style Transfer", titleStyle);
+            EditorGUILayout.HelpBox("Transfer the content image towards the style image.", MessageType.Info);
+            
+            //images dimensions
+            //content
+            EditorGUILayout.BeginHorizontal(GUILayout.MaxWidth(leftColumnMaxWidth));
+            resizeContent = EditorGUILayout.Toggle(resizeCon
