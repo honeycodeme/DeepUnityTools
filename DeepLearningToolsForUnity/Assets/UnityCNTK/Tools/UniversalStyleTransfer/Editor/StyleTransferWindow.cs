@@ -100,4 +100,23 @@ namespace UnityCNTK.Editor
         static void Init()
         {
             // Get existing open window or if none, make a new one:
-        
+            StyleTransferWindow window = (StyleTransferWindow)EditorWindow.GetWindow(typeof(StyleTransferWindow));
+            window.position = windowDefaultRect;
+            window.Show();
+            
+
+        }
+
+        void OnGUI()
+        {
+
+
+            EditorGUILayout.BeginHorizontal(GUILayout.MaxWidth(leftColumnMaxWidth));
+            EditorGUILayout.BeginVertical();
+
+            EditorGUILayout.Space();
+            EditorGUILayout.Space();
+            EditorGUILayout.Space();
+            EditorGUILayout.Space();
+            //title
+            if
