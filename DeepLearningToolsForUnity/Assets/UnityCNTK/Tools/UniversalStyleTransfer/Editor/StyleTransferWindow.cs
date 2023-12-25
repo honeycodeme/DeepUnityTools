@@ -129,4 +129,11 @@ namespace UnityCNTK.Editor
             //images dimensions
             //content
             EditorGUILayout.BeginHorizontal(GUILayout.MaxWidth(leftColumnMaxWidth));
-            resizeContent = EditorGUILayout.Toggle(resizeCon
+            resizeContent = EditorGUILayout.Toggle(resizeContent);
+            EditorGUI.BeginDisabledGroup(!resizeContent);
+            contentSize = Vector2Int.Max(EditorGUILayout.Vector2IntField(new GUIContent("Content Image Resize", "Result image will be the same size."), contentSize), new Vector2Int(32, 32));
+            EditorGUI.EndDisabledGroup();
+            EditorGUILayout.EndHorizontal();
+            //style
+            EditorGUILayout.BeginHorizontal(GUILayout.MaxWidth(leftColumnMaxWidth));
+            resizeStyle = EditorGUILayout.Toggle(resizeSt
