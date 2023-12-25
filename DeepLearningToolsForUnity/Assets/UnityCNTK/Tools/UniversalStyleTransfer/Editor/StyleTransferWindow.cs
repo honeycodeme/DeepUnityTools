@@ -136,4 +136,13 @@ namespace UnityCNTK.Editor
             EditorGUILayout.EndHorizontal();
             //style
             EditorGUILayout.BeginHorizontal(GUILayout.MaxWidth(leftColumnMaxWidth));
-            resizeStyle = EditorGUILayout.Toggle(resizeSt
+            resizeStyle = EditorGUILayout.Toggle(resizeStyle);
+            EditorGUI.BeginDisabledGroup(!resizeStyle);
+            styleSize = Vector2Int.Max(EditorGUILayout.Vector2IntField("Style Image Resize", styleSize), new Vector2Int(32, 32));
+            EditorGUI.EndDisabledGroup();
+            EditorGUILayout.EndHorizontal();
+
+            if (!resizeContent && contentWindow.TextureOriginalSize != Vector2Int.zero)
+                contentSize = contentWindow.TextureOriginalSize;
+            if (!resizeStyle && styleWindow.TextureOriginalSize != Vector2Int.zero)
+ 
