@@ -145,4 +145,15 @@ namespace UnityCNTK.Editor
             if (!resizeContent && contentWindow.TextureOriginalSize != Vector2Int.zero)
                 contentSize = contentWindow.TextureOriginalSize;
             if (!resizeStyle && styleWindow.TextureOriginalSize != Vector2Int.zero)
- 
+                styleSize = styleWindow.TextureOriginalSize;
+            contentWindow.desiredSize = contentSize;
+            styleWindow.desiredSize = styleSize;
+
+            //other settings
+            EditorGUILayout.BeginHorizontal(GUILayout.MaxWidth(leftColumnMaxWidth));
+            useOriginalAlpha = EditorGUILayout.Toggle(useOriginalAlpha);
+            EditorGUILayout.LabelField("Use Alpha From Content");
+            EditorGUILayout.EndHorizontal();
+
+            //first the blending parameters
+            blendingFactorFoldout = EditorGUIL
