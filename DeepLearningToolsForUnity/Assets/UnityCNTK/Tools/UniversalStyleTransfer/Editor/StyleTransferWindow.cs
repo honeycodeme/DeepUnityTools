@@ -156,4 +156,12 @@ namespace UnityCNTK.Editor
             EditorGUILayout.EndHorizontal();
 
             //first the blending parameters
-            blendingFactorFoldout = EditorGUIL
+            blendingFactorFoldout = EditorGUILayout.Foldout(blendingFactorFoldout, new GUIContent("Blend Strength", "Strength of blending towards style image."));
+            if (!blendingFactorFoldout)
+            {
+                float tempWidth = EditorGUIUtility.labelWidth;
+                EditorGUIUtility.labelWidth = 50;
+                for (int i = 0; i < styleTransferParams.Count; ++i)
+                {
+                    EditorGUILayout.BeginHorizontal(GUILayout.MaxWidth(leftColumnMaxWidth));
+                    styleTransferParams[i].enabled = EditorG
