@@ -182,3 +182,16 @@ namespace UnityCNTK.Editor
             if (GUILayout.Button("Transfer"))
             {
                 StartTransfer();
+            }
+            EditorGUI.EndDisabledGroup();
+
+            //help box for the texture sythesizing
+            EditorGUILayout.LabelField("Texture Synthesize", titleStyle);
+            EditorGUILayout.HelpBox("Set content image to white noise and style image to desired texture for texxture synthesizing",MessageType.Info);
+            
+            EditorGUILayout.EndVertical();
+            EditorGUILayout.EndHorizontal();
+
+            BeginWindows();
+
+            
