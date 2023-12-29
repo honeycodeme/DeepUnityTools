@@ -172,4 +172,13 @@ namespace UnityCNTK.Editor
                 }
                 EditorGUIUtility.labelWidth = tempWidth;
             }
- 
+            //show warning meesage if no GPU device availabe
+            if(gpuDevice == null)
+            {
+                EditorGUILayout.HelpBox("No available GPU device. Use CPU instead, which might take a minute or more to run.", MessageType.Warning);
+            }
+            //transfer button
+            EditorGUI.BeginDisabledGroup(isRunningTransfer || contentWindow.showTexture == null || styleWindow.showTexture == null);
+            if (GUILayout.Button("Transfer"))
+            {
+                StartTransfer();
