@@ -164,4 +164,12 @@ namespace UnityCNTK.Editor
                 for (int i = 0; i < styleTransferParams.Count; ++i)
                 {
                     EditorGUILayout.BeginHorizontal(GUILayout.MaxWidth(leftColumnMaxWidth));
-                    styleTransferParams[i].enabled = EditorG
+                    styleTransferParams[i].enabled = EditorGUILayout.Toggle(styleTransferParams[i].enabled);
+                    EditorGUI.BeginDisabledGroup(!styleTransferParams[i].enabled);
+                    styleTransferParams[i].BlendFactor = EditorGUILayout.Slider("Level " + (5 - i), styleTransferParams[i].BlendFactor, 0, 1);
+                    EditorGUI.EndDisabledGroup();
+                    EditorGUILayout.EndHorizontal();
+                }
+                EditorGUIUtility.labelWidth = tempWidth;
+            }
+ 
