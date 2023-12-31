@@ -194,4 +194,26 @@ namespace UnityCNTK.Editor
 
             BeginWindows();
 
-            
+            //All GUI.Window or GUILayout.Window must come inside here
+            contentWindow.OnGUI();
+            styleWindow.OnGUI();
+            resultWindow.OnGUI();
+            EndWindows();
+
+
+        }
+
+        void OnInspectorUpdate()
+        {
+            Repaint();
+        }
+        
+        private void Update()
+        {
+            if (_queued)
+            {
+                lock (_backlog)
+                {
+                    var tmp = _actions;
+                    _actions = _backlog;
+          
