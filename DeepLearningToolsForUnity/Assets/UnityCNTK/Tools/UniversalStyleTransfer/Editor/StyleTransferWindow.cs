@@ -216,4 +216,21 @@ namespace UnityCNTK.Editor
                 {
                     var tmp = _actions;
                     _actions = _backlog;
-          
+                    _backlog = tmp;
+                    _queued = false;
+                }
+
+                foreach (var action in _actions)
+                    action();
+
+                _actions.Clear();
+            }
+        }
+
+        protected void StartTransfer()
+        {
+            IsRunningTransfer = true;
+            if (gpuDevice != null)
+                styleTransferModel = new UniversalStyleTransferModel(gpuDevice, styleTransferModelData.bytes);
+            else if (cpuDevice != null)
+                styleTransferModel = new Universal
