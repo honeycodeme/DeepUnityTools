@@ -248,4 +248,19 @@ namespace UnityCNTK.Editor
             /*
             //run in main thread
             byte[] result = styleTransferModel.TransferStyle(contentBytes, styleBytes, styleTransferParams.ToArray());
-            Texture2D tex2 = new Texture2D(contentSize.x, contentSize.y, TextureFormat.RGB24, false
+            Texture2D tex2 = new Texture2D(contentSize.x, contentSize.y, TextureFormat.RGB24, false);
+            tex2.LoadRawTextureData(result);
+            tex2.Apply();
+            if (resultWindow.showTexture != null)
+            {
+                DestroyImmediate(resultWindow.showTexture);
+            }
+            resultWindow.showTexture = tex2;*/
+
+            //run in ahother thread
+            Task.Run(() =>
+            {
+                try
+                {
+                    byte[] result = styleTransferModel.TransferStyle(contentBytes, styleBytes, styleTransferParams.ToArray());
+                    GC
