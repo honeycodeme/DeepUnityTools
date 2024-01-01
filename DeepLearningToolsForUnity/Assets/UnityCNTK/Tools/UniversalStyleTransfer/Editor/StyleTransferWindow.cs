@@ -233,4 +233,11 @@ namespace UnityCNTK.Editor
             if (gpuDevice != null)
                 styleTransferModel = new UniversalStyleTransferModel(gpuDevice, styleTransferModelData.bytes);
             else if (cpuDevice != null)
-                styleTransferModel = new Universal
+                styleTransferModel = new UniversalStyleTransferModel(cpuDevice, styleTransferModelData.bytes);
+            else
+                Debug.LogError("There must be a bug that no device if found");
+            styleTransferModel.CreateModelWithDimensions(contentSize, styleSize);
+            //var tempContentTexture = Images.GetReadableTextureFromUnreadable(contentWindow.showTexture);
+            byte[] contentBytes = contentWindow.showTexture.GetRGB24FromTexture2D(contentSize);
+            //contentBytes = contentWindow.showTexture.GetRawTextureData();
+            //DestroyImmedi
