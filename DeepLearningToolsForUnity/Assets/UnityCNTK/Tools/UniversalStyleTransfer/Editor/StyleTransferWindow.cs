@@ -240,4 +240,12 @@ namespace UnityCNTK.Editor
             //var tempContentTexture = Images.GetReadableTextureFromUnreadable(contentWindow.showTexture);
             byte[] contentBytes = contentWindow.showTexture.GetRGB24FromTexture2D(contentSize);
             //contentBytes = contentWindow.showTexture.GetRawTextureData();
-            //DestroyImmedi
+            //DestroyImmediate(tempContentTexture);
+            //var tempStyleTexture = Images.GetReadableTextureFromUnreadable(styleWindow.showTexture);
+            byte[] styleBytes = styleWindow.showTexture.GetRGB24FromTexture2D(styleSize);
+            //DestroyImmediate(tempStyleTexture);
+
+            /*
+            //run in main thread
+            byte[] result = styleTransferModel.TransferStyle(contentBytes, styleBytes, styleTransferParams.ToArray());
+            Texture2D tex2 = new Texture2D(contentSize.x, contentSize.y, TextureFormat.RGB24, false
