@@ -263,4 +263,14 @@ namespace UnityCNTK.Editor
                 try
                 {
                     byte[] result = styleTransferModel.TransferStyle(contentBytes, styleBytes, styleTransferParams.ToArray());
-                    GC
+                    GC.Collect();
+                    RunOnMainThread(() => {
+                        Texture2D tex = new Texture2D(contentSize.x, contentSize.y, TextureFormat.RGB24, false);
+                        tex.LoadRawTextureData(result);
+                        tex.Apply();
+
+                        var resultTexture = tex;
+                        if (useOriginalAlpha)
+                        {
+                            resultTexture = Images.GetTextureWithAlpha(tex, contentWindow.showTexture);
+        
