@@ -273,4 +273,17 @@ namespace UnityCNTK.Editor
                         if (useOriginalAlpha)
                         {
                             resultTexture = Images.GetTextureWithAlpha(tex, contentWindow.showTexture);
-        
+                            DestroyImmediate(tex);
+                        }
+
+                        if (resultWindow.showTexture != null)
+                        {
+                            DestroyImmediate(resultWindow.showTexture);
+                        }
+                        resultWindow.showTexture = resultTexture;
+                        IsRunningTransfer = false;
+                    });
+                }
+                catch(Exception e) {
+                    Debug.LogError(e.Message);
+             
