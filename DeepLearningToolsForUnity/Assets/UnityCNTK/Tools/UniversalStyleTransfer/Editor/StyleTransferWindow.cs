@@ -303,4 +303,22 @@ namespace UnityCNTK.Editor
             lock (_backlog)
             {
                 _backlog.Add(action);
-                _queued = 
+                _queued = true;
+            }
+        }
+    }
+
+
+    public class InputImageWindow : ResizableSubWindow
+    {
+
+
+        public Texture2D showTexture = null;
+        public Material showImageMat;
+
+        protected int bottomRowHeight = 20;
+        protected int padding = 5;
+        protected int bottomButtonWidth = 80;
+        
+        public Vector2Int desiredSize = new Vector2Int(256,256);
+        public Vector2Int TextureOriginalSize { get { return showTexture == null ? Vector2Int.zero : new Vector2Int(showTexture.width, showTexture
