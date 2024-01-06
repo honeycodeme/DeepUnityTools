@@ -286,4 +286,21 @@ namespace UnityCNTK.Editor
                 }
                 catch(Exception e) {
                     Debug.LogError(e.Message);
-             
+                     RunOnMainThread(() => {
+                         IsRunningTransfer = false;
+                     });
+                }
+
+            });
+        }
+
+        /// <summary>
+        /// ccall this in other thread to add action in the main thread.
+        /// </summary>
+        /// <param name="action"></param>
+        public void RunOnMainThread(Action action)
+        {
+            lock (_backlog)
+            {
+                _backlog.Add(action);
+                _queued = 
