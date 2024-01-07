@@ -321,4 +321,20 @@ namespace UnityCNTK.Editor
         protected int bottomButtonWidth = 80;
         
         public Vector2Int desiredSize = new Vector2Int(256,256);
-        public Vector2Int TextureOriginalSize { get { return showTexture == null ? Vector2Int.zero : new Vector2Int(showTexture.width, showTexture
+        public Vector2Int TextureOriginalSize { get { return showTexture == null ? Vector2Int.zero : new Vector2Int(showTexture.width, showTexture.height); } }
+
+        public bool enableButtons = true;
+
+        public InputImageWindow(int id, string title = "") : base(id, title)
+        {
+        }
+
+        public InputImageWindow(int id, Rect initWindowRect, string title = "") : base(id, initWindowRect, title)
+        {
+        }
+
+
+        protected override void DoWindow(int windowID)
+        {
+            Rect imageRect = new Rect(padding, dragableTopHeight, WindowRect.width - padding * 2, WindowRect.height - bottomRowHeight - dragableTopHeight - padding * 2);
+    
