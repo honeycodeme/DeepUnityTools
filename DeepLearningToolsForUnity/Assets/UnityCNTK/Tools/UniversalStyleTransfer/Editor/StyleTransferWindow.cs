@@ -337,4 +337,12 @@ namespace UnityCNTK.Editor
         protected override void DoWindow(int windowID)
         {
             Rect imageRect = new Rect(padding, dragableTopHeight, WindowRect.width - padding * 2, WindowRect.height - bottomRowHeight - dragableTopHeight - padding * 2);
-    
+            if (showTexture)
+                EditorGUI.DrawPreviewTexture(imageRect, showTexture, showImageMat, ScaleMode.ScaleToFit);
+            else
+                EditorGUI.DrawPreviewTexture(imageRect, EditorGUIUtility.whiteTexture, showImageMat);
+
+            //texture picker
+            EditorGUI.BeginDisabledGroup(!enableButtons);
+            var currentPickerWindow = EditorGUIUtility.GetControlID(FocusType.Passive) + 100;
+            if (GUI.Button(new Rect(padding, WindowRect.height - bottomRowHeight - padding, bottomButton
