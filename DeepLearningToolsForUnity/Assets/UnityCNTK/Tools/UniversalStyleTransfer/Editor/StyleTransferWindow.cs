@@ -345,4 +345,14 @@ namespace UnityCNTK.Editor
             //texture picker
             EditorGUI.BeginDisabledGroup(!enableButtons);
             var currentPickerWindow = EditorGUIUtility.GetControlID(FocusType.Passive) + 100;
-            if (GUI.Button(new Rect(padding, WindowRect.height - bottomRowHeight - padding, bottomButton
+            if (GUI.Button(new Rect(padding, WindowRect.height - bottomRowHeight - padding, bottomButtonWidth, bottomRowHeight), "Texture"))
+            {
+
+                EditorGUIUtility.ShowObjectPicker<Texture2D>(null, true, "", currentPickerWindow);
+            }
+            if (Event.current.commandName == "ObjectSelectorClosed" && EditorGUIUtility.GetObjectPickerControlID() == currentPickerWindow)
+            {
+                if (showTexture != null)
+                    GameObject.DestroyImmediate(showTexture);
+                var newTex = (Texture2D)EditorGUIUtility.GetObjectPickerObject();
+ 
