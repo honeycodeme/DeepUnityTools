@@ -355,4 +355,16 @@ namespace UnityCNTK.Editor
                 if (showTexture != null)
                     GameObject.DestroyImmediate(showTexture);
                 var newTex = (Texture2D)EditorGUIUtility.GetObjectPickerObject();
- 
+                if (newTex != null)
+                {
+                    showTexture = Images.GetReadableTextureFromUnreadable(newTex);//always switch it to readable texture first
+                }
+                else
+                {
+                    showTexture = null;
+                }
+                currentPickerWindow = -1;
+            }
+
+            //use whitenoise
+            if (GUI.Button(new Rect(padding * 2 + bottomButtonWidth, WindowRect.height - bott
