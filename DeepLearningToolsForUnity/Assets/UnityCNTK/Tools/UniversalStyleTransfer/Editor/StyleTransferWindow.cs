@@ -378,4 +378,18 @@ namespace UnityCNTK.Editor
             string imageInfo = showTexture != null ? "size:" + showTexture.width + "x" + showTexture.height : "";
             EditorGUI.LabelField(new Rect(padding * 3 + bottomButtonWidth * 2, WindowRect.height - bottomRowHeight - padding, bottomButtonWidth*1.5f, bottomRowHeight), imageInfo);
 
-            base.DoWindow(w
+            base.DoWindow(windowID);
+        }
+
+        protected void GenerateWhiteNoiseTexture()
+        {
+            showTexture = new Texture2D(desiredSize.x, desiredSize.y,TextureFormat.RGB24,false);
+            //showTexture.SetPixels(Images.GeneratePureColor(desiredSize.x* desiredSize.y,Color.white),0);
+            showTexture.SetPixels(Images.GenerateWhiteNoise(desiredSize.x * desiredSize.y), 0);
+            showTexture.Apply();
+        }
+    }
+
+
+    public class OutputImageWindow : ResizableSubWindow
+ 
