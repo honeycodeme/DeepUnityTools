@@ -392,4 +392,25 @@ namespace UnityCNTK.Editor
 
 
     public class OutputImageWindow : ResizableSubWindow
- 
+    {
+
+
+        public Texture2D showTexture = null;
+        public Material showImageMat;
+
+        protected int bottomRowHeight = 20;
+        protected int padding = 5;
+        protected int bottomButtonWidth = 80;
+
+        public OutputImageWindow(int id, string title = "") : base(id, title)
+        {
+        }
+
+        public OutputImageWindow(int id, Rect initWindowRect, string title = "") : base(id, initWindowRect, title)
+        {
+        }
+
+
+        protected override void DoWindow(int windowID)
+        {
+            Rect imageRect = n
