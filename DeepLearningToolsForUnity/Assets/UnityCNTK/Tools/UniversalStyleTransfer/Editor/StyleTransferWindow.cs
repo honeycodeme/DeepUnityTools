@@ -413,4 +413,12 @@ namespace UnityCNTK.Editor
 
         protected override void DoWindow(int windowID)
         {
-            Rect imageRect = n
+            Rect imageRect = new Rect(padding, dragableTopHeight, WindowRect.width - padding * 2, WindowRect.height - bottomRowHeight - dragableTopHeight - padding * 2);
+            if (showTexture)
+                EditorGUI.DrawPreviewTexture(imageRect, showTexture, showImageMat, ScaleMode.ScaleToFit);
+            else
+                EditorGUI.DrawPreviewTexture(imageRect, EditorGUIUtility.whiteTexture, showImageMat);
+
+            //Save
+             EditorGUI.BeginDisabledGroup(showTexture == null);
+         
