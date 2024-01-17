@@ -429,4 +429,9 @@ namespace UnityCNTK.Editor
 
             //show original dimension
             string imageInfo = showTexture != null ? "size:" + showTexture.width + "x" + showTexture.height : "";
-            EditorGUI.LabelField(new Rect(padding * 3 + bottomButtonWidth * 2, WindowRect.height - bottomRowHe
+            EditorGUI.LabelField(new Rect(padding * 3 + bottomButtonWidth * 2, WindowRect.height - bottomRowHeight - padding, bottomButtonWidth * 1.5f, bottomRowHeight), imageInfo);
+
+            base.DoWindow(windowID);
+        }
+    }
+}
