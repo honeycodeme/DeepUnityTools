@@ -8,4 +8,10 @@ MonoImporter:
   defaultReferences:
   - m_PersistentViewDataDictionary: {instanceID: 0}
   - showImageMat: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
-  - styleTransferModel
+  - styleTransferModelData: {fileID: 4900000, guid: 0c5f420ba7f3c464f81a25af23c5d091,
+      type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
