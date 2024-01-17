@@ -421,4 +421,12 @@ namespace UnityCNTK.Editor
 
             //Save
              EditorGUI.BeginDisabledGroup(showTexture == null);
-         
+             if (GUI.Button(new Rect(padding, WindowRect.height - bottomRowHeight - padding, bottomButtonWidth*1.5f, bottomRowHeight), "Save"))
+             {
+                 EditorUtils.SaveTextureToPNGFile(showTexture);
+             }
+             EditorGUI.EndDisabledGroup();
+
+            //show original dimension
+            string imageInfo = showTexture != null ? "size:" + showTexture.width + "x" + showTexture.height : "";
+            EditorGUI.LabelField(new Rect(padding * 3 + bottomButtonWidth * 2, WindowRect.height - bottomRowHe
