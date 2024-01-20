@@ -128,3 +128,28 @@ namespace UnityCNTK
                 GC.Collect();
                 RunOnMainThread(() => {
                     Texture2D tex = new Texture2D(contentResize.x, contentResize.y, TextureFormat.RGB24, false);
+                    tex.LoadRawTextureData(result);
+                    tex.Apply();
+
+                    onFinished.Invoke(tex);
+                });
+
+            });
+        }
+
+        /// <summary>
+        /// ccall this in other thread to add action in the main thread.
+        /// </summary>
+        /// <param name="action"></param>
+        public void RunOnMainThread(Action action)
+        {
+            lock (_backlog)
+            {
+                _backlog.Add(action);
+                _queued = true;
+            }
+        }
+
+
+    }
+}
