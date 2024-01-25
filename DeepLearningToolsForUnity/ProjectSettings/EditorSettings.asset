@@ -15,4 +15,6 @@ EditorSettings:
   m_EtcTextureBestCompressor: 4
   m_ProjectGenerationIncludedExtensions: txt;xml;fnt;cd
   m_ProjectGenerationRootNamespace: 
-  m_UserGeneratedProjectSuffix
+  m_UserGeneratedProjectSuffix: 
+  m_CollabEditorSettings:
+    inProgressEnabled: 1
