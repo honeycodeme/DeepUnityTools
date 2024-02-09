@@ -173,4 +173,21 @@ PlayerSettings:
   APKExpansionFiles: 0
   keepLoadedShadersAlive: 0
   StripUnusedMeshComponents: 0
-  VertexChannelCompressi
+  VertexChannelCompressionMask:
+    serializedVersion: 2
+    m_Bits: 238
+  iPhoneSdkVersion: 988
+  iOSTargetOSVersionString: 7.0
+  tvOSSdkVersion: 0
+  tvOSRequireExtendedGameController: 0
+  tvOSTargetOSVersionString: 9.0
+  uIPrerenderedIcon: 0
+  uIRequiresPersistentWiFi: 0
+  uIRequiresFullScreen: 1
+  uIStatusBarHidden: 1
+  uIExitOnSuspend: 0
+  uIStatusBarStyle: 0
+  iPhoneSplashScreen: {fileID: 0}
+  iPhoneHighResSplashScreen: {fileID: 0}
+  iPhoneTallHighResSplashScreen: {fileID: 0}
+  iPhone47inSplashScreen: {fileID: 0
