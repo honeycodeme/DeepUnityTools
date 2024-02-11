@@ -236,4 +236,22 @@ PlayerSettings:
   iOSRenderExtraFrameOnPause: 0
   appleDeveloperTeamID: 
   iOSManualSigningProvisioningProfileID: 
-  tvOSManualSig
+  tvOSManualSigningProvisioningProfileID: 
+  appleEnableAutomaticSigning: 0
+  clonedFromGUID: 00000000000000000000000000000000
+  AndroidTargetDevice: 0
+  AndroidSplashScreenScale: 0
+  androidSplashScreen: {fileID: 0}
+  AndroidKeystoreName: 
+  AndroidKeyaliasName: 
+  AndroidTVCompatibility: 1
+  AndroidIsGame: 1
+  AndroidEnableTango: 0
+  androidEnableBanner: 1
+  androidUseLowAccuracyLocation: 0
+  m_AndroidBanners:
+  - width: 320
+    height: 180
+    banner: {fileID: 0}
+  androidGamepadSupportLevel: 0
+  resolutionDialogBanner: 
