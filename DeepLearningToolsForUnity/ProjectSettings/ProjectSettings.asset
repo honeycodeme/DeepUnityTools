@@ -291,4 +291,21 @@ PlayerSettings:
   wiiUTVStartupScreen: {fileID: 0}
   wiiUGamePadStartupScreen: {fileID: 0}
   wiiUDrcBufferDisabled: 0
-  wiiUProfiler
+  wiiUProfilerLibPath: 
+  playModeTestRunnerEnabled: 0
+  actionOnDotNetUnhandledException: 1
+  enableInternalProfiler: 0
+  logObjCUncaughtExceptions: 1
+  enableCrashReportAPI: 0
+  cameraUsageDescription: 
+  locationUsageDescription: 
+  microphoneUsageDescription: 
+  switchNetLibKey: 
+  switchSocketMemoryPoolSize: 6144
+  switchSocketAllocatorPoolSize: 128
+  switchSocketConcurrencyLimit: 14
+  switchScreenResolutionBehavior: 2
+  switchUseCPUProfiler: 0
+  switchApplicationID: 0x01004b9000490000
+  switchNSODependencies: 
+  swi
