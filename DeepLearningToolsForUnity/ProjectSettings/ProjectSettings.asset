@@ -398,4 +398,19 @@ PlayerSettings:
   switchRatingsInt_8: 0
   switchRatingsInt_9: 0
   switchRatingsInt_10: 0
-  swi
+  switchRatingsInt_11: 0
+  switchLocalCommunicationIds_0: 
+  switchLocalCommunicationIds_1: 
+  switchLocalCommunicationIds_2: 
+  switchLocalCommunicationIds_3: 
+  switchLocalCommunicationIds_4: 
+  switchLocalCommunicationIds_5: 
+  switchLocalCommunicationIds_6: 
+  switchLocalCommunicationIds_7: 
+  switchParentalControl: 0
+  switchAllowsScreenshot: 1
+  switchAllowsVideoCapturing: 1
+  switchAllowsRuntimeAddOnContentInstall: 0
+  switchDataLossConfirmation: 0
+  switchSupportedNpadStyles: 3
+  switchSocketC
