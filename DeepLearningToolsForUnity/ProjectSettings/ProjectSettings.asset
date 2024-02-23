@@ -485,4 +485,24 @@ PlayerSettings:
   ps4attrib3DSupport: 0
   ps4attribShareSupport: 0
   ps4attribExclusiveVR: 0
-  ps4disableAutoH
+  ps4disableAutoHideSplash: 0
+  ps4videoRecordingFeaturesUsed: 0
+  ps4contentSearchFeaturesUsed: 0
+  ps4attribEyeToEyeDistanceSettingVR: 0
+  ps4IncludedModules: []
+  monoEnv: 
+  psp2Splashimage: {fileID: 0}
+  psp2NPTrophyPackPath: 
+  psp2NPSupportGBMorGJP: 0
+  psp2NPAgeRating: 12
+  psp2NPTitleDatPath: 
+  psp2NPCommsID: 
+  psp2NPCommunicationsID: 
+  psp2NPCommsPassphrase: 
+  psp2NPCommsSig: 
+  psp2ParamSfxPath: 
+  psp2ManualPath: 
+  psp2LiveAreaGatePath: 
+  psp2LiveAreaBackroundPath: 
+  psp2LiveAreaPath: 
+  psp2LiveAr
