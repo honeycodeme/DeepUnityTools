@@ -561,4 +561,23 @@ PlayerSettings:
   additionalIl2CppArgs: 
   scriptingRuntimeVersion: 1
   apiCompatibilityLevelPerPlatform: {}
-  
+  m_RenderingPath: 1
+  m_MobileRenderingPath: 1
+  metroPackageName: DeepLearningToolsForUnity
+  metroPackageVersion: 
+  metroCertificatePath: 
+  metroCertificatePassword: 
+  metroCertificateSubject: 
+  metroCertificateIssuer: 
+  metroCertificateNotAfter: 0000000000000000
+  metroApplicationDescription: DeepLearningToolsForUnity
+  wsaImages: {}
+  metroTileShortName: 
+  metroCommandLineArgsFile: 
+  metroTileShowName: 0
+  metroMediumTileShowName: 0
+  metroLargeTileShowName: 0
+  metroWideTileShowName: 0
+  metroDefaultTileSize: 1
+  metroTileForegroundText: 2
+  metroTi
