@@ -542,3 +542,23 @@ PlayerSettings:
   splashScreenBackgroundSourceLandscape: {fileID: 0}
   splashScreenBackgroundSourcePortrait: {fileID: 0}
   spritePackerPolicy: 
+  webGLMemorySize: 256
+  webGLExceptionSupport: 1
+  webGLNameFilesAsHashes: 0
+  webGLDataCaching: 0
+  webGLDebugSymbols: 0
+  webGLEmscriptenArgs: 
+  webGLModulesDirectory: 
+  webGLTemplate: APPLICATION:Default
+  webGLAnalyzeBuildSize: 0
+  webGLUseEmbeddedResources: 0
+  webGLUseWasm: 0
+  webGLCompressionFormat: 1
+  scriptingDefineSymbols: {}
+  platformArchitecture: {}
+  scriptingBackend: {}
+  incrementalIl2cppBuild: {}
+  additionalIl2CppArgs: 
+  scriptingRuntimeVersion: 1
+  apiCompatibilityLevelPerPlatform: {}
+  
