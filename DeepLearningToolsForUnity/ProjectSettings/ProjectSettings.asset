@@ -580,4 +580,18 @@ PlayerSettings:
   metroWideTileShowName: 0
   metroDefaultTileSize: 1
   metroTileForegroundText: 2
-  metroTi
+  metroTileBackgroundColor: {r: 0.13333334, g: 0.17254902, b: 0.21568628, a: 0}
+  metroSplashScreenBackgroundColor: {r: 0.12941177, g: 0.17254902, b: 0.21568628,
+    a: 1}
+  metroSplashScreenUseBackgroundColor: 0
+  platformCapabilities: {}
+  metroFTAName: 
+  metroFTAFileTypes: []
+  metroProtocolName: 
+  metroCompilationOverrides: 1
+  tizenProductDescription: 
+  tizenProductURL: 
+  tizenSigningProfileName: 
+  tizenGPSPermissions: 0
+  tizenMicrophonePermissions: 0
+  tizenDe
