@@ -616,4 +616,22 @@ PlayerSettings:
   XboxOneSCId: 
   XboxOneGameOsOverridePath: 
   XboxOnePackagingOverridePath: 
-  XboxOneAppMani
+  XboxOneAppManifestOverridePath: 
+  XboxOnePackageEncryption: 0
+  XboxOnePackageUpdateGranularity: 2
+  XboxOneDescription: 
+  XboxOneLanguage:
+  - enus
+  XboxOneCapability: []
+  XboxOneGameRating: {}
+  XboxOneIsContentPackage: 0
+  XboxOneEnableGPUVariability: 0
+  XboxOneSockets: {}
+  XboxOneSplashScreen: {fileID: 0}
+  XboxOneAllowedProductIds: []
+  XboxOnePersistentLocalStorageSize: 0
+  xboxOneScriptCompiler: 0
+  vrEditorSettings:
+    daydream:
+      daydreamIconForeground: {fileID: 0}
+      daydreamIconBackground: {f
