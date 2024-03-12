@@ -20,4 +20,14 @@ Current contents:
   
 ## Platform and Installation
 Currently it only works on Windows. If you need to use GPU for NN, you also need a proper Nvidia graphic card.
-Installation
+Installation steps:
+1. Download the repo(Unity project)
+2. Download the zip that includes necessary dlls https://drive.google.com/open?id=1VWEiXJw3PSdeXfBrimPevdCWdbUyHd_0
+3. Put the dlls in correct places: (Adapted from https://github.com/aiunderstand/unity-cntk/blob/master/README.md.)
+- Put those files/folders into any Plugins folder under /DeepLearningToolsForUnity/Assets.
+    * Cntk.Core.Managed-2.4.dll
+    * MathNet.Numerics.dll
+    * MathNet.Numerics.MKL.dll
+    * System.Drawing.dll
+    * Accord folder
+- Copy the othe
