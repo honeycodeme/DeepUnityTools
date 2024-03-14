@@ -30,4 +30,10 @@ Installation steps:
     * MathNet.Numerics.MKL.dll
     * System.Drawing.dll
     * Accord folder
-- Copy the othe
+- Copy the other dlls(not folders), and put them DIRECTLY under /DeepLearningToolsForUnity folder, or another place where Windows can find those dlls.
+4. Done.
+
+Note that the file Assets/UnityCNTK/Tools/UniversalStyleTransfer/Data/UST_combined.bytes uses Git LFS, be sure you download it correctly (It should be larger than 100MB)
+
+## Documentation
+Go to [Wiki](https://github.com/tcmxx/CNTKUnityTools/wiki) to see detailed documentaion.
